@@ -8,7 +8,15 @@
 /*
  *  go from the beginning to the end of the container
  */
-void goToBeginToEnd()
+void goFromBeginToEnd()
+{
+
+}
+
+/*
+ *  go from the ending to the begin of the container
+ */
+void goFromEndToBegin()
 {
 
 }
@@ -16,7 +24,9 @@ void goToBeginToEnd()
 
 void iteratorTest()
 {
-    goToBeginToEnd();
+
+    goFromBeginToEnd();
+    goFromEndToBegin();
 }
 
 
