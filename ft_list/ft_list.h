@@ -13,10 +13,15 @@ template<class T, class Alloc = std::allocator<T> >
 class list {
 
 private:
-
+    typedef struct      s_node
+    {
+        T               *data;
+        s_node          *previous;
+        s_node          *next;
+    }                   t_node;
 public:
-    typedef T value_type;
-    typedef Alloc allocator_type;
+    typedef T                                               value_type;
+    typedef Alloc                                           allocator_type;
 
     typedef typename allocator_type::reference              reference;
     typedef typename allocator_type::const_reference        const_reference;
