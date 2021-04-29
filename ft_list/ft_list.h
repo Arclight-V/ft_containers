@@ -5,6 +5,7 @@
 #ifndef FT_LIST_H
 #define FT_LIST_H
 
+#include "stdafx.h"
 
 class ft_list {
 
