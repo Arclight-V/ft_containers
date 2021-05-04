@@ -2,23 +2,18 @@
 // Created by Arclight Natashia on 4/28/21.
 //
 
-#ifndef FT_LIST_H
-#define FT_LIST_H
+#ifndef FT_DEQUE_H
+#define FT_DEQUE_H
 
 #include "stdafx.h"
 
 namespace ft
 
 template<class T, class Alloc = std::allocator<T> >
-class list {
+class deque {
 
 private:
-    typedef struct      s_node
-    {
-        T               value;
-        s_node          *previous;
-        s_node          *next;
-    }                   t_node;
+    
 public:
     /* common type definitions for all containers */
     typedef T                                               value_type;
@@ -67,26 +62,26 @@ public:
      *  empty container constructor (default constructor)
      *  Constructs an empty container, with no elements.
      *
-     * explicit list (const allocator_type& alloc = allocator_type());
+     * explicit deque (const allocator_type& alloc = allocator_type());
      *
      */
     /*
      *  copy constructor
      *  Constructs a container with a copy of each of the elements in x, in the same order.
      *
-     * list (const list& x);
+     * deque (const deque& x);
      */
 
     /*
-     *  list destructor
+     *  deque destructor
      *  Destroys the container object.
      *
-     * ~list();
+     * ~deque();
      */
 
     /*
      * Return iterator to beginning
-     * Returns an iterator pointing to the first element in the list container.
+     * Returns an iterator pointing to the first element in the deque container.
      *
      * it begin() {};
      * c_it begin() const {};
@@ -110,7 +105,7 @@ public:
 
     /*
      * Return reverse iterator to reverse end
-     * Returns a reverse iterator pointing to the theoretical element preceding the first element in the list container (which is considered its reverse end).
+     * Returns a reverse iterator pointing to the theoretical element preceding the first element in the deque container (which is considered its reverse end).
      *
      * rev_it rend();
      * c_rev_it rend() const;
@@ -122,22 +117,22 @@ public:
      */
     /*
     template <class T, class Alloc>
-    bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+    bool operator== (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs);
 
     template <class T, class Alloc>
-    bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+    bool operator!= (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs);
 
     template <class T, class Alloc>
-    bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+    bool operator<  (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs);
 
     template <class T, class Alloc>
-    bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+    bool operator<= (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs);
 
     template <class T, class Alloc>
-    bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+    bool operator>  (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs);
 
     template <class T, class Alloc>
-    bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+    bool operator>= (const deque<T,Alloc>& lhs, const deque<T,Alloc>& rhs);
      *
      */
 
@@ -145,17 +140,17 @@ public:
      * Capacity
      *
      * Test whether container is empty
-     * Returns whether the list container is empty (i.e. whether its size is 0).
+     * Returns whether the deque container is empty (i.e. whether its size is 0).
      *
      * bool empty() const;
      *
      * Return size
-     * Returns the number of elements in the list container.
+     * Returns the number of elements in the deque container.
      *
      * size_type size() const;
      *
      * Return maximum size
-     * Returns the maximum number of elements that the list container can hold.
+     * Returns the maximum number of elements that the deque container can hold.
      *
      * size_type max_size() const;
      *
@@ -164,4 +159,4 @@ public:
 };
 
 
-#endif //FT_LIST_H
+#endif //FT_DEQUE_H
