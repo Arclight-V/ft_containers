@@ -21,7 +21,7 @@ private:
         s_node          *next;
     }                   t_node;
 public:
-    /* general type definitions */
+    /* common type definitions for all containers */
     typedef T                                               value_type;
     typedef Alloc                                           allocator_type;
     typedef typename allocator_type::reference              reference;
@@ -58,7 +58,110 @@ public:
      * using diff = difference_type;
      */
 
-    ft_list();
+    /*
+     * * * * * * * * * * * * * * * * * * * * * * * *
+     * common member functions for all containers  *
+     * * * * * * * * * * * * * * * * * * * * * * * *
+    */
+
+    /*
+     *  empty container constructor (default constructor)
+     *  Constructs an empty container, with no elements.
+     *
+     * explicit list (const allocator_type& alloc = allocator_type());
+     *
+     */
+    /*
+     *  copy constructor
+     *  Constructs a container with a copy of each of the elements in x, in the same order.
+     *
+     * list (const list& x);
+     */
+
+    /*
+     *  list destructor
+     *  Destroys the container object.
+     *
+     * ~list();
+     */
+
+    /*
+     * Return iterator to beginning
+     * Returns an iterator pointing to the first element in the list container.
+     *
+     * it begin() {};
+     * c_it begin() const {};
+     */
+
+    /*
+     * Return iterator to end
+     * Returns an iterator referring to the past-the-end element in the vector container.
+     *
+     * it end() {};
+     * c_it end() const {};
+     */
+
+    /*
+     * Return reverse iterator to reverse beginning
+     * Returns a reverse iterator pointing to the last element in the container (i.e., its reverse beginning).
+     *
+     * rev_it rbegin();
+     * c_rev_it rbegin() const;
+     */
+
+    /*
+     * Return reverse iterator to reverse end
+     * Returns a reverse iterator pointing to the theoretical element preceding the first element in the list container (which is considered its reverse end).
+     *
+     * rev_it rend();
+     * c_rev_it rend() const;
+     */
+
+    /*
+     * Relational operators
+     *
+     */
+    /*
+    template <class T, class Alloc>
+    bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+    template <class T, class Alloc>
+    bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+    template <class T, class Alloc>
+    bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+    template <class T, class Alloc>
+    bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+    template <class T, class Alloc>
+    bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+    template <class T, class Alloc>
+    bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+     *
+     */
+
+    /*
+     * Capacity
+     *
+     * Test whether container is empty
+     * Returns whether the list container is empty (i.e. whether its size is 0).
+     *
+     * bool empty() const;
+     *
+     * Return size
+     * Returns the number of elements in the list container.
+     *
+     * size_type size() const;
+     *
+     * Return maximum size
+     * Returns the maximum number of elements that the list container can hold.
+     *
+     * size_type max_size() const;
+     *
+     */
+
 };
 
 
