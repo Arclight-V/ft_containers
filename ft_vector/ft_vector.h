@@ -156,6 +156,52 @@ public:
      *
      */
 
+	/*
+     * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * common member functions for sequence containers *
+     * * * * * * * * * * * * * * * * * * * * * * * * * *
+    */
+
+    /*
+     * fill constructor
+     * Constructs a container with n elements. Each element is a copy of val.
+     *
+     * explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
+     */
+
+    /*
+     * range constructor
+     * Constructs a container with as many elements as the range [first,last), with each element constructed from its corresponding element in that range, in the same order.
+     *
+     * template<class InputIterator>
+     * list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
+    */
+
+    /*
+     * it insert (it position, const value_type& val);
+     *
+     * void insert (it position, size_type n, const value_type& val);
+     *
+     * template <class InputIterator>
+     * void insert (it position, InputIterator first, InputIterator last); // first and last must not be iterators pointing to the inserted container
+     */
+
+    /*
+     * Erase elements
+     * Removes from the list container either a single element (position) or a range of elements ([first,last))
+     *
+     * it erase (iterator position);
+     *
+     * it erase (iterator first, iterator last);
+     */
+
+    /*
+     * Clear content
+     * Removes all elements from the list container (which are destroyed), and leaving the container with a size of 0.
+     *
+     * void clear();
+     */
+
 };
 
 
