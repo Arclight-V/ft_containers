@@ -3,5 +3,6 @@
 
 #include <memory.h>
 #include <cstddef>
+#include <iterator>
 
 #endif
