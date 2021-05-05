@@ -29,6 +29,14 @@ namespace ft {
         // Destructor
         virtual ~ListIterator() {};
 
+        // Requirements for a bidirectional iterator
+        ListIterator &operator=(ListIterator const &x) {
+            if (this != x) {
+                _node = x._node;
+            }
+            return *this;
+        }
+
     private:
         Node *_node;
     };
