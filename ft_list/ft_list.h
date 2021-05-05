@@ -19,6 +19,10 @@ private:
         s_node          *previous;
         s_node          *next;
     }                   t_node;
+
+    //  using the tail has access to the head
+    t_node *_tail;
+
 public:
     /* common type definitions for all containers */
     typedef T                                                       value_type;
@@ -196,7 +200,20 @@ public:
      *
      * void clear();
      */
+private:
+    size_type _size;
+    allocator_type _alloc;
+    std::allocator<t_node> _allocNode;
+protected:
 
+    t_node *allocateMemoryForNode() {
+        t_node *NewNode;
+
+        NewNode = _allocNode.allocate(1);
+        NewNode->previous = NewNode;
+        NewNode->next = NewNode;
+        return NewNode;
+    }
 
 
 
