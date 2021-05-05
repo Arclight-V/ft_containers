@@ -21,41 +21,33 @@ private:
     }                   t_node;
 public:
     /* common type definitions for all containers */
-    typedef T                                               value_type;
-    typedef Alloc                                           allocator_type;
-    typedef typename allocator_type::reference              reference;
-    typedef typename allocator_type::const_reference        const_reference;
-    typedef typename allocator_type::pointer                pointer;
-    typedef typename allocator_type::const_pointer          const_pointer;
+    typedef T                                                       value_type;
+    typedef Alloc                                                   allocator_type;
+    typedef typename allocator_type::reference                      reference;
+    typedef typename allocator_type::const_reference                const_reference;
+    typedef typename allocator_type::pointer                        pointer;
+    typedef typename allocator_type::const_pointer                  const_pointer;
+
+    typedef typename ft::ListIterator<value_type>                   iterator;
+    typedef typename ft::ListIterator<const value_type>             const_iterator;
+    typedef typename ft::ListIterator<iterator>                     reverse_iterator:
+    typedef typename ft::ListIterator<const_iterator>               const_reverse_iterator;
+
+    typedef typename ft::ListIterator<value_type>::difference_type  difference_type;
 
     /*
-     * define iterators
-     *
-     * typedef typename iterator;
-     * typedef typename const_iterator;
-     * typedef typename reverse_iterator:
-     * typedef typename const_reverse_iterator;
-     *
+     * alias
      */
-
-    /* define difference_type
-     * ...
-     *
-     */
-
     using size_type = size_t;
     using ref = reference;
     using c_ref = const_reference;
     using ptr = pointer;
     using c_ptr = const_pointer;
-    /*
-     * using
-     * using it = iterator;
-     * using c_it = const_iterator;
-     * using rev_it = reverse_iterator;
-     * using c_rev_it = const_reverse_iterator
-     * using diff = difference_type;
-     */
+    using it = iterator;
+    using c_it = const_iterator;
+    using rev_it = reverse_iterator;
+    using c_rev_it = const_reverse_iterator
+    using diff = difference_type;
 
     /*
      * * * * * * * * * * * * * * * * * * * * * * * *
@@ -63,13 +55,11 @@ public:
      * * * * * * * * * * * * * * * * * * * * * * * *
     */
 
-    /*
-     *  empty container constructor (default constructor)
-     *  Constructs an empty container, with no elements.
-     *
-     * explicit list (const allocator_type& alloc = allocator_type());
-     *
-     */
+    //  empty container constructor (default constructor)
+    //  Constructs an empty container, with no elements.
+    explicit list (const allocator_type& alloc = allocator_type());
+
+
     /*
      *  copy constructor
      *  Constructs a container with a copy of each of the elements in x, in the same order.

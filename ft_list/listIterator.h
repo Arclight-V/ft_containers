@@ -13,7 +13,8 @@ namespace ft {
 
     template<class Node>
     class ListIterator {
-
+    private:
+        Node *_node;
     public:
         // defining iterator trait types
         typedef typename std::iterator_traits<Node>::value_type         value_type;
@@ -86,8 +87,6 @@ namespace ft {
             _node = _node->previous;
             return ret;
         }
-    private:
-        Node *_node;
     };
 }
 
