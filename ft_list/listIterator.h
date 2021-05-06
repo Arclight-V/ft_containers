@@ -5,7 +5,7 @@
 #ifndef LISTITERATOR_H
 #define LISTITERATOR_H
 
-#include "stdafx.h"
+//#include "stdafx.h"
 
 // BIDIRECTIONAL ITERATOR
 
@@ -16,12 +16,12 @@ namespace ft {
     private:
         Node *_node;
     public:
-        // defining iterator trait types
-        typedef typename std::iterator_traits<Node>::value_type         value_type;
-        typedef typename std::iterator_traits<Node>::difference_type    difference_type;
-        typedef typename std::iterator_traits<Node>::pointer            pointer;
-        typedef typename std::iterator_traits<Node>::reference          reference;
-        typedef typename std::bidirectional_iterator_tag                iterator_category;
+        // defining iterator types
+        typedef Node                                        value_type;
+        typedef typename std::ptrdiff_t                     difference_type;
+        typedef Node*                                       pointer;
+        typedef Node&                                       reference;
+        typedef typename std::bidirectional_iterator_tag    iterator_category;
 
         /*
          * Requirements for a bidirectional iterator

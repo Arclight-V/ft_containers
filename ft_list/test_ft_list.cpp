@@ -2,8 +2,15 @@
 // Created by Arclight Natashia on 4/28/21.
 //
 
-#include <iostream>
-#include "ft_list.hpp"
+#include "ft_list.h"
+
+void constructorTest()
+{
+    ft::list<int> lst;
+    ft::list<const int> const lst1;
+    (void)lst;
+    (void)lst1;
+}
 
 /*
  *  go from the beginning to the end of the container
@@ -32,6 +39,7 @@ void iteratorTest()
 
 int main ()
 {
+    constructorTest();
     iteratorTest();
 }
 

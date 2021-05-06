@@ -6,10 +6,11 @@
 #define FT_LIST_H
 
 #include "stdafx.h"
+#include "listIterator.h"
 
-namespace ft
+namespace ft {
 
-template<class T, class Alloc = std::allocator<T> >
+template< class T, class Alloc = std::allocator<T> >
 class list {
 
 private:
@@ -34,14 +35,17 @@ public:
 
     typedef typename ft::ListIterator<value_type>                   iterator;
     typedef typename ft::ListIterator<const value_type>             const_iterator;
-    typedef typename ft::ListIterator<iterator>                     reverse_iterator:
+    typedef typename ft::ListIterator<iterator>                     reverse_iterator;
     typedef typename ft::ListIterator<const_iterator>               const_reverse_iterator;
 
     typedef typename ft::ListIterator<value_type>::difference_type  difference_type;
 
+    typedef size_t                                                  size_type;
     /*
      * alias
      */
+
+    /*
     using size_type = size_t;
     using ref = reference;
     using c_ref = const_reference;
@@ -52,6 +56,7 @@ public:
     using rev_it = reverse_iterator;
     using c_rev_it = const_reverse_iterator
     using diff = difference_type;
+    */
 
     /*
      * * * * * * * * * * * * * * * * * * * * * * * *
@@ -61,7 +66,7 @@ public:
 
     //  empty container constructor (default constructor)
     //  Constructs an empty container, with no elements.
-    explicit list (const allocator_type& alloc = allocator_type());
+    explicit list (const allocator_type& alloc = allocator_type()) : _tail(allocateMemoryForNode()), _alloc(alloc), _size(0)  {};
 
 
     /*
@@ -201,9 +206,10 @@ public:
      * void clear();
      */
 private:
-    size_type _size;
     allocator_type _alloc;
     std::allocator<t_node> _allocNode;
+    size_type _size;
+
 protected:
 
     t_node *allocateMemoryForNode() {
@@ -214,12 +220,17 @@ protected:
         NewNode->next = NewNode;
         return NewNode;
     }
-
-
-
-
-
 };
+
+
+/*
+extern template list<int>();
+extern template list<int8_t>();
+extern template list<float>();
+extern template list<double>();
+extern template list<char>();
+*/
+}
 
 
 #endif //FT_LIST_H

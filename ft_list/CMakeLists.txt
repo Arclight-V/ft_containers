@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 98)
 set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
 set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 add_compile_options(-Wall -Wextra -Werror)
-include_directories(ft_list/)
-target_precompile_headers(ft_list_test PRIVATE stdafx.h)
+include_directories(~/)
 add_executable(ft_list_test ft_list.cpp
-                            ft_list_test.cpp)
+                            test_ft_list.cpp)
+target_precompile_headers(ft_list_test PRIVATE
+        stdafx.h)
