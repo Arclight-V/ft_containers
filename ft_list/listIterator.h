@@ -5,6 +5,8 @@
 #ifndef LISTITERATOR_H
 #define LISTITERATOR_H
 
+#include "baseIterator.h"
+
 //#include "stdafx.h"
 
 // BIDIRECTIONAL ITERATOR
@@ -12,17 +14,18 @@
 namespace ft {
 
     template<class Node>
-    class ListIterator {
+class ListIterator : public ft::baseIterator<std::bidirectional_iterator_tag, Node> {
     private:
         Node *_node;
     public:
+        /*
         // defining iterator types
         typedef Node                                        value_type;
         typedef typename std::ptrdiff_t                     difference_type;
         typedef Node*                                       pointer;
         typedef Node&                                       reference;
         typedef typename std::bidirectional_iterator_tag    iterator_category;
-
+        */
         /*
          * Requirements for a bidirectional iterator
          */
@@ -54,11 +57,11 @@ namespace ft {
         }
 
         // Can be dereferenced as an rvalue (if in a dereferenceable state)
-        reference operator*(){
+        typename ft::baseIterator<std::bidirectional_iterator_tag, Node>::reference operator*(){
             return _node->value;
         }
 
-        pointer  operator->(){
+        typename ft::baseIterator<std::bidirectional_iterator_tag, Node>::pointer operator->(){
             return &_node->value;
         }
 
