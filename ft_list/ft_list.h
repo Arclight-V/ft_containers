@@ -28,7 +28,7 @@ namespace ft {
         typedef typename ft::ListIterator<iterator>                     reverse_iterator;
         typedef typename ft::ListIterator<const_iterator>               const_reverse_iterator;
 
-        typedef typename ft::ListIterator<value_type, t_node>::difference_type  difference_type;
+        typedef typename ft::ListIterator<value_type>::difference_type  difference_type;
 
         typedef size_t size_type;
 
@@ -204,22 +204,9 @@ namespace ft {
          * void clear();
          */
 
-        /*
-         * Add element at the end
-         * Adds a new element at the end of the list container, after its current last element.
-         * The content of val is copied (or moved) to the new element.
-         */
-//        void push_back(value_type const &val) {
-//            insert(end(), val);
-//            iterator itEnd = end();
-//
-//        }
-//
-
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
 
-        //  Insert elements
-        //  The container is extended by inserting new elements before the element at the specified position.
+        // -----------------------------------------Insert elements-----------------------------------------------------
 
         iterator insert(iterator position, value_type const &val) {
             node *NewNode = nullptr;
@@ -244,6 +231,20 @@ namespace ft {
                 ++position;
             }
         };
+
+        //  Add element at the end
+        //  Adds a new element at the end of the list container, after its current last element.
+        //  The content of val is copied (or moved) to the new element.
+
+        void push_back(value_type const &val) {
+            node *NewNode = nullptr;
+
+            allocateMemoryForNodeAndConstruct(val, &NewNode);
+            exchangeOfpointersBetweenNodes(NewNode, _tail);
+            ++_size;
+        }
+
+
 
     private:
         allocator_type _alloc;
