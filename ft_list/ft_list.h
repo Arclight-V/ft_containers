@@ -19,17 +19,17 @@ namespace ft {
         /* common type definitions for all containers */
         typedef T value_type;
         typedef Alloc allocator_type;
-        typedef typename allocator_type::reference reference;
-        typedef typename allocator_type::const_reference const_reference;
-        typedef typename allocator_type::pointer pointer;
-        typedef typename allocator_type::const_pointer const_pointer;
+        typedef typename allocator_type::reference                      reference;
+        typedef typename allocator_type::const_reference                const_reference;
+        typedef typename allocator_type::pointer                        pointer;
+        typedef typename allocator_type::const_pointer                  const_pointer;
 
-        typedef typename ft::ListIterator<value_type> iterator;
-        typedef typename ft::ListConstIterator<value_type, T const *> const_iterator;
-//        typedef typename ft::ListIterator<iterator, t_node>                     reverse_iterator;
-//        typedef typename ft::ListIterator<const_iterator, t_node>               const_reverse_iterator;
+        typedef typename ft::ListIterator<value_type>                   iterator;
+        typedef typename ft::ListConstIterator<value_type, T const *>   const_iterator;
+        typedef typename ft::ListIterator<iterator>                     reverse_iterator;
+        typedef typename ft::ListIterator<const_iterator>               const_reverse_iterator;
 
-//        typedef typename ft::ListIterator<value_type, t_node>::difference_type  difference_type;
+        typedef typename ft::ListIterator<value_type, t_node>::difference_type  difference_type;
 
         typedef size_t size_type;
 
