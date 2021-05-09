@@ -102,9 +102,7 @@ namespace ft {
 
         template<typename, typename> friend class list;
     public:
-        /*
-         * Requirements for a bidirectional iterator
-         */
+
         explicit ListConstIterator(Node *ptr = nullptr) : _node(ptr) {};
 
         ListConstIterator(ListIterator<T> const &x) : _node(x._node) {};

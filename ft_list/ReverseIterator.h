@@ -139,4 +139,15 @@ public:
         return lhs.base() <= rhs.base();
     }
 
+    template <class Iterator>
+    reverse_iterator<Iterator> operator+ ( typename ReverseIterator<Iterator>::difference_type n, const ReverseIterator<Iterator>& rev_it) {
+        return ReverseIterator<rev_it - n>;
+    }
+
+    template <class Iterator>
+    typename reverse_iterator<Iterator>::difference_type operator- (const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) {
+        return rhs.base() - lhs.base();
+}
+
+
 #endif //REVERSEITERATOR_H
