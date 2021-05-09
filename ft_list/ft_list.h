@@ -10,7 +10,6 @@
 #include "NodeTraits.h"
 
 namespace ft {
-
     template<typename T, typename Alloc = std::allocator<T> >
     class list {
         typedef typename ft::NodeTraits<T>::_dl_list_TS node;
@@ -32,6 +31,11 @@ namespace ft {
         typedef typename ft::ListIterator<value_type, t_node>::difference_type  difference_type;
 
         typedef size_t size_type;
+
+        /*
+        ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
+        */
+
 
         /*
          * * * * * * * * * * * * * * * * * * * * * * * *
