@@ -124,24 +124,30 @@ namespace ft {
          */
 
         /*
-         * Capacity
-         *
-         * Test whether container is empty
-         * Returns whether the list container is empty (i.e. whether its size is 0).
-         *
-         * bool empty() const;
-         *
-         * Return size
-         * Returns the number of elements in the list container.
-         *
-         * size_type size() const;
-         *
-         * Return maximum size
-         * Returns the maximum number of elements that the list container can hold.
-         *
-         * size_type max_size() const;
-         *
-         */
+        ** -----------------------------------------CAPACITY------------------------------------------------------------
+        */
+
+        //  Test whether container is empty
+        //  Returns whether the list container is empty (i.e. whether its size is 0).
+
+        bool empty() const {
+            return _size == 0;
+        }
+
+        //  Return size
+        //  Returns the number of elements in the list container.
+
+        size_type size() const {
+            return _size;
+        };
+
+        //  Return maximum size
+        //  Returns the maximum number of elements that the list container can hold.
+
+         size_type max_size() const {
+             return _alloc.max_size();
+         };
+
 
         /*
          * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -209,6 +215,7 @@ namespace ft {
 
             allocateMemoryForNodeAndConstruct(val, &NewNode);
             exchangeOfpointersBetweenNodes(NewNode, position._node);
+            ++_size;
             return iterator(NewNode);
         }
 
