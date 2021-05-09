@@ -200,12 +200,23 @@ namespace ft {
 //
 //        }
 //
+        /*
+         *  Insert elements
+         *  The container is extended by inserting new elements before the element at the specified position.
+         */
         iterator insert(iterator position, value_type const &val) {
             node *NewNode = nullptr;
 
             allocateMemoryForNodeAndConstruct(val, &NewNode);
             exchangeOfpointersBetweenNodes(NewNode, position._node);
             return iterator(NewNode);
+        }
+
+        void insert(iterator position, size_type n, value_type const &val)
+        {
+            for (size_type i = 0; i < n ; ++i) {
+                insert(position, val);
+            }
         }
 
     private:
