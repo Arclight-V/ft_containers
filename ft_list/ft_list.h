@@ -37,13 +37,16 @@ namespace ft {
          * Common Member Functions For All Containers  *
          * * * * * * * * * * * * * * * * * * * * * * * *
         */
-        //      Empty container constructor (default constructor)
-        //      Constructs an empty container, with no elements.
 
+        /*
+        ** -----------------------------------------CONSTRUCTOR---------------------------------------------------------
+        */
+
+        // Empty container constructor (default constructor)
+        // Constructs an empty container, with no elements.
 
         explicit list(const allocator_type &alloc = allocator_type()) : _tail(allocateMemoryForNode()), _alloc(alloc),
                                                                         _size(0) {};
-
 
         //     Copy constructor
         //     Constructs a container with a copy of each of the elements in x, in the same order.
@@ -57,19 +60,17 @@ namespace ft {
         ** -----------------------------------------DESTRUCTOR----------------------------------------------------------
         */
 
-        //  list destructor
-        //  Destroys the container object.
-
-        virtual ~list() {};
+//        virtual ~list() {
+//            for (; _size; --_size) {
+//                erese
+//            }
+//        };
 
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
         */
 
         // -----------------------------------------ITERATORS-----------------------------------------------------------
-
-        //  Return iterator to beginning
-        //  Returns an iterator pointing to the first element in the list container.
 
         iterator begin() {
             return iterator(_tail->next);
@@ -79,10 +80,6 @@ namespace ft {
             return const_iterator(_tail->next);
         };
 
-        /*
-         *  Return iterator to end
-         *  Returns an iterator referring to the past-the-end element in the list container.
-         */
         iterator end() {
             return iterator(_tail);
         }
@@ -189,15 +186,6 @@ namespace ft {
          */
 
         /*
-         * Erase elements
-         * Removes from the list container either a single element (position) or a range of elements ([first,last))
-         *
-         * it erase (iterator position);
-         *
-         * it erase (iterator first, iterator last);
-         */
-
-        /*
          * Clear content
          * Removes all elements from the list container (which are destroyed), and leaving the container with a size of 0.
          *
@@ -232,6 +220,20 @@ namespace ft {
             }
         };
 
+        // -----------------------------------------Erase elements------------------------------------------------------
+
+         iterator erase(iterator position) {
+             node *retNode = position._node->next;
+
+             exchangeOfpointersBetweenNodes(position._node->previous, position._node->next);
+             destroyAndDeallocateNode(position._node);
+             return iterator(retNode);
+         };
+
+//         it erase (iterator first, iterator last);
+
+
+
         //  Add element at the end
         //  Adds a new element at the end of the list container, after its current last element.
         //  The content of val is copied (or moved) to the new element.
@@ -243,8 +245,6 @@ namespace ft {
             exchangeOfpointersBetweenNodes(NewNode, _tail);
             ++_size;
         }
-
-
 
     private:
         allocator_type _alloc;
@@ -270,6 +270,12 @@ namespace ft {
             node2->previous->next = node1;
             node2->previous = node1;
         }
+
+        void destroyAndDeallocateNode(node *node) {
+            _alloc.destroy(&node->value_type);
+            _allocNode.deallocate(node, 1);
+        }
+
     };
 
 
