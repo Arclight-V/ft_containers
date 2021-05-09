@@ -13,28 +13,19 @@ namespace ft {
 
     template<typename T, typename Alloc = std::allocator<T> >
     class list {
-
-//        typedef struct  s_node {
-//            T           value;
-//            s_node      *previous;
-//            s_node      *next;
-//        }               t_node;
-
-        //  using the tail has access to the head
-//        t_node          *_tail;
-    typedef typename ft::NodeTraits<T>::_dl_list_TS                     node;
-        node                                                            *_tail;   //  using the tail has access to the head
+        typedef typename ft::NodeTraits<T>::_dl_list_TS node;
+        node *_tail;   //  using the tail has access to the head
     public:
         /* common type definitions for all containers */
-        typedef T                                                       value_type;
-        typedef Alloc                                                   allocator_type;
-        typedef typename allocator_type::reference                      reference;
-        typedef typename allocator_type::const_reference                const_reference;
-        typedef typename allocator_type::pointer                        pointer;
-        typedef typename allocator_type::const_pointer                  const_pointer;
+        typedef T value_type;
+        typedef Alloc allocator_type;
+        typedef typename allocator_type::reference reference;
+        typedef typename allocator_type::const_reference const_reference;
+        typedef typename allocator_type::pointer pointer;
+        typedef typename allocator_type::const_pointer const_pointer;
 
-        typedef typename ft::ListIterator<value_type>                   iterator;
-        typedef typename ft::ListConstIterator<value_type, T const *>        const_iterator;
+        typedef typename ft::ListIterator<value_type> iterator;
+        typedef typename ft::ListConstIterator<value_type, T const *> const_iterator;
 //        typedef typename ft::ListIterator<iterator, t_node>                     reverse_iterator;
 //        typedef typename ft::ListIterator<const_iterator, t_node>               const_reverse_iterator;
 
@@ -78,6 +69,7 @@ namespace ft {
         const_iterator begin() const {
             return const_iterator(_tail->next);
         };
+
         /*
          *  Return iterator to end
          *  Returns an iterator referring to the past-the-end element in the list container.
@@ -89,16 +81,6 @@ namespace ft {
         const_iterator end() const {
             return const_iterator(_tail);
         }
-
-
-
-        /*
-         * Return iterator to end
-         * Returns an iterator referring to the past-the-end element in the vector container.
-         *
-         * it end() {};
-         * c_it end() const {};
-         */
 
         /*
          * Return reverse iterator to reverse beginning
@@ -206,31 +188,53 @@ namespace ft {
          *
          * void clear();
          */
+
+        /*
+         * Add element at the end
+         * Adds a new element at the end of the list container, after its current last element.
+         * The content of val is copied (or moved) to the new element.
+         */
+//        void push_back(value_type const &val) {
+//            insert(end(), val);
+//            iterator itEnd = end();
+//
+//        }
+//
+        iterator insert(iterator position, value_type const &val) {
+            node *NewNode = nullptr;
+
+            allocateMemoryForNodeAndConstruct(val, &NewNode);
+            exchangeOfpointersBetweenNodes(NewNode, position._node);
+            return iterator(NewNode);
+        }
+
     private:
         allocator_type _alloc;
         std::allocator<node> _allocNode;
         size_type _size;
 
-    protected:
-
         node *allocateMemoryForNode() {
-            node *NewNode;
+            node *newNode = _allocNode.allocate(1);
+            std::memset(&newNode->value_type, 0, sizeof(value_type));
+            newNode->previous = newNode;
+            newNode->next = newNode;
+            return newNode;
+        }
 
-            NewNode = _allocNode.allocate(1);
-            NewNode->previous = NewNode;
-            NewNode->next = NewNode;
-            return NewNode;
+        void allocateMemoryForNodeAndConstruct(value_type const &val, node **node) {
+            *node = allocateMemoryForNode();
+            _alloc.construct(&(*node)->value_type, val);
+        }
+
+        void exchangeOfpointersBetweenNodes(node *&node1, node *&node2) {
+            node1->next = node2;
+            node1->previous = node2->previous;
+            node2->previous->next = node1;
+            node2->previous = node1;
         }
     };
 
 
-/*
-extern template list<int>();
-extern template list<int8_t>();
-extern template list<float>();
-extern template list<double>();
-extern template list<char>();
-*/
 }
 
 

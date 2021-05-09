@@ -6,8 +6,8 @@
 
 void constructorTest()
 {
-    ft::list<int> lst;
-    ft::list<const int> const lst1;
+//    ft::list<int> lst;
+//    ft::list<const int> const lst1;
 //    (void)lst;
 //    (void)lst1;
 }
@@ -31,13 +31,18 @@ void goFromEndToBegin()
 
 void BeginAndEndIteratorsAnEmptyContariner() {
     ft::list<int> lst;
-    ft::list<int>::const_iterator itBeginConst = lst.begin();
 
-//    ft::list<int>::const_iterator itBeginConst2 = lst2.begin();
+    lst.insert(lst.begin(), 10);
 
-//    itBeginConst = itBeginConst2;
+    std::cout << *lst.begin() << '\n' << *lst.end();
+//    for (ft::list<int>::iterator itBegin = lst.begin(); itBegin != lst.end(); itBegin++) {
+//        std::cout << *itBegin << '\n';
+//    }
 
-//    itBeginMutable = itBeginMutable2;
+
+
+//    std::cout << *lst.begin() << '\n';
+
 
 }
 

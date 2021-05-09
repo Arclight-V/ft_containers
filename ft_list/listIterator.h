@@ -9,12 +9,13 @@
 //#include "stdafx.h"
 
 #include "NodeTraits.h"
-#include "list"
+#include "ft_list.h"
+#include <list>
 
 // BIDIRECTIONAL ITERATOR
 namespace ft {
 
-//    template<class T> class ListIterator;
+    template<class T> class ListIterator;
     template<class T, class PointerT> class ListConstIterator;
 
     template<class T>
@@ -23,6 +24,8 @@ namespace ft {
         Node *_node;
 
         template<class, class> friend class ListConstIterator;
+        template<typename, typename> friend class list;
+
     public:
 
         /*
@@ -57,7 +60,7 @@ namespace ft {
 
         // Can be dereferenced as an rvalue (if in a dereferenceable state)
         typename ListIterator::reference operator*() const {
-            return _node->value;
+            return _node->value_type;
         }
 
         typename ListIterator::pointer operator->() const {
@@ -90,6 +93,7 @@ namespace ft {
             _node = _node->previous;
             return ret;
         }
+
     };
 
     template<class T, class PointerT>

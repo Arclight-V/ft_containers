@@ -10,17 +10,18 @@ namespace ft {
     struct NodeTraits {
         //  doubly-linked list T on the stack
         struct _dl_list_TS {
-            T           value;
+            T           value_type;
             _dl_list_TS *previous;
             _dl_list_TS *next;
         };
 
         //  doubly-linked list T on the heap
         struct _dl_list_TH {
-            T           *value;
+            T           *value_type;
             _dl_list_TH *previous;
             _dl_list_TH *next;
         };
+
     };
 }
 
