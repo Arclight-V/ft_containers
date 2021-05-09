@@ -33,17 +33,14 @@ namespace ft {
         typedef size_t size_type;
 
         /*
-        ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
-        */
-
-
-        /*
          * * * * * * * * * * * * * * * * * * * * * * * *
          * Common Member Functions For All Containers  *
          * * * * * * * * * * * * * * * * * * * * * * * *
         */
         //      Empty container constructor (default constructor)
         //      Constructs an empty container, with no elements.
+
+
         explicit list(const allocator_type &alloc = allocator_type()) : _tail(allocateMemoryForNode()), _alloc(alloc),
                                                                         _size(0) {};
 
@@ -57,15 +54,23 @@ namespace ft {
          */
 
         /*
-         *  list destructor
-         *  Destroys the container object.
-         */
+        ** -----------------------------------------DESTRUCTOR----------------------------------------------------------
+        */
+
+        //  list destructor
+        //  Destroys the container object.
+
         virtual ~list() {};
 
         /*
-         *  Return iterator to beginning
-         *  Returns an iterator pointing to the first element in the list container.
-         */
+        ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
+        */
+
+        // -----------------------------------------ITERATORS-----------------------------------------------------------
+
+        //  Return iterator to beginning
+        //  Returns an iterator pointing to the first element in the list container.
+
         iterator begin() {
             return iterator(_tail->next);
         };
@@ -210,10 +215,12 @@ namespace ft {
 //
 //        }
 //
-        /*
-         *  Insert elements
-         *  The container is extended by inserting new elements before the element at the specified position.
-         */
+
+        // -----------------------------------------MODIFIERS-----------------------------------------------------------
+
+        //  Insert elements
+        //  The container is extended by inserting new elements before the element at the specified position.
+
         iterator insert(iterator position, value_type const &val) {
             node *NewNode = nullptr;
 
@@ -229,6 +236,14 @@ namespace ft {
                 insert(position, val);
             }
         }
+
+        template <class InputIterator>
+        void insert(iterator position, InputIterator first, InputIterator last) {
+            for (; first != last; ++first) {
+                insert(position, *first);
+                ++position;
+            }
+        };
 
     private:
         allocator_type _alloc;
