@@ -198,24 +198,23 @@ namespace ft {
 
         iterator insert(iterator position, value_type const &val) {
             node *NewNode = nullptr;
-
-            allocateMemoryForNodeAndConstruct(val, &NewNode);
-            exchangeOfpointersBetweenNodes(NewNode, position._node);
-            ++_size;
+            executeInsert(&NewNode, &position._node, val);
             return iterator(NewNode);
         }
 
         void insert(iterator position, size_type n, value_type const &val)
         {
             for (size_type i = 0; i < n ; ++i) {
-                insert(position, val);
+                node *NewNode = nullptr;
+                executeInsert(&NewNode, &position._node, val);
             }
         }
 
         template <class InputIterator>
         void insert(iterator position, InputIterator first, InputIterator last) {
             for (; first != last; ++first) {
-                insert(position, *first);
+                node *NewNode = nullptr;
+                executeInsert(&NewNode, &position._node, *first);
                 ++position;
             }
         };
@@ -225,7 +224,7 @@ namespace ft {
          iterator erase(iterator position) {
              node *retNode = position._node->next;
 
-             exchangeOfpointersBetweenNodes(position._node->previous, position._node->next);
+             exchangeOfpointersBetweenNodes(&position._node->previous, &position._node->next);
              destroyAndDeallocateNode(position._node);
              return iterator(retNode);
          };
@@ -242,7 +241,7 @@ namespace ft {
             node *NewNode = nullptr;
 
             allocateMemoryForNodeAndConstruct(val, &NewNode);
-            exchangeOfpointersBetweenNodes(NewNode, _tail);
+            exchangeOfpointersBetweenNodes(&NewNode, &_tail);
             ++_size;
         }
 
@@ -264,11 +263,17 @@ namespace ft {
             _alloc.construct(&(*node)->value_type, val);
         }
 
-        void exchangeOfpointersBetweenNodes(node *&node1, node *&node2) {
-            node1->next = node2;
-            node1->previous = node2->previous;
-            node2->previous->next = node1;
-            node2->previous = node1;
+        void exchangeOfpointersBetweenNodes(node **node1, node **node2) {
+            (*node1)->next = *node2;
+            (*node1)->previous = (*node2)->previous;
+            (*node2)->previous->next = *node1;
+            (*node2)->previous = *node1;
+        }
+
+        void executeInsert(node **newNode, node **positionNode, value_type const &val) {
+            allocateMemoryForNodeAndConstruct(val, newNode);
+            exchangeOfpointersBetweenNodes(newNode, positionNode);
+            ++_size;
         }
 
         void destroyAndDeallocateNode(node *node) {
