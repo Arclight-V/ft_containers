@@ -195,6 +195,15 @@ namespace ft {
             ++_size;
         }
 
+        // -----------------------------------------Swap----------------------------------------------------------------
+
+        void swap (list& x) {
+            ft::swap(_tail, x._tail);
+            ft::swap(_alloc,x._alloc);
+            ft::swap(_allocNode, x._allocNode);
+            ft::swap(_size,x._size);
+        }
+
         // -----------------------------------------Clear Content-------------------------------------------------------
 
         void clear() {
@@ -290,9 +299,17 @@ namespace ft {
         }
 
         template <class T, class Alloc>
-        bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+        bool operator>=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
             return !(lhs < rhs);
         }
+
+        // -----------------------------------------Swap----------------------------------------------------------------
+
+        template <class T, class Alloc>
+        void swap (list<T,Alloc>& x, list<T,Alloc>& y) {
+            x.swap(y);
+        }
+
 }
 
 
