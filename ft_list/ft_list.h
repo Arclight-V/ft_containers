@@ -8,6 +8,7 @@
 //#include "stdafx.h"
 #include "listIterator.h"
 #include "NodeTraits.h"
+#include "ReverseIterator.h"
 
 namespace ft {
     template<typename T, typename Alloc = std::allocator<T> >
@@ -15,7 +16,6 @@ namespace ft {
         typedef typename ft::NodeTraits<T>::_dl_list_TS node;
         node *_tail;   //  using the tail has access to the head
     public:
-        /* common type definitions for all containers */
         typedef T value_type;
         typedef Alloc allocator_type;
         typedef typename allocator_type::reference                      reference;
@@ -25,8 +25,8 @@ namespace ft {
 
         typedef typename ft::ListIterator<value_type>                   iterator;
         typedef typename ft::ListConstIterator<value_type, T const *>   const_iterator;
-        typedef typename ft::ListIterator<iterator>                     reverse_iterator;
-        typedef typename ft::ListIterator<const_iterator>               const_reverse_iterator;
+        typedef typename ft::ReverseIterator<iterator>                     reverse_iterator;
+        typedef typename ft::ReverseIterator<const_iterator>               const_reverse_iterator;
 
         typedef typename ft::ListIterator<value_type>::difference_type  difference_type;
 
@@ -47,7 +47,7 @@ namespace ft {
         //  Constructs a container with n elements. Each element is a copy of val.
 
          explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _tail(allocateMemoryForNode()),
-                                                                                                                            _alloc(alloc),
+                                                                                                                             _alloc(alloc),
                                                                                                                              _size(0) {
             for (size_type i = 0; i < n ; ++i) {
                 push_back(val);
@@ -68,11 +68,10 @@ namespace ft {
 
         //  Copy constructor
         //  Constructs a container with a copy of each of the elements in x, in the same order.
-        /*
-        list (const list& x) {
 
-        };
-         */
+//        list (const list& x) {
+//
+//        };
 
         /*
         ** -----------------------------------------DESTRUCTOR----------------------------------------------------------
@@ -105,21 +104,21 @@ namespace ft {
             return const_iterator(_tail);
         }
 
-        /*
-         * Return reverse iterator to reverse beginning
-         * Returns a reverse iterator pointing to the last element in the container (i.e., its reverse beginning).
-         *
-         * rev_it rbegin();
-         * c_rev_it rbegin() const;
-         */
+        reverse_iterator  rbegin() {
+            return reverse_iterator(_tail)
+        }
 
-        /*
-         * Return reverse iterator to reverse end
-         * Returns a reverse iterator pointing to the theoretical element preceding the first element in the list container (which is considered its reverse end).
-         *
-         * rev_it rend();
-         * c_rev_it rend() const;
-         */
+        const_reverse_iterator rbegin() const {
+            return const_reverse_iterator(_tail);
+        }
+
+        reverse_iterator rend() {
+            return reverse_iterator(_tail->next);
+        }
+
+        const_reverse_iterator rend() const {
+            return const_reverse_iterator(_tail->next);
+        }
 
         /*
          * Relational operators
