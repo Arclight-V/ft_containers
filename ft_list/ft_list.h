@@ -9,6 +9,7 @@
 #include "listIterator.h"
 #include "NodeTraits.h"
 #include "ReverseIterator.h"
+#include "Algorithm.h"
 
 namespace ft {
     template<typename T, typename Alloc = std::allocator<T> >
@@ -257,32 +258,41 @@ namespace ft {
         }
     };
 
-
         /*
-         * Relational operators
-         *
-         */
-        /*
-        template <class T, class Alloc>
-        bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+        ** -----------------------------------------NON-MEMBER FUNCTIONS------------------------------------------------
+        */
+
+        // -----------------------------------------Relational Operators------------------------------------------------
 
         template <class T, class Alloc>
-        bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+        bool operator==(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+            return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+        }
 
         template <class T, class Alloc>
-        bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+        bool operator!=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+            return !(lhs == rhs)
+        }
 
         template <class T, class Alloc>
-        bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+        bool operator<(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+            return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+        }
 
         template <class T, class Alloc>
-        bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+        bool operator<=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+            return !(rhs < lhs);
+        }
 
         template <class T, class Alloc>
-        bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
-         *
-         */
+        bool operator>(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+            return lhs < rhs;
+        }
 
+        template <class T, class Alloc>
+        bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
+            return !(lhs < rhs);
+        }
 }
 
 

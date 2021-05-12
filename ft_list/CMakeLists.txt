@@ -7,6 +7,6 @@ set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 add_compile_options(-Wall -Wextra -Werror)
 include_directories(~/)
 add_executable(ft_list_test ft_list.cpp
-                            test_ft_list.cpp)
+                            test_ft_list.cpp Algorithm.h)
 target_precompile_headers(ft_list_test PRIVATE
         stdafx.h)
