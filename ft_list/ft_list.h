@@ -48,6 +48,14 @@ namespace ft {
         explicit list(const allocator_type &alloc = allocator_type()) : _tail(allocateMemoryForNode()), _alloc(alloc),
                                                                         _size(0) {};
 
+        //  fill constructor
+        //  Constructs a container with n elements. Each element is a copy of val.
+
+         explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) {
+
+         }
+
+
         //     Copy constructor
         //     Constructs a container with a copy of each of the elements in x, in the same order.
         /*
@@ -132,40 +140,23 @@ namespace ft {
         ** -----------------------------------------CAPACITY------------------------------------------------------------
         */
 
-        //  Test whether container is empty
-        //  Returns whether the list container is empty (i.e. whether its size is 0).
-
         bool empty() const {
             return _size == 0;
         }
-
-        //  Return size
-        //  Returns the number of elements in the list container.
 
         size_type size() const {
             return _size;
         };
 
-        //  Return maximum size
-        //  Returns the maximum number of elements that the list container can hold.
-
          size_type max_size() const {
              return _alloc.max_size();
          };
-
 
         /*
          * * * * * * * * * * * * * * * * * * * * * * * * * *
          * common member functions for sequence containers *
          * * * * * * * * * * * * * * * * * * * * * * * * * *
         */
-
-        /*
-         * fill constructor
-         * Constructs a container with n elements. Each element is a copy of val.
-         *
-         * explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
-         */
 
         /*
          * range constructor
@@ -246,7 +237,6 @@ namespace ft {
             _tail->previous = _tail;
             _tail->next = _tail;
         }
-
 
     private:
         allocator_type _alloc;
