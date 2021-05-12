@@ -33,13 +33,7 @@ namespace ft {
         typedef size_t size_type;
 
         /*
-         * * * * * * * * * * * * * * * * * * * * * * * *
-         * Common Member Functions For All Containers  *
-         * * * * * * * * * * * * * * * * * * * * * * * *
-        */
-
-        /*
-        ** -----------------------------------------CONSTRUCTOR---------------------------------------------------------
+        ** -----------------------------------------CONSTRUCTORS--------------------------------------------------------
         */
 
         // Empty container constructor (default constructor)
@@ -48,12 +42,23 @@ namespace ft {
         explicit list(const allocator_type &alloc = allocator_type()) : _tail(allocateMemoryForNode()), _alloc(alloc),
                                                                         _size(0) {};
 
-        //  fill constructor
+        //  Fill constructor
         //  Constructs a container with n elements. Each element is a copy of val.
 
          explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) {
-
+            for (size_type i = 0; i < n ; ++i) {
+                push_back(val);
+            }
          }
+
+
+        /*
+         * range constructor
+         * Constructs a container with as many elements as the range [first,last), with each element constructed from its corresponding element in that range, in the same order.
+         *
+         * template<class InputIterator>
+         * list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
+        */
 
 
         //     Copy constructor
@@ -152,23 +157,9 @@ namespace ft {
              return _alloc.max_size();
          };
 
-        /*
-         * * * * * * * * * * * * * * * * * * * * * * * * * *
-         * common member functions for sequence containers *
-         * * * * * * * * * * * * * * * * * * * * * * * * * *
-        */
-
-        /*
-         * range constructor
-         * Constructs a container with as many elements as the range [first,last), with each element constructed from its corresponding element in that range, in the same order.
-         *
-         * template<class InputIterator>
-         * list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
-        */
-
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
 
-        // -----------------------------------------Insert elements-----------------------------------------------------
+        // -----------------------------------------Insert Elements-----------------------------------------------------
 
         iterator insert(iterator position, value_type const &val) {
             node *NewNode = nullptr;
