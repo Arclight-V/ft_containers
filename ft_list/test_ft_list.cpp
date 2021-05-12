@@ -35,18 +35,6 @@ void BeginAndEndIteratorsAnEmptyContariner() {
     for (int i = 1; i < 10; ++i) {
         lst.push_back(i);
     }
-    for (ft::list<int>::iterator itBegin = lst.begin(); itBegin != lst.end(); ++itBegin) {
-        std::cout << *itBegin << '\n';
-    }
-
-    lst.erase(lst.begin());
-
-    for (ft::list<int>::iterator itBegin = lst.begin(); itBegin != lst.end(); ++itBegin) {
-        std::cout << *itBegin << '\n';
-    }
-
-
-
 
 //    std::cout << *lst.begin() << '\n';
 

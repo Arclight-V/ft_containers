@@ -60,11 +60,10 @@ namespace ft {
         ** -----------------------------------------DESTRUCTOR----------------------------------------------------------
         */
 
-//        virtual ~list() {
-//            for (; _size; --_size) {
-//                erese
-//            }
-//        };
+        virtual ~list() {
+            clear();
+            destroyAndDeallocateNode(_tail);
+        }
 
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
@@ -176,22 +175,6 @@ namespace ft {
          * list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
         */
 
-        /*
-         * it insert (it position, const value_type& val);
-         *
-         * void insert (it position, size_type n, const value_type& val);
-         *
-         * template <class InputIterator>
-         * void insert (it position, InputIterator first, InputIterator last); // first and last must not be iterators pointing to the inserted container
-         */
-
-        /*
-         * Clear content
-         * Removes all elements from the list container (which are destroyed), and leaving the container with a size of 0.
-         *
-         * void clear();
-         */
-
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
 
         // -----------------------------------------Insert elements-----------------------------------------------------
@@ -217,38 +200,64 @@ namespace ft {
                 executeInsert(&NewNode, &position._node, *first);
                 ++position;
             }
-        };
+        }
 
-        // -----------------------------------------Erase elements------------------------------------------------------
+        // -----------------------------------------Erase Elements------------------------------------------------------
 
          iterator erase(iterator position) {
              node *retNode = position._node->next;
 
              exchangeOfpointersBetweenNodes(&position._node->previous, &position._node->next);
              destroyAndDeallocateNode(position._node);
+             --_size;
              return iterator(retNode);
-         };
+         }
 
-//         it erase (iterator first, iterator last);
+         iterator erase(iterator first, iterator last) {
+            node *saveNode = first._node->previous;
 
+             for (; first != last; ++first) {
+                 destroyAndDeallocateNode(first._node);
+                 --_size;
+             }
+             exchangeOfpointersBetweenNodes(&saveNode, &first._node->next);
+             return last;
+        }
 
-
-        //  Add element at the end
-        //  Adds a new element at the end of the list container, after its current last element.
-        //  The content of val is copied (or moved) to the new element.
+        // -----------------------------------------Push Elements-------------------------------------------------------
 
         void push_back(value_type const &val) {
             node *NewNode = nullptr;
-
             allocateMemoryForNodeAndConstruct(val, &NewNode);
             exchangeOfpointersBetweenNodes(&NewNode, &_tail);
             ++_size;
         }
 
+        // -----------------------------------------Clear Content-------------------------------------------------------
+
+        void clear() {
+            node *nextNode = nullptr, *toDeleted = _tail->next;
+
+            for (; _size != 0; --_size) {
+                nextNode = toDeleted->next;
+                destroyAndDeallocateNode(toDeleted);
+                toDeleted = nextNode;
+            }
+            _tail->previous = _tail;
+            _tail->next = _tail;
+        }
+
+
     private:
         allocator_type _alloc;
         std::allocator<node> _allocNode;
         size_type _size;
+
+        /*
+        ** -----------------------------------------AUXILIARY FUNCTIONS-------------------------------------------------
+        */
+
+        // -----------------------------------------Allocate Memory-----------------------------------------------------
 
         node *allocateMemoryForNode() {
             node *newNode = _allocNode.allocate(1);
@@ -263,6 +272,15 @@ namespace ft {
             _alloc.construct(&(*node)->value_type, val);
         }
 
+        // -----------------------------------------Deallocate Memory---------------------------------------------------
+
+        void destroyAndDeallocateNode(node *node) {
+            _alloc.destroy(&node->value_type);
+            _allocNode.deallocate(node, 1);
+        }
+
+        // -----------------------------------------Exchange Of Pointers------------------------------------------------
+
         void exchangeOfpointersBetweenNodes(node **node1, node **node2) {
             (*node1)->next = *node2;
             (*node1)->previous = (*node2)->previous;
@@ -270,17 +288,13 @@ namespace ft {
             (*node2)->previous = *node1;
         }
 
+        // -----------------------------------------Insert Element------------------------------------------------------
+
         void executeInsert(node **newNode, node **positionNode, value_type const &val) {
             allocateMemoryForNodeAndConstruct(val, newNode);
             exchangeOfpointersBetweenNodes(newNode, positionNode);
             ++_size;
         }
-
-        void destroyAndDeallocateNode(node *node) {
-            _alloc.destroy(&node->value_type);
-            _allocNode.deallocate(node, 1);
-        }
-
     };
 
 
