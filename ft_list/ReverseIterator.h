@@ -9,23 +9,22 @@
 
 namespace ft {
     template<class Iterator>
-    class ReverseIterator : public ft::baseIterator<typename std::iterator_traits<Iter>::iterator_category,
-                                                    typename std::iterator_traits<Iter>::value_type,
-                                                    typename std::iterator_traits<Iter>::difference_type,
-                                                    typename std::iterator_traits<Iter>::pointer,
-                                                    typename std::iterator_traits<Iter>::reference> {
-    private:
-        Iterator _iterator;
+    class ReverseIterator : public ft::baseIterator<typename std::iterator_traits<Iterator>::iterator_category,
+                                                    typename std::iterator_traits<Iterator>::value_type,
+                                                    typename std::iterator_traits<Iterator>::difference_type,
+                                                    typename std::iterator_traits<Iterator>::pointer,
+                                                    typename std::iterator_traits<Iterator>::reference> {
     public:
         typedef Iterator iterator_type;
+        typedef typename std::iterator_traits<Iterator>::difference_type difference_type;
 
         /*
         ** -----------------------------------------CONSTRUCTOR---------------------------------------------------------
         */
 
-        ReverseIterator() : _iterator();
+        ReverseIterator() : _iterator() {};
 
-        explicit ReverseIterator(Iter x) : _iterator(x) {};
+        explicit ReverseIterator(Iterator x) : _iterator(x) {};
 
         ReverseIterator(ReverseIterator<Iterator> const &x) : _iterator(x._iterator) {};
 
@@ -81,7 +80,7 @@ namespace ft {
         }
 
         ReverseIterator operator+(difference_type n) const {
-            return ReverseIterator<_iterator - n>;
+            return ReverseIterator(_iterator - n);
         }
 
         ReverseIterator &operator+=(difference_type n) {
@@ -90,7 +89,7 @@ namespace ft {
         }
 
         ReverseIterator operator-(difference_type n) const {
-            return ReverseIterator<_iterator + n>;
+            return ReverseIterator(_iterator + n);
         }
 
         ReverseIterator &operator-=(difference_type n) {
@@ -101,7 +100,9 @@ namespace ft {
         typename ReverseIterator::reference operator[](difference_type n) const {
             return *(*this + n);
         }
-    }
+    private:
+        iterator_type _iterator;
+    };
 
     /*
     ** -----------------------------------------NON-MEMBER FUNCTIONS OVERLOADS------------------------------------------
@@ -138,14 +139,13 @@ namespace ft {
     }
 
     template<class Iterator>
-    reverse_iterator <Iterator>
-    operator+(typename ReverseIterator<Iterator>::difference_type n, const ReverseIterator<Iterator> &rev_it) {
-        return ReverseIterator<rev_it - n>;
+    ReverseIterator<Iterator>operator+(typename ReverseIterator<Iterator>::difference_type n, const ReverseIterator<Iterator> &rev_it) {
+        return ReverseIterator<Iterator>(rev_it - n);
     }
 
     template<class Iterator>
-    typename reverse_iterator<Iterator>::difference_type
-    operator-(const reverse_iterator <Iterator> &lhs, const reverse_iterator <Iterator> &rhs) {
+    typename ReverseIterator<Iterator>::difference_type
+    operator-(const ReverseIterator<Iterator> &lhs, const ReverseIterator<Iterator> &rhs) {
         return rhs.base() - lhs.base();
     }
 }

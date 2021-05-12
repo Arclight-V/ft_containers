@@ -105,7 +105,7 @@ namespace ft {
         }
 
         reverse_iterator  rbegin() {
-            return reverse_iterator(_tail)
+            return reverse_iterator(_tail);
         }
 
         const_reverse_iterator rbegin() const {
@@ -119,31 +119,6 @@ namespace ft {
         const_reverse_iterator rend() const {
             return const_reverse_iterator(_tail->next);
         }
-
-        /*
-         * Relational operators
-         *
-         */
-        /*
-        template <class T, class Alloc>
-        bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
-
-        template <class T, class Alloc>
-        bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
-
-        template <class T, class Alloc>
-        bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
-
-        template <class T, class Alloc>
-        bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
-
-        template <class T, class Alloc>
-        bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
-
-        template <class T, class Alloc>
-        bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
-         *
-         */
 
         /*
         ** -----------------------------------------CAPACITY------------------------------------------------------------
@@ -282,6 +257,31 @@ namespace ft {
         }
     };
 
+
+        /*
+         * Relational operators
+         *
+         */
+        /*
+        template <class T, class Alloc>
+        bool operator== (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+        template <class T, class Alloc>
+        bool operator!= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+        template <class T, class Alloc>
+        bool operator<  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+        template <class T, class Alloc>
+        bool operator<= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+        template <class T, class Alloc>
+        bool operator>  (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+
+        template <class T, class Alloc>
+        bool operator>= (const list<T,Alloc>& lhs, const list<T,Alloc>& rhs);
+         *
+         */
 
 }
 
