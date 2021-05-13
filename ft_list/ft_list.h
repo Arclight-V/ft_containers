@@ -33,9 +33,12 @@ namespace ft {
 
         typedef size_t size_type;
 
+
         /*
-        ** -----------------------------------------CONSTRUCTORS--------------------------------------------------------
+        ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
         */
+
+        // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
         // Empty container constructor (default constructor)
         // Constructs an empty container, with no elements.
@@ -56,7 +59,8 @@ namespace ft {
          }
 
          // Range constructor
-         // Constructs a container with as many elements as the range [first,last), with each element constructed from its corresponding element in that range, in the same order.
+         // Constructs a container with as many elements as the range [first,last), with each element constructed from
+         // its corresponding element in that range, in the same order.
 
          template<class InputIterator>
          list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type()) :_tail(allocateMemoryForNode()),
@@ -70,22 +74,28 @@ namespace ft {
         //  Copy constructor
         //  Constructs a container with a copy of each of the elements in x, in the same order.
 
-//        list (const list& x) {
-//
-//        };
+        list (const list& x) : _tail(allocateMemoryForNode()),
+                               _alloc(alloc),
+                               _size(0) {
+            for (const_iterator it = x.begin(), it != x.end(), ++it) {
+                push_back(*it);
+            }
+        };
 
-        /*
-        ** -----------------------------------------DESTRUCTOR----------------------------------------------------------
-        */
+        // -----------------------------------------DESTRUCTOR----------------------------------------------------------
 
         virtual ~list() {
             clear();
             destroyAndDeallocateNode(_tail);
         }
 
-        /*
-        ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
-        */
+        // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
+
+//        list &operator=(const list& x) {
+//            if (this != &x) {
+//
+//            }
+//        }
 
         // -----------------------------------------ITERATORS-----------------------------------------------------------
 
@@ -121,9 +131,8 @@ namespace ft {
             return const_reverse_iterator(_tail->next);
         }
 
-        /*
-        ** -----------------------------------------CAPACITY------------------------------------------------------------
-        */
+
+        // -----------------------------------------CAPACITY------------------------------------------------------------
 
         bool empty() const {
             return _size == 0;
