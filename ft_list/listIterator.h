@@ -103,7 +103,9 @@ namespace ft {
         template<typename, typename> friend class list;
     public:
 
-        explicit ListConstIterator(Node *ptr = nullptr) : _node(ptr) {};
+        explicit ListConstIterator(Node *ptr = nullptr) : _node(ptr) {
+            std::cout << "list\n";
+        };
 
         ListConstIterator(ListIterator<T> const &x) : _node(x._node) {};
 
@@ -125,11 +127,11 @@ namespace ft {
         }
 
         typename ListConstIterator::reference operator*() const {
-            return _node->value;
+            return _node->value_type;
         }
 
         typename ListConstIterator::pointer operator->() const {
-            return &_node->value;
+            return &_node->value_type;
         }
 
         ListConstIterator operator++() {

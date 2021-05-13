@@ -50,7 +50,7 @@ namespace ft {
         //  Fill constructor
         //  Constructs a container with n elements. Each element is a copy of val.
 
-         explicit list (size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _tail(allocateMemoryForNode()),
+         explicit list(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _tail(allocateMemoryForNode()),
                                                                                                                              _alloc(alloc),
                                                                                                                              _size(0) {
             for (size_type i = 0; i < n ; ++i) {
@@ -75,10 +75,10 @@ namespace ft {
         //  Constructs a container with a copy of each of the elements in x, in the same order.
 
         list (const list& x) : _tail(allocateMemoryForNode()),
-                               _alloc(alloc),
+                               _alloc(x.get_allocator()),
                                _size(0) {
-            for (const_iterator it = x.begin(), it != x.end(), ++it) {
-                push_back(*it);
+            for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
+                push_back(*itBegin);
             }
         };
 
@@ -147,6 +147,18 @@ namespace ft {
          };
 
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
+
+        // -----------------------------------------Assign new content to container-------------------------------------
+
+//        template <class InputIterator>
+//        void assign(InputIterator first, InputIterator last) {
+//
+//        }
+//
+//        void assign(size_type n, const value_type& val) {
+//
+//        }
+
 
         // -----------------------------------------Insert Elements-----------------------------------------------------
 
@@ -227,6 +239,12 @@ namespace ft {
             _tail->next = _tail;
         }
 
+        // -----------------------------------------OBSERVERS-----------------------------------------------------------
+
+        allocator_type get_allocator() const {
+            return _alloc;
+        }
+
     private:
         allocator_type _alloc;
         std::allocator<node> _allocNode;
@@ -289,7 +307,7 @@ namespace ft {
 
         template <class T, class Alloc>
         bool operator!=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-            return !(lhs == rhs)
+            return !(lhs == rhs);
         }
 
         template <class T, class Alloc>

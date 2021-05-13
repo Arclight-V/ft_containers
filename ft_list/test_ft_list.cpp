@@ -36,6 +36,11 @@ void BeginAndEndIteratorsAnEmptyContariner() {
         lst.push_back(i);
     }
 
+    ft::list<int> lst2(lst);
+//    lst2 = lst;
+
+
+
 //    std::cout << *lst.begin() << '\n';
 
 
