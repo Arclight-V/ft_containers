@@ -103,9 +103,7 @@ namespace ft {
         template<typename, typename> friend class list;
     public:
 
-        explicit ListConstIterator(Node *ptr = nullptr) : _node(ptr) {
-            std::cout << "list\n";
-        };
+        explicit ListConstIterator(Node *ptr = nullptr) : _node(ptr) {};
 
         ListConstIterator(ListIterator<T> const &x) : _node(x._node) {};
 
