@@ -10,6 +10,7 @@
 #include "NodeTraits.h"
 #include "ReverseIterator.h"
 #include "Algorithm.h"
+#include "utils.h"
 
 namespace ft {
     template<typename T, typename Alloc = std::allocator<T> >
@@ -93,7 +94,8 @@ namespace ft {
 
 //        list &operator=(const list& x) {
 //            if (this != &x) {
-//
+//                clear();
+//                assign(x.begin(), x.end());
 //            }
 //        }
 
@@ -150,10 +152,13 @@ namespace ft {
 
         // -----------------------------------------Assign new content to container-------------------------------------
 
-//        template <class InputIterator>
-//        void assign(InputIterator first, InputIterator last) {
-//
-//        }
+        template <class InputIterator>
+        void assign(InputIterator first, InputIterator last, typename ft::enable_if<!std::numeric_limits<InputIterator>::is_specialized::type* = 0>) {
+            clear();
+            for(;first != last; ++first) {
+                push_back(*first);
+            }
+        }
 //
 //        void assign(size_type n, const value_type& val) {
 //
