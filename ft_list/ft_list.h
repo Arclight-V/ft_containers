@@ -38,7 +38,6 @@ namespace ft {
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
         */
-
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
         // Empty container constructor (default constructor)
@@ -151,16 +150,24 @@ namespace ft {
          };
 
         // -----------------------------------------ELEMENT ACCESS------------------------------------------------------
-        /*
-              reference front();
-        const_reference front() const;
 
-               reference back();
-        const_reference back() const;
-         */
+        reference front() {
+            return _tail->next->value_type;
+        }
+
+        const_reference front() const {
+            return _tail->next->value_type;
+        }
+
+        reference back() {
+            return _tail->value->type;
+        }
+
+        const_reference back() const {
+            return _tail->value->type;
+        }
 
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
-
         // -----------------------------------------Assign new content to container-------------------------------------
 
         template <class InputIterator>
