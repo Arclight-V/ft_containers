@@ -92,12 +92,14 @@ namespace ft {
 
         // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
 
-//        list &operator=(const list& x) {
-//            if (this != &x) {
-//                clear();
-//                assign(x.begin(), x.end());
-//            }
-//        }
+        list &operator=(const list& x) {
+            if (this != &x) {
+                clear();
+                for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
+                    push_back(*itBegin);
+                }
+            }
+        }
 
         // -----------------------------------------ITERATORS-----------------------------------------------------------
 
