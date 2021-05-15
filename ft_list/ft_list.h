@@ -150,6 +150,15 @@ namespace ft {
              return _alloc.max_size();
          };
 
+        // -----------------------------------------ELEMENT ACCESS------------------------------------------------------
+        /*
+              reference front();
+        const_reference front() const;
+
+               reference back();
+        const_reference back() const;
+         */
+
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
 
         // -----------------------------------------Assign new content to container-------------------------------------
