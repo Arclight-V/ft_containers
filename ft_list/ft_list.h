@@ -159,10 +159,13 @@ namespace ft {
                 push_back(*first);
             }
         }
-//
-//        void assign(size_type n, const value_type& val) {
-//
-//        }
+
+        void assign(size_type n, const value_type& val) {
+            clear();
+            for(;n; --n) {
+                push_back(val);
+            }
+        }
 
 
         // -----------------------------------------Insert Elements-----------------------------------------------------
