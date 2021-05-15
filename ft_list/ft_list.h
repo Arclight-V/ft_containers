@@ -168,15 +168,19 @@ namespace ft {
         }
 
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
+
         // -----------------------------------------Assign new content to container-------------------------------------
 
         template <class InputIterator>
-        void assign(InputIterator first, InputIterator last, typename ft::enable_if<!std::numeric_limits<InputIterator>::is_specialized::type* = 0>) {
+        void assign(InputIterator first, InputIterator last, typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+            (void)isIter;
             clear();
             for(;first != last; ++first) {
                 push_back(*first);
             }
         }
+
+        // -----------------------------------------Assign new content to container-------------------------------------
 
         void assign(size_type n, const value_type& val) {
             clear();
@@ -185,6 +189,22 @@ namespace ft {
             }
         }
 
+        // -----------------------------------------Insert Element At Beginning-----------------------------------------
+
+        void push_front (const value_type& val) {
+            node *NewNode = nullptr;
+            executeInsert(&NewNode, &_tail, val);
+        }
+
+        // -----------------------------------------Delete first element------------------------------------------------
+
+        void pop_front() {
+             node *retNode = _tail->next;
+
+             exchangeOfpointersBetweenNodes(&_tail->previous, &_tail->next);
+             destroyAndDeallocateNode(_tail->next);
+             --_size;
+        }
 
         // -----------------------------------------Insert Elements-----------------------------------------------------
 
@@ -233,7 +253,7 @@ namespace ft {
              return last;
         }
 
-        // -----------------------------------------Push Elements-------------------------------------------------------
+        // -----------------------------------------Add Element At The End----------------------------------------------
 
         void push_back(value_type const &val) {
             node *NewNode = nullptr;
@@ -242,7 +262,7 @@ namespace ft {
             ++_size;
         }
 
-        // -----------------------------------------Swap----------------------------------------------------------------
+        // -----------------------------------------Swap Content--------------------------------------------------------
 
         void swap (list& x) {
             ft::swap(_tail, x._tail);

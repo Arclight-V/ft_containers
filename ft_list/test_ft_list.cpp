@@ -30,20 +30,18 @@ void goFromEndToBegin()
 
 
 void BeginAndEndIteratorsAnEmptyContariner() {
-    ft::list<int> lst;
+    ft::list<int> first;
+    ft::list<int> second;
 
-    for (int i = 1; i < 10; ++i) {
-        lst.push_back(i);
-    }
+    first.assign (7,100);                      // 7 ints with value 100
 
-    ft::list<int> lst2(lst);
-//    lst2 = lst;
+    second.assign (first.begin(),first.end()); // a copy of first
 
+    int myints[]={1776,7,4};
+    first.assign (myints,myints+3);            // assigning from array
 
-
-//    std::cout << *lst.begin() << '\n';
-
-
+    std::cout << "Size of first: " << int (first.size()) << '\n';
+    std::cout << "Size of second: " << int (second.size()) << '\n';
 }
 
 void iteratorTest()
