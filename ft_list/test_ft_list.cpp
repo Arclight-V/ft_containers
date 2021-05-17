@@ -30,18 +30,32 @@ void goFromEndToBegin()
 
 
 void BeginAndEndIteratorsAnEmptyContariner() {
-    ft::list<int> first;
-    ft::list<int> second;
+    ft::list<int> mylist;
+//  int sum (0);
+  mylist.push_back (100);
+  mylist.push_back (200);
+  mylist.push_back (300);
+  mylist.push_back (400);
+  mylist.push_back (500);
 
-    first.assign (7,100);                      // 7 ints with value 100
+  for (ft::list<int>::iterator itBegin = mylist.begin(), itEnd = mylist.end(); itBegin != itEnd; ++itBegin) {
+        std::cout << *itBegin << ' ';
+    }
+  std::cout << '\n';
+  mylist.erase(--mylist.end());
 
-    second.assign (first.begin(),first.end()); // a copy of first
+    for (ft::list<int>::iterator itBegin = mylist.begin(), itEnd = mylist.end(); itBegin != itEnd; ++itBegin) {
+        std::cout << *itBegin << ' ';
+    }
+    std::cout << '\n';
 
-    int myints[]={1776,7,4};
-    first.assign (myints,myints+3);            // assigning from array
+  ft::list<int>::iterator itBegin = mylist.begin(), itEnd = --mylist.end();
+  for (; itBegin != itEnd; --itEnd) {
+        std::cout << *itEnd << ' ';
+    }
+  std::cout << *itEnd << ' ';
+  std::cout << '\n';
 
-    std::cout << "Size of first: " << int (first.size()) << '\n';
-    std::cout << "Size of second: " << int (second.size()) << '\n';
 }
 
 void iteratorTest()

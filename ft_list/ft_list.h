@@ -160,11 +160,11 @@ namespace ft {
         }
 
         reference back() {
-            return _tail->value->type;
+            return _tail->value_type;
         }
 
         const_reference back() const {
-            return _tail->value->type;
+            return _tail->value_type;
         }
 
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
@@ -200,10 +200,24 @@ namespace ft {
 
         void pop_front() {
              node *retNode = _tail->next;
-
              exchangeOfpointersBetweenNodes(&_tail->previous, &_tail->next);
              destroyAndDeallocateNode(_tail->next);
              --_size;
+        }
+
+        // -----------------------------------------Add Element At The End----------------------------------------------
+
+        void push_back(value_type const &val) {
+            node *NewNode = nullptr;
+            allocateMemoryForNodeAndConstruct(val, &NewNode);
+            exchangeOfpointersBetweenNodes(&NewNode, &_tail);
+            ++_size;
+        }
+
+        // -----------------------------------------Delete last element-------------------------------------------------
+
+        void pop_back() {
+            erase(end());
         }
 
         // -----------------------------------------Insert Elements-----------------------------------------------------
@@ -234,9 +248,9 @@ namespace ft {
         // -----------------------------------------Erase Elements------------------------------------------------------
 
          iterator erase(iterator position) {
+             position._node->previous->next = position._node->next;
+             position._node->next->previous = position._node->previous;
              node *retNode = position._node->next;
-
-             exchangeOfpointersBetweenNodes(&position._node->previous, &position._node->next);
              destroyAndDeallocateNode(position._node);
              --_size;
              return iterator(retNode);
@@ -251,15 +265,6 @@ namespace ft {
              }
              exchangeOfpointersBetweenNodes(&saveNode, &first._node->next);
              return last;
-        }
-
-        // -----------------------------------------Add Element At The End----------------------------------------------
-
-        void push_back(value_type const &val) {
-            node *NewNode = nullptr;
-            allocateMemoryForNodeAndConstruct(val, &NewNode);
-            exchangeOfpointersBetweenNodes(&NewNode, &_tail);
-            ++_size;
         }
 
         // -----------------------------------------Swap Content--------------------------------------------------------
