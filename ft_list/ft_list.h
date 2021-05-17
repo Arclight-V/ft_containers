@@ -217,7 +217,7 @@ namespace ft {
         // -----------------------------------------Delete last element-------------------------------------------------
 
         void pop_back() {
-            erase(end());
+            erase(--end());
         }
 
         // -----------------------------------------Insert Elements-----------------------------------------------------
@@ -257,13 +257,14 @@ namespace ft {
          }
 
          iterator erase(iterator first, iterator last) {
-            node *saveNode = first._node->previous;
+            first._node->previous->next = last._node;
+            last._node->previous = first._node->previous;
+
 
              for (; first != last; ++first) {
                  destroyAndDeallocateNode(first._node);
                  --_size;
              }
-             exchangeOfpointersBetweenNodes(&saveNode, &first._node->next);
              return last;
         }
 

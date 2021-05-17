@@ -42,7 +42,7 @@ void BeginAndEndIteratorsAnEmptyContariner() {
         std::cout << *itBegin << ' ';
     }
   std::cout << '\n';
-  mylist.erase(--mylist.end());
+  mylist.pop_back();
 
     for (ft::list<int>::iterator itBegin = mylist.begin(), itEnd = mylist.end(); itBegin != itEnd; ++itBegin) {
         std::cout << *itBegin << ' ';
