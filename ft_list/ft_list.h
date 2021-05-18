@@ -279,6 +279,20 @@ namespace ft {
             ft::swap(_size,x._size);
         }
 
+        // -----------------------------------------Change size---------------------------------------------------------
+
+        void resize (size_type n, value_type val = value_type()) {
+            if (n < _size) {
+                node *currentNode = _tail->previous->previous, *toDelete = currentNode->next;
+                for (; n != _size; --_size) {
+                    destroyAndDeallocateNode(first._node);
+                }
+            }
+            else {
+
+            }
+        }
+
         // -----------------------------------------Clear Content-------------------------------------------------------
 
         void clear() {
