@@ -30,32 +30,35 @@ void goFromEndToBegin()
 
 
 void BeginAndEndIteratorsAnEmptyContariner() {
+}
+
+void testResize() {
+
     ft::list<int> mylist;
-//  int sum (0);
-  mylist.push_back (100);
-  mylist.push_back (200);
-  mylist.push_back (300);
-  mylist.push_back (400);
-  mylist.push_back (500);
+    std::list<int> stdList;
 
-  for (ft::list<int>::iterator itBegin = mylist.begin(), itEnd = mylist.end(); itBegin != itEnd; ++itBegin) {
-        std::cout << *itBegin << ' ';
+    // set some initial content:
+    for (int i=1; i<10; ++i){
+        mylist.push_back(i);
+        stdList.push_back(i);
     }
-  std::cout << '\n';
-  mylist.pop_back();
 
-    for (ft::list<int>::iterator itBegin = mylist.begin(), itEnd = mylist.end(); itBegin != itEnd; ++itBegin) {
-        std::cout << *itBegin << ' ';
-    }
+    mylist.resize(5);
+    stdList.resize(5);
+//    mylist.resize(8,100);
+//    mylist.resize(12);
+
+    std::cout << " mylist contains:";
+    for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        std::cout << ' ' << *it;
+
     std::cout << '\n';
 
-  ft::list<int>::iterator itBegin = mylist.begin(), itEnd = --mylist.end();
-  for (; itBegin != itEnd; --itEnd) {
-        std::cout << *itEnd << ' ';
-    }
-  std::cout << *itEnd << ' ';
-  std::cout << '\n';
+    std::cout << "stdList contains:";
+    for (std::list<int>::iterator it=stdList.begin(); it!=stdList.end(); ++it)
+        std::cout << ' ' << *it;
 
+    std::cout << '\n';
 }
 
 void iteratorTest()
@@ -63,6 +66,8 @@ void iteratorTest()
     BeginAndEndIteratorsAnEmptyContariner();
     goFromBeginToEnd();
     goFromEndToBegin();
+
+    testResize();
 }
 
 

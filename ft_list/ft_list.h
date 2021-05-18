@@ -282,14 +282,19 @@ namespace ft {
         // -----------------------------------------Change size---------------------------------------------------------
 
         void resize (size_type n, value_type val = value_type()) {
+            (void) val; // for initial testing only
             if (n < _size) {
                 node *currentNode = _tail->previous->previous, *toDelete = currentNode->next;
                 for (; n != _size; --_size) {
-                    destroyAndDeallocateNode(first._node);
+                    destroyAndDeallocateNode(toDelete);
+                    currentNode = currentNode->previous;
+                    toDelete = currentNode->next;
                 }
+                currentNode->next->next = _tail;
+                _tail->previous = currentNode;
             }
             else {
-
+                ;
             }
         }
 
