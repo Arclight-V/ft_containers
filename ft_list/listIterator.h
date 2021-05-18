@@ -41,7 +41,7 @@ namespace ft {
 
         // copy-assignable
         ListIterator &operator=(ListIterator const &x) {
-            if (this != x) {
+            if (this != &x) {
                 _node = x._node;
             }
             return *this;
@@ -110,7 +110,7 @@ namespace ft {
         virtual ~ListConstIterator() {};
 
         ListConstIterator &operator=(ListConstIterator const &x) {
-            if (this != x) {
+            if (this != &x) {
                 _node = x._node;
             }
             return *this;

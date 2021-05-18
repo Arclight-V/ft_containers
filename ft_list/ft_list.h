@@ -314,6 +314,32 @@ namespace ft {
             _tail->next = _tail;
         }
 
+        // -----------------------------------------OPERATIONS----------------------------------------------------------
+
+        // -----------------------------------------Transfer elements from list to list---------------------------------
+
+        void splice(iterator position, list& x) {
+
+            node *saveTail = position._node;
+
+            for (iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
+                exchangeOfpointersBetweenNodes(&position._node, &itBegin._node);
+                --x._size;
+                ++position;
+            }
+            exchangeOfpointersBetweenNodes(&position._node, &saveTail);
+        }
+
+        /*
+        void splice(iterator position, list& x, iterator i) {
+
+        }
+
+        void splice(iterator position, list& x, iterator first, iterator last) {
+
+        }
+        */
+
         // -----------------------------------------OBSERVERS-----------------------------------------------------------
 
         allocator_type get_allocator() const {
