@@ -320,33 +320,34 @@ namespace ft {
 
         void splice(iterator position, list& x) {
 
-            node *BeginX = x._tail->next, *prevEndX = x._tail->previous;
+            if (x._size) {
+                node *BeginX = x._tail->next, *prevEndX = x._tail->previous;
 
-            prevEndX->next->next = prevEndX->next;
-            prevEndX->next->previous = prevEndX->next;
+                prevEndX->next->next = prevEndX->next;
+                prevEndX->next->previous = prevEndX->next;
 
-            position._node->previous->next = BeginX;
-            BeginX->previous = position._node->previous;
+                position._node->previous->next = BeginX;
+                BeginX->previous = position._node->previous;
 
-            position._node->previous = prevEndX;
-            prevEndX->next = position._node;
+                position._node->previous = prevEndX;
+                prevEndX->next = position._node;
 
-            _size += x._size;
-            x._size = 0;
-
-        }
-
-        /*
-        void splice(iterator position, list& x, iterator i) {
+                _size += x._size;
+                x._size = 0;
+            }
 
         }
 
-        void splice(iterator position, list& x, iterator first, iterator last) {
+//        void splice(iterator position, list& x, iterator i) {
+//
+//        }
+            /*
 
-        }
-        */
+            void splice(iterator position, list& x, iterator first, iterator last) {
 
-        // -----------------------------------------OBSERVERS-----------------------------------------------------------
+            }
+            */
+            // -----------------------------------------OBSERVERS-----------------------------------------------------------
 
         allocator_type get_allocator() const {
             return _alloc;

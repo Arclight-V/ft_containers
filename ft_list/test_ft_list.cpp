@@ -71,8 +71,8 @@ void testSplice() {
     for (int i=1; i<=4; ++i)
         mylist1.push_back(i);      // mylist1: 1 2 3 4
 
-    for (int i=1; i<=3; ++i)
-        mylist2.push_back(i*10);   // mylist2: 10 20 30
+//    for (int i=1; i<=3; ++i)
+//        mylist2.push_back(i*10);   // mylist2: 10 20 30
 
     it = mylist1.begin();
     ++it;                         // points to 2
