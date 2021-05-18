@@ -291,10 +291,12 @@ namespace ft {
                     toDelete = currentNode->next;
                 }
                 currentNode->next->next = _tail;
-                _tail->previous = currentNode;
+                _tail->previous = currentNode->next;
             }
             else {
-                ;
+                for (size_type size = n - _size; size; --size) {
+                    push_back(val);
+                };
             }
         }
 
