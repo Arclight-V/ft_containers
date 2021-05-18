@@ -77,10 +77,10 @@ void testSplice() {
     it = mylist1.begin();
     ++it;                         // points to 2
 
-    mylist1.splice (it, mylist2); // mylist1: 1 10 20 30 2 3 4
+    mylist1.splice(it, mylist2); // mylist1: 1 10 20 30 2 3 4
 
-    std::cout << "myList contains:";
-    for(ft::list<int>::iterator itBegin = mylist1.begin(), itEnd = mylist2.begin(); itBegin != itEnd; ++itBegin) {
+    std::cout << "myList conteins: ";
+    for(ft::list<int>::iterator itBegin = mylist1.begin(), itEnd = mylist1.end(); itBegin != itEnd; ++itBegin) {
         std::cout << ' ' << *itBegin;
     }
     std::cout << '\n';
