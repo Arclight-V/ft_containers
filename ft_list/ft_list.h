@@ -320,23 +320,20 @@ namespace ft {
 
         void splice(iterator position, list& x) {
 
-            iterator  itBeginX = x.begin(), itEndX = x.end();
+            node *BeginX = x._tail->next, *prevEndX = x._tail->previous;
 
+            prevEndX->next->next = prevEndX->next;
+            prevEndX->next->previous = prevEndX->next;
 
-            node *tailX = itEndX._node;
-            --itEndX;
+            position._node->previous->next = BeginX;
+            BeginX->previous = position._node->previous;
 
-            tailX->next = tailX;
-            tailX->previous = tailX;
+            position._node->previous = prevEndX;
+            prevEndX->next = position._node;
 
-            position._node->previous->next = itBeginX._node;
-            itBeginX._node->previous = position._node->previous;
-
-            position._node->previous = itEndX._node;
-
-            itEndX._node->next = position._node;
-            _size += x.size();
+            _size += x._size;
             x._size = 0;
+
         }
 
         /*
