@@ -200,7 +200,7 @@ namespace ft {
 
         void pop_front() {
              node *retNode = _tail->next;
-             exchangeOfpointersBetweenNodes(&_tail->previous, &_tail->next);
+             insertingNodeBefore(&_tail->previous, &_tail->next);
              destroyAndDeallocateNode(_tail->next);
              --_size;
         }
@@ -210,7 +210,8 @@ namespace ft {
         void push_back(value_type const &val) {
             node *NewNode = nullptr;
             allocateMemoryForNodeAndConstruct(val, &NewNode);
-            exchangeOfpointersBetweenNodes(&NewNode, &_tail);
+            insertingNodeBefore(&NewNode, &_tail);
+//            insertingNode(&NewNode, &_tail->next);
             ++_size;
         }
 
@@ -241,7 +242,11 @@ namespace ft {
         }
 
         template <class InputIterator>
-        void insert(iterator position, InputIterator first, InputIterator last) {
+        void insert(iterator position,
+                    InputIterator first,
+                    InputIterator last,
+                    typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+            (void)isIter;
             for (; first != last; ++first) {
                 node *NewNode = nullptr;
                 executeInsert(&NewNode, &position._node, *first);
@@ -319,34 +324,37 @@ namespace ft {
         // -----------------------------------------Transfer elements from list to list---------------------------------
 
         void splice(iterator position, list& x) {
-
             if (x._size) {
                 node *BeginX = x._tail->next, *prevEndX = x._tail->previous;
-
                 prevEndX->next->next = prevEndX->next;
                 prevEndX->next->previous = prevEndX->next;
-
                 position._node->previous->next = BeginX;
                 BeginX->previous = position._node->previous;
-
                 position._node->previous = prevEndX;
                 prevEndX->next = position._node;
-
                 _size += x._size;
                 x._size = 0;
             }
-
         }
 
-//        void splice(iterator position, list& x, iterator i) {
-//
-//        }
+        void splice(iterator position, list& x, iterator i) {
+            if (position._node != i._node && position._node != i._node->next) {
+
+                i._node->next->previous = i._node->previous;
+                i._node->previous->next = i._node->next;
+                --x._size;
+
+                insertingNodeBefore(&i._node, &position._node);
+                ++_size;
+            }
+        }
             /*
 
             void splice(iterator position, list& x, iterator first, iterator last) {
 
             }
             */
+
             // -----------------------------------------OBSERVERS-----------------------------------------------------------
 
         allocator_type get_allocator() const {
@@ -386,18 +394,27 @@ namespace ft {
 
         // -----------------------------------------Exchange Of Pointers------------------------------------------------
 
-        void exchangeOfpointersBetweenNodes(node **node1, node **node2) {
+        void insertingNodeBefore(node **node1, node **node2) {
             (*node1)->next = *node2;
             (*node1)->previous = (*node2)->previous;
             (*node2)->previous->next = *node1;
             (*node2)->previous = *node1;
         }
 
+        // -----------------------------------------Inserting A Node----------------------------------------------------
+        void insertingNodeAfter(node **t, node **x) {
+            (*t)->next = (*x)->next;
+            (*x)->next->previous = *t;
+
+            (*x)->next = *t;
+            (*t)->previous = *x;
+        }
+
         // -----------------------------------------Insert Element------------------------------------------------------
 
         void executeInsert(node **newNode, node **positionNode, value_type const &val) {
             allocateMemoryForNodeAndConstruct(val, newNode);
-            exchangeOfpointersBetweenNodes(newNode, positionNode);
+            insertingNodeBefore(newNode, positionNode);
             ++_size;
         }
     };
