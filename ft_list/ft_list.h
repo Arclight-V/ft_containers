@@ -348,12 +348,24 @@ namespace ft {
                 ++_size;
             }
         }
-            /*
 
-            void splice(iterator position, list& x, iterator first, iterator last) {
+        void splice(iterator position, list& x, iterator first, iterator last) {
+            if (first != last) {
+                if (this != &x) {
+                    size_type countNode = ft::distance(first, last);
+                    x._size -= countNode;
+                    _size += countNode;
+                }
+                last._node->previous->next = position._node;
+                first._node->previous->next = last._node;
+                position._node->previous->next = first._node;
 
+                node *tmp = first._node->previous;
+                first._node->previous = position._node->previous;
+                position._node->previous = last._node->previous;
+                last._node->previous = tmp;
             }
-            */
+        }
 
             // -----------------------------------------OBSERVERS-----------------------------------------------------------
 

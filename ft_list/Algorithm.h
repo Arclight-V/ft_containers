@@ -47,6 +47,18 @@ namespace ft {
             return (lhs < rhs);
         }
     };
+
+    template <class RandIter>
+    typename std::iterator_traits<RandIter>::difference_type
+    __distance(RandIter first, RandIter last, std::random_access_iterator_tag)
+    {
+        return last - first;
+    }
+
+    template <class InputIterator>
+    typename std::iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last) {
+        return __distance(first, last, typename std::iterator_traits<InputIterator>::iterator_category());
+    }
 }
 
 #endif //ALGORITHM_H

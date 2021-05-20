@@ -4,7 +4,7 @@
 
 #include "ft_list.h"
 #include <vector>
-
+#include <list>
 
 void printModifeyIterator(ft::list<int> &printList) {
 
@@ -147,21 +147,45 @@ void baseTestSplice () {
     ++it;                         // points to 2
 
     mylist1.splice (it, mylist2); // mylist1: 1 10 20 30 2 3 4
+    mylist1.clear();
+    mylist2.clear();
+
+    for (int i=1; i<=4; ++i)
+        mylist1.push_back(i);      // mylist1: 1 2 3 4
+
+    for (int i=1; i<=3; ++i)
+        mylist2.push_back(i*10);   // mylist2: 10 20 30
+
+
+
     // mylist2 (empty)
     // "it" still points to 2 (the 5th element)
 
-    it = mylist1.begin();
-    ++it;
-
-    for (int i=2; i<=4; ++i)
-        mylist2.push_back(i*10);   // m
-    mylist2.splice(++mylist2.begin(),mylist1, it);
+    mylist2.splice (mylist2.begin(),mylist1, it);
     // mylist1: 1 10 20 30 3 4
     // mylist2: 2
-    // "it" is now invalid
+    // "it" is now invalid.
+//    it = mylist1.begin();
+//    std::advance(it,3);           // "it" points now to 30
 
-    printIterator(mylist1);
-    printIterator(mylist2);
+    it = mylist2.begin();
+    ++it;                         // points to 2
+
+//    mylist1.splice( mylist1.begin(), mylist2, it, mylist2.end());
+    // mylist1: 30 3 4 1 10 20
+
+    std::cout << "mylist1 contains:";
+    for (it=mylist1.begin(); it!=mylist1.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+
+    std::cout << "mylist2 contains:";
+    for (it=mylist2.begin(); it!=mylist2.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+
+//    printIterator(mylist1);
+//    printIterator(mylist2);
 }
 
 void testSplice() {
