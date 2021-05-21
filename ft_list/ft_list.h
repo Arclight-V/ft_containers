@@ -367,11 +367,25 @@ namespace ft {
             }
         }
 
-        // -----------------------------------------Remove elements with specific value---------------------------------
+        // -----------------------------------------Remove Elements With Specific Value---------------------------------
 
         void remove(const value_type& val) {
             for (node *start = _tail->next, *toDelete = nullptr; start != _tail; start = start->next) {
                 if (start->value_type == val) {
+                    toDelete = start;
+                    destroyAndDeallocateNode(toDelete);
+                    deleteNode(&toDelete);
+                    --_size;
+                }
+            }
+        }
+
+        // -----------------------------------------Remove Elements Fulfilling Condition--------------------------------
+
+        template <class Predicate>
+        void remove_if (Predicate pred) {
+            for (node *start = _tail->next, *toDelete = nullptr; start != _tail; start = start->next) {
+                if (pred(start->value_type)) {
                     toDelete = start;
                     destroyAndDeallocateNode(toDelete);
                     deleteNode(&toDelete);
