@@ -223,6 +223,24 @@ void testInsert()
     baseTestInsert();
 }
 
+void baseTestRemove() {
+    int myints[]= {17,89,7,14, 89, 3, 44,89,89};
+    ft::list<int> mylist (myints,myints+8);
+
+    mylist.remove(89);
+
+    std::cout << "mylist contains:";
+    for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
+
+void testRemove() {
+
+    baseTestRemove();
+}
+
+
 void iteratorTest()
 {
     BeginAndEndIteratorsAnEmptyContariner();
@@ -231,7 +249,8 @@ void iteratorTest()
 //    testInsert();
 
     testResize();
-    testSplice();
+//    testSplice();
+    testRemove();
 
 }
 

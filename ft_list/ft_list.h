@@ -367,7 +367,20 @@ namespace ft {
             }
         }
 
-            // -----------------------------------------OBSERVERS-----------------------------------------------------------
+        // -----------------------------------------Remove elements with specific value---------------------------------
+
+        void remove(const value_type& val) {
+            for (node *start = _tail->next, *toDelete = nullptr; start != _tail; start = start->next) {
+                if (start->value_type == val) {
+                    toDelete = start;
+                    destroyAndDeallocateNode(toDelete);
+                    deleteNode(&toDelete);
+                    --_size;
+                }
+            }
+        }
+
+        // -----------------------------------------OBSERVERS-----------------------------------------------------------
 
         allocator_type get_allocator() const {
             return _alloc;
@@ -404,7 +417,7 @@ namespace ft {
             _allocNode.deallocate(node, 1);
         }
 
-        // -----------------------------------------Exchange Of Pointers------------------------------------------------
+        // -----------------------------------------Inserting Node Before-----------------------------------------------
 
         void insertingNodeBefore(node **node1, node **node2) {
             (*node1)->next = *node2;
@@ -413,13 +426,20 @@ namespace ft {
             (*node2)->previous = *node1;
         }
 
-        // -----------------------------------------Inserting A Node----------------------------------------------------
+        // -----------------------------------------Inserting Node After------------------------------------------------
         void insertingNodeAfter(node **t, node **x) {
             (*t)->next = (*x)->next;
             (*x)->next->previous = *t;
 
             (*x)->next = *t;
             (*t)->previous = *x;
+        }
+
+        // -----------------------------------------Delete Node---------------------------------------------------------
+
+        void deleteNode(node **toDelete) {
+            (*toDelete)->next->previous =(*toDelete)->previous;
+            (*toDelete)->previous->next = (*toDelete)->next;
         }
 
         // -----------------------------------------Insert Element------------------------------------------------------
