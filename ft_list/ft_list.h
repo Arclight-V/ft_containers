@@ -417,7 +417,7 @@ namespace ft {
             node *second = _tail->next->next;
 
             while (second != _tail) {
-                if (BinaryPredicate(second->value_type, second->previous->value_type)) {
+                if (binary_pred(second->value_type, second->previous->value_type)) {
                     second = second->next;
                     destroyAndDeallocateNode(second->previous);
                     deleteNode(&second->previous);
@@ -428,6 +428,41 @@ namespace ft {
                 }
             }
         }
+
+        // -----------------------------------------Merge Sorted Lists--------------------------------------------------
+
+        /*
+        void merge (list& x) {
+
+        }
+
+        template <class Compare>
+        void merge (list& x, Compare comp) {
+
+        }
+
+        */
+
+        // -----------------------------------------Sort Elements In Container------------------------------------------
+
+
+        void sort() {
+
+            node *head = _tail->next, *lastBeforeSorted = nullptr;
+
+            deleteNode(&_tail);
+            head->previous->next = nullptr;
+            mergeSort(&head, &lastBeforeSorted);
+            head->previous = _tail;
+            _tail->next = head;
+            _tail->previous = lastBeforeSorted;
+            lastBeforeSorted->next = _tail;
+        }
+
+//        template <class Compare>
+//        void sort (Compare comp) {
+//
+//        }
 
         // -----------------------------------------OBSERVERS-----------------------------------------------------------
 
@@ -497,6 +532,54 @@ namespace ft {
             allocateMemoryForNodeAndConstruct(val, newNode);
             insertingNodeBefore(newNode, positionNode);
             ++_size;
+        }
+
+        // -----------------------------------------Merge Sort----------------------------------------------------------
+
+        node *mergeSortedLists(node *head1, node *head2, node **last){
+//            node *result = nullptr;
+            if (!head1) {
+                return head2;
+            }
+            if (!head2) {
+                return head1;
+            }
+            if (head1->value_type < head2->value_type) {
+                *last = head2;
+                head1->next = mergeSortedLists(head1->next, head2, last);
+                head1->next->previous = head1;
+                head1->previous = nullptr;
+                return head1;
+            }
+            head2->next = mergeSortedLists(head1, head2->next, last);
+            head2->next->previous = head2;
+            head2->previous = nullptr;
+            return head2;
+        }
+
+        void splitList(node *src, node **fRef, node **bRef) {
+            node *fast = src->next, *slow = src;
+            while (fast) {
+                fast = fast->next;
+                if (fast) {
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+            }
+            *fRef = src;
+            *bRef = slow->next;
+            slow->next = nullptr;
+        }
+
+        void mergeSort(node **head, node **last) {
+            node *p = *head, *a = nullptr, *b = nullptr;
+            if (!p || !p->next) {
+                return;
+            }
+            splitList(p, &a, &b);
+            mergeSort(&a, last);
+            mergeSort(&b, last);
+            *head = mergeSortedLists(a, b, last);
         }
     };
 

@@ -263,17 +263,32 @@ void testRemove() {
     baseTestRemoveIf();
 }
 
+void testSort() {
+    ft::list<std::string> mylist;
+    ft::list<std::string>::iterator it;
+    mylist.push_back ("one");
+    mylist.push_back ("two");
+    mylist.push_back ("Three");
+
+    mylist.sort();
+
+    std::cout << "mylist contains:";
+    for (it=mylist.begin(); it!=mylist.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+}
 
 void iteratorTest()
 {
-    BeginAndEndIteratorsAnEmptyContariner();
-    goFromBeginToEnd();
-    goFromEndToBegin();
+//    BeginAndEndIteratorsAnEmptyContariner();
+//    goFromBeginToEnd();
+//    goFromEndToBegin();
 //    testInsert();
 
-    testResize();
+//    testResize();
 //    testSplice();
-    testRemove();
+//    testRemove();
+    testSort();
 
 }
 

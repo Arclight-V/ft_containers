@@ -39,15 +39,6 @@ namespace ft {
         return (first2 != last2);
     }
 
-    template<class T>
-    struct less {
-    public:
-        bool
-        operator()(const T &lhs, const T &rhs) const {
-            return (lhs < rhs);
-        }
-    };
-
     template <class RandIter>
     typename std::iterator_traits<RandIter>::difference_type
     __distance(RandIter first, RandIter last, std::random_access_iterator_tag)
@@ -59,6 +50,19 @@ namespace ft {
     typename std::iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last) {
         return __distance(first, last, typename std::iterator_traits<InputIterator>::iterator_category());
     }
+
+
+    // -----------------------------------------Compare function--------------------------------------------------------
+    // can be used as a binary predicate for sort function
+
+    template<class T>
+    struct less {
+    public:
+        bool
+        operator()(const T &lhs, const T &rhs) const {
+            return (lhs < rhs);
+        }
+    };
 }
 
 #endif //ALGORITHM_H
