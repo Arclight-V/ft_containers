@@ -394,6 +394,29 @@ namespace ft {
             }
         }
 
+        // -----------------------------------------Remove duplicate values---------------------------------------------
+        void unique() {
+            node *current = _tail->next, *compared = current->next;
+
+            while (current != _tail) {
+                if (current->value_type == compared->value_type) {
+                    destroyAndDeallocateNode(compared);
+                    deleteNode(&compared);
+                    --_size;
+                    compared = current->next;
+                }
+                else {
+                    current = current->next;
+                    compared = current->next;
+                }
+            }
+        }
+
+        template <class BinaryPredicate>
+        void unique (BinaryPredicate binary_pred) {
+
+        }
+
         // -----------------------------------------OBSERVERS-----------------------------------------------------------
 
         allocator_type get_allocator() const {
