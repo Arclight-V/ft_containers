@@ -414,7 +414,19 @@ namespace ft {
 
         template <class BinaryPredicate>
         void unique (BinaryPredicate binary_pred) {
+            node *second = _tail->next->next;
 
+            while (second != _tail) {
+                if (BinaryPredicate(second->value_type, second->previous->value_type)) {
+                    second = second->next;
+                    destroyAndDeallocateNode(second->previous);
+                    deleteNode(&second->previous);
+                    --_size;
+                }
+                else {
+                    second = second->next;
+                }
+            }
         }
 
         // -----------------------------------------OBSERVERS-----------------------------------------------------------
