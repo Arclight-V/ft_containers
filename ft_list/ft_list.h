@@ -452,7 +452,7 @@ namespace ft {
 
             deleteNode(&_tail);
             head->previous->next = nullptr;
-            mergeSort(&head, &lastBeforeSorted);
+            mergeSort(&head, &lastBeforeSorted, ft::less<value_type>());
             head->previous = _tail;
             _tail->next = head;
             _tail->previous = lastBeforeSorted;
@@ -535,23 +535,22 @@ namespace ft {
         }
 
         // -----------------------------------------Merge Sort----------------------------------------------------------
-
-        node *mergeSortedLists(node *head1, node *head2, node **last){
-//            node *result = nullptr;
+        template <class Compare>
+        node *mergeSortedLists(node *head1, node *head2, node **last, Compare comp){
             if (!head1) {
                 return head2;
             }
             if (!head2) {
                 return head1;
             }
-            if (head1->value_type < head2->value_type) {
+            if (comp(head1->value_type, head2->value_type)) {
                 *last = head2;
-                head1->next = mergeSortedLists(head1->next, head2, last);
+                head1->next = mergeSortedLists(head1->next, head2, last, comp);
                 head1->next->previous = head1;
                 head1->previous = nullptr;
                 return head1;
             }
-            head2->next = mergeSortedLists(head1, head2->next, last);
+            head2->next = mergeSortedLists(head1, head2->next, last, comp);
             head2->next->previous = head2;
             head2->previous = nullptr;
             return head2;
@@ -570,16 +569,16 @@ namespace ft {
             *bRef = slow->next;
             slow->next = nullptr;
         }
-
-        void mergeSort(node **head, node **last) {
+        template <class Compare>
+        void mergeSort(node **head, node **last, Compare comp) {
             node *p = *head, *a = nullptr, *b = nullptr;
             if (!p || !p->next) {
                 return;
             }
             splitList(p, &a, &b);
-            mergeSort(&a, last);
-            mergeSort(&b, last);
-            *head = mergeSortedLists(a, b, last);
+            mergeSort(&a, last, comp);
+            mergeSort(&b, last, comp);
+            *head = mergeSortedLists(a, b, last, comp);
         }
     };
 
