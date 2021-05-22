@@ -459,10 +459,18 @@ namespace ft {
             lastBeforeSorted->next = _tail;
         }
 
-//        template <class Compare>
-//        void sort (Compare comp) {
-//
-//        }
+        template <class Compare>
+        void sort (Compare comp) {
+            node *head = _tail->next, *lastBeforeSorted = nullptr;
+
+            deleteNode(&_tail);
+            head->previous->next = nullptr;
+            mergeSort(&head, &lastBeforeSorted, comp);
+            head->previous = _tail;
+            _tail->next = head;
+            _tail->previous = lastBeforeSorted;
+            lastBeforeSorted->next = _tail;
+        }
 
         // -----------------------------------------OBSERVERS-----------------------------------------------------------
 
