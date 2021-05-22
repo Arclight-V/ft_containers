@@ -256,8 +256,7 @@ namespace ft {
         // -----------------------------------------Erase Elements------------------------------------------------------
 
          iterator erase(iterator position) {
-             position._node->previous->next = position._node->next;
-             position._node->next->previous = position._node->previous;
+            unlinkNodes(&position._node, &position._node);
              node *retNode = position._node->next;
              destroyAndDeallocateNode(position._node);
              --_size;
@@ -265,8 +264,7 @@ namespace ft {
          }
 
          iterator erase(iterator first, iterator last) {
-            first._node->previous->next = last._node;
-            last._node->previous = first._node->previous;
+            unlinkNodes(&position._node, &last._node->previous);
              for (; first != last; ++first) {
                  destroyAndDeallocateNode(first._node);
                  --_size;
