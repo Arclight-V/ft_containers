@@ -211,7 +211,6 @@ namespace ft {
             node *NewNode = nullptr;
             allocateMemoryForNodeAndConstruct(val, &NewNode);
             insertingNodeBefore(&NewNode, &_tail);
-//            insertingNode(&NewNode, &_tail->next);
             ++_size;
         }
 
@@ -374,7 +373,7 @@ namespace ft {
                 if (start->value_type == val) {
                     toDelete = start;
                     destroyAndDeallocateNode(toDelete);
-                    deleteNode(&toDelete);
+                    unlinkNode(&toDelete);
                     --_size;
                 }
             }
@@ -388,7 +387,7 @@ namespace ft {
                 if (pred(start->value_type)) {
                     toDelete = start;
                     destroyAndDeallocateNode(toDelete);
-                    deleteNode(&toDelete);
+                    unlinkNode(&toDelete);
                     --_size;
                 }
             }
@@ -396,20 +395,7 @@ namespace ft {
 
         // -----------------------------------------Remove duplicate values---------------------------------------------
         void unique() {
-            node *current = _tail->next, *compared = current->next;
-
-            while (current != _tail) {
-                if (current->value_type == compared->value_type) {
-                    destroyAndDeallocateNode(compared);
-                    deleteNode(&compared);
-                    --_size;
-                    compared = current->next;
-                }
-                else {
-                    current = current->next;
-                    compared = current->next;
-                }
-            }
+            unique(ft::equalTo());
         }
 
         template <class BinaryPredicate>
@@ -420,7 +406,7 @@ namespace ft {
                 if (binary_pred(second->value_type, second->previous->value_type)) {
                     second = second->next;
                     destroyAndDeallocateNode(second->previous);
-                    deleteNode(&second->previous);
+                    unlinkNode(&second->previous);
                     --_size;
                 }
                 else {
@@ -431,18 +417,32 @@ namespace ft {
 
         // -----------------------------------------Merge Sorted Lists--------------------------------------------------
 
-        /*
+
         void merge (list& x) {
             merge(x, ft::less<value_type>());
         }
 
+        /*
         template <class Compare>
         void merge (list& x, Compare comp) {
             if (this != &x) {
-                node *first1 = _tail->next, *end1 = _tail, *first2 = x._t
+                node *first1 = _tail->next, *end1 = _tail, *first2 = x._tail->next, *end2 = x._tail;
+
+                while(first1 != end1 && first2 != end2) {
+                    if (comp(first1->value_type, first2->value_type)) {
+                        size_type size = 1;
+                        node *tmp = first2->next;
+                        for(; tmp !=end2 && comp(tmp->value_type, first1->value_type); tmp = tmp->next, ++size)
+                            ;
+                        _size += size;
+                        x._size -= size;
+                        node *f = first2, *l = tmp->previous;
+                        first2 = tmp;
+
+                    }
+                }
             }
         }
-
 
 
         */
@@ -458,7 +458,7 @@ namespace ft {
         void sort (Compare comp) {
             node *head = _tail->next, *lastBeforeSorted = nullptr;
 
-            deleteNode(&_tail);
+            unlinkNode(&_tail);
             head->previous->next = nullptr;
             mergeSort(&head, &lastBeforeSorted, comp);
             head->previous = _tail;
@@ -522,11 +522,16 @@ namespace ft {
             (*t)->previous = *x;
         }
 
-        // -----------------------------------------Delete Node---------------------------------------------------------
+        // -----------------------------------------Unlink Nodes--------------------------------------------------------
 
-        void deleteNode(node **toDelete) {
+        void unlinkNode(node **toDelete) {
             (*toDelete)->next->previous =(*toDelete)->previous;
             (*toDelete)->previous->next = (*toDelete)->next;
+        }
+
+        void unlinkNodes(node **first, node **last) {
+            (*first)->previous->next = (*last)->next;
+            (*last)->previous = (*first)->previous;
         }
 
         // -----------------------------------------Insert Element------------------------------------------------------

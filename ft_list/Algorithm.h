@@ -52,8 +52,7 @@ namespace ft {
     }
 
 
-    // -----------------------------------------Compare function--------------------------------------------------------
-    // can be used as a binary predicate for sort function
+    // -----------------------------------------Compare binary predicate------------------------------------------------
 
     template<class T>
     struct less {
@@ -61,6 +60,15 @@ namespace ft {
         bool
         operator()(const T &lhs, const T &rhs) const {
             return (lhs < rhs);
+        }
+    };
+
+    template<class T>
+    struct equalTo {
+    public:
+        bool
+        operator()(const T &lhs, const T &rhs) const {
+            return (lhs == rhs);
         }
     };
 }
