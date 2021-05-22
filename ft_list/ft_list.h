@@ -324,13 +324,8 @@ namespace ft {
 
         void splice(iterator position, list& x) {
             if (x._size) {
-                node *BeginX = x._tail->next, *prevEndX = x._tail->previous;
-                prevEndX->next->next = prevEndX->next;
-                prevEndX->next->previous = prevEndX->next;
-                position._node->previous->next = BeginX;
-                BeginX->previous = position._node->previous;
-                position._node->previous = prevEndX;
-                prevEndX->next = position._node;
+                unlinkNodes(&x._tail->next, &x._tail->previous);
+                linkNodes(&position._node, &x._tail->next, &x._tail->previous)
                 _size += x._size;
                 x._size = 0;
             }
@@ -339,11 +334,9 @@ namespace ft {
         void splice(iterator position, list& x, iterator i) {
             if (position._node != i._node && position._node != i._node->next) {
 
-                i._node->next->previous = i._node->previous;
-                i._node->previous->next = i._node->next;
+                unlinkNodes(&i._node, &i._node);
                 --x._size;
-
-                insertingNodeBefore(&i._node, &position._node);
+                linkNodes(&position._node, &i._node, &i._node);
                 ++_size;
             }
         }
@@ -355,14 +348,9 @@ namespace ft {
                     x._size -= countNode;
                     _size += countNode;
                 }
-                last._node->previous->next = position._node;
-                first._node->previous->next = last._node;
-                position._node->previous->next = first._node;
-
-                node *tmp = first._node->previous;
-                first._node->previous = position._node->previous;
-                position._node->previous = last._node->previous;
-                last._node->previous = tmp;
+                --last;
+                unlinkNodes(&first._node, &last._node->previous);
+                linkNodes(&position._node, &first._node, &last._node);
             }
         }
 
