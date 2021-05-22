@@ -431,14 +431,19 @@ namespace ft {
 
         // -----------------------------------------Merge Sorted Lists--------------------------------------------------
 
-        /*
-        void merge (list& x) {
+//        void merge (list& x) {
+//            if (this != &x) {
+//
+//            }
+//        }
 
-        }
+        /*
 
         template <class Compare>
         void merge (list& x, Compare comp) {
+         if (this != &x) {
 
+            }
         }
 
         */
@@ -580,13 +585,12 @@ namespace ft {
         template <class Compare>
         void mergeSort(node **head, node **last, Compare comp) {
             node *p = *head, *a = nullptr, *b = nullptr;
-            if (!p || !p->next) {
-                return;
+            if (p->next) {
+                splitList(p, &a, &b);
+                mergeSort(&a, last, comp);
+                mergeSort(&b, last, comp);
+                *head = mergeSortedLists(a, b, last, comp);
             }
-            splitList(p, &a, &b);
-            mergeSort(&a, last, comp);
-            mergeSort(&b, last, comp);
-            *head = mergeSortedLists(a, b, last, comp);
         }
     };
 
