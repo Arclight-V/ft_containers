@@ -17,7 +17,9 @@ void printModifeyIterator(ft::list<int> &printList) {
 
     // -----------------------------------------iterator --itEnd--------------------------------------------------------
     std::cout << "      iterator   --itEnd:";
-    ft::list<int>::iterator itEnd = --printList.end();
+    ft::list<int>::iterator itEnd = printList.end();
+//    std::cout << ' ' << *itEnd;
+    itEnd--;
     for (ft::list<int>::iterator itBegin = printList.begin(); itBegin != itEnd; --itEnd) {
         std::cout << ' ' << *itEnd;
     }
@@ -36,7 +38,9 @@ void printConstIterator(ft::list<int> &printList) {
 
     // -----------------------------------------const_iterator --itEnd--------------------------------------------------
     std::cout << "const_iterator   --itEnd:";
-    ft::list<int>::const_iterator itEnd = --printList.end();
+    ft::list<int>::const_iterator itEnd = printList.end();
+//    std::cout << ' ' << *itEnd;
+    itEnd--;
     for (ft::list<int>::const_iterator itBegin = printList.begin(); itBegin != itEnd; --itEnd) {
         std::cout << ' ' << *itEnd;
     }
@@ -133,8 +137,8 @@ void testResize() {
 }
 
 void baseTestSplice () {
-    ft::list<int> mylist1, mylist2;
-    ft::list<int>::iterator it;
+    std::list<int> mylist1, mylist2;
+    std::list<int>::iterator it;
 
     // set some initial values:
     for (int i=1; i<=4; ++i)
@@ -145,6 +149,10 @@ void baseTestSplice () {
 
     it = mylist1.begin();
     ++it;                         // points to 2
+
+//    printIterator(mylist1);
+//    printIterator(mylist2);
+//    return;
 
     mylist1.splice (it, mylist2); // mylist1: 1 10 20 30 2 3 4
     mylist1.clear();
@@ -199,17 +207,17 @@ void baseTestInsert () {
     // set some initial values:
     for (int i=1; i<=5; ++i) mylist.push_back(i); // 1 2 3 4 5
 
-    printIterator(mylist);
+//    printIterator(mylist);
 
     it = mylist.begin();
     ++it;       // it points now to number 2           ^
 
     mylist.insert (it,10);                        // 1 10 2 3 4 5
 
-    printIterator(mylist);
+//    printIterator(mylist);
     // "it" still points to number 2                      ^
     mylist.insert (it,2,20);                      // 1 10 20 20 2 3 4 5
-    printIterator(mylist);
+//    printIterator(mylist);
     --it;       // it points now to the second 20            ^
 
     std::vector<int> myvector (2,30);
@@ -217,6 +225,7 @@ void baseTestInsert () {
     // 1 10 20 30 30 20 2 3 4 5
     //               ^
     printIterator(mylist);
+
 }
 void testInsert()
 {
@@ -276,20 +285,24 @@ bool compare_nocase (const std::string& first, const std::string& second)
 }
 
 void testSort() {
-    ft::list<std::string> mylist;
-    ft::list<std::string>::iterator it;
-    mylist.push_back ("one");
-    mylist.push_back ("two");
-    mylist.push_back ("Three");
+    ft::list<int> mylist;
+    ft::list<int>::iterator it;
 
-    mylist.sort();
+    srand(time(NULL));
+    for (int i = 0; i < 20; ++i) {
+        mylist.push_back(rand() % 100);
+    }
 
-    std::cout << "mylist contains:";
+    std::cout << "         mylist contains:";
     for (it=mylist.begin(); it!=mylist.end(); ++it)
         std::cout << ' ' << *it;
     std::cout << '\n';
 
-    mylist.sort(compare_nocase);
+//    mylist.sort(compare_nocase);
+    mylist.sort();
+
+    printIterator(mylist);
+
 
     std::cout << "mylist contains:";
     for (it=mylist.begin(); it!=mylist.end(); ++it)
@@ -301,21 +314,31 @@ bool mycomparison (double first, double second)
 { return ( int(first)<int(second) ); }
 
 void testMerge() {
-    std::list<double> first, second;
+    ft::list<double> first, second;
 
     first.push_back (3.1);
     first.push_back (2.2);
     first.push_back (2.9);
 
-    second.push_back (3.1);
-    second.push_back (2.2);
-    second.push_back (2.9);
+    second.push_back (3.7);
+    second.push_back (7.1);
+    second.push_back (1.4);
 
     first.sort();
     second.sort();
 
+
     first.merge(second);
 
+    std::cout << "first contains:";
+    for (ft::list<double>::iterator it=first.begin(); it!=first.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
+//
+    std::cout << "second contains:";
+    for (ft::list<double>::iterator it=second.begin(); it!=second.end(); ++it)
+        std::cout << ' ' << *it;
+    std::cout << '\n';
     // (second is now empty)
 
     second.push_back (2.1);
@@ -323,8 +346,23 @@ void testMerge() {
     first.merge(second,mycomparison);
 
     std::cout << "first contains:";
-    for (std::list<double>::iterator it=first.begin(); it!=first.end(); ++it)
+    for (ft::list<double>::iterator it=first.begin(); it!=first.end(); ++it)
         std::cout << ' ' << *it;
+    std::cout << '\n';
+
+}
+
+void testReverse() {
+    ft::list<int> mylist;
+
+    for (int i=1; i<10; ++i) mylist.push_back(i);
+
+    mylist.reverse();
+
+    std::cout << "mylist contains:";
+    for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        std::cout << ' ' << *it;
+
     std::cout << '\n';
 
 }
@@ -341,6 +379,7 @@ void iteratorTest()
 //    testRemove();
 //    testSort();
     testMerge();
+//    testReverse();
 
 }
 

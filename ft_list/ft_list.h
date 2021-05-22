@@ -264,7 +264,7 @@ namespace ft {
          }
 
          iterator erase(iterator first, iterator last) {
-            unlinkNodes(&position._node, &last._node->previous);
+            unlinkNodes(&first._node, &last._node->previous);
              for (; first != last; ++first) {
                  destroyAndDeallocateNode(first._node);
                  --_size;
@@ -322,8 +322,9 @@ namespace ft {
 
         void splice(iterator position, list& x) {
             if (x._size) {
-                unlinkNodes(&x._tail->next, &x._tail->previous);
-                linkNodes(&position._node, &x._tail->next, &x._tail->previous)
+                node *f = x._tail->next, *l = x._tail->previous;
+                unlinkNodes(&f, &l);
+                linkNodes(&position._node, &f, &l);
                 _size += x._size;
                 x._size = 0;
             }
@@ -410,20 +411,20 @@ namespace ft {
         template <class Compare>
         void merge (list& x, Compare comp) {
             if (this != &x) {
-                node *first1 = _tail->next, *end1 = _tail, *first2 = x._tail->next, *end2 = x._tail;
+                node *first1 = _tail->next, *first2 = x._tail->next;
 
-                while(first1 != end1 && first2 != end2) {
-                    if (comp(first1->value_type, first2->value_type)) {
+                while(first1 != _tail && first2 != x._tail) {
+                    if (comp(first2->value_type, first1->value_type)) {
                         size_type size = 1;
                         node *tmp = first2->next;
-                        for(; tmp !=end2 && comp(tmp->value_type, first1->value_type); tmp = tmp->next, ++size)
+                        for(; tmp != x._tail && comp(tmp->value_type, first1->value_type); tmp = tmp->next, ++size)
                             ;
                         _size += size;
                         x._size -= size;
                         node *f = first2, *l = tmp->previous;
                         first2 = tmp;
                         unlinkNodes(&f, &l);
-                        tmp = tmp->next;
+                        tmp = first1->next;
                         linkNodes(&first1, &f, &l);
                         first1 = tmp;
                     }
@@ -432,11 +433,11 @@ namespace ft {
                     }
                 }
                 splice(end(), x);
+
             }
         }
 
         // -----------------------------------------Sort Elements In Container------------------------------------------
-
 
         void sort() {
             sort(ft::less<value_type>());
@@ -448,11 +449,23 @@ namespace ft {
 
             unlinkNode(&_tail);
             head->previous->next = nullptr;
-            mergeSort(&head, &lastBeforeSorted, comp);
+            mergeSort(&head, comp);
             head->previous = _tail;
             _tail->next = head;
+            for (lastBeforeSorted = head; lastBeforeSorted->next; lastBeforeSorted = lastBeforeSorted->next)
+                ;
             _tail->previous = lastBeforeSorted;
             lastBeforeSorted->next = _tail;
+        }
+
+        // -----------------------------------------Reverse The Order Of Elements---------------------------------------
+
+        void reverse() {
+            node *movePrevious = _tail->previous, *moveNext = _tail;
+
+            for (; movePrevious != _tail; movePrevious = movePrevious->previous, moveNext = moveNext->next) {
+                insertingNodeBefore(&movePrevious, &moveNext);
+            }
         }
 
         // -----------------------------------------OBSERVERS-----------------------------------------------------------
@@ -527,7 +540,7 @@ namespace ft {
 
         void unlinkNodes(node **first, node **last) {
             (*first)->previous->next = (*last)->next;
-            (*last)->previous = (*first)->previous;
+            (*last)->next->previous = (*first)->previous;
         }
 
         // -----------------------------------------Insert Element------------------------------------------------------
@@ -539,7 +552,7 @@ namespace ft {
 
         // -----------------------------------------Merge Sort----------------------------------------------------------
         template <class Compare>
-        node *mergeSortedLists(node *head1, node *head2, node **last, Compare comp){
+        node *mergeSortedLists(node *head1, node *head2, Compare comp){
             if (!head1) {
                 return head2;
             }
@@ -547,13 +560,12 @@ namespace ft {
                 return head1;
             }
             if (comp(head1->value_type, head2->value_type)) {
-                *last = head2;
-                head1->next = mergeSortedLists(head1->next, head2, last, comp);
+                head1->next = mergeSortedLists(head1->next, head2, comp);
                 head1->next->previous = head1;
                 head1->previous = nullptr;
                 return head1;
             }
-            head2->next = mergeSortedLists(head1, head2->next, last, comp);
+            head2->next = mergeSortedLists(head1, head2->next, comp);
             head2->next->previous = head2;
             head2->previous = nullptr;
             return head2;
@@ -573,13 +585,13 @@ namespace ft {
             slow->next = nullptr;
         }
         template <class Compare>
-        void mergeSort(node **head, node **last, Compare comp) {
+        void mergeSort(node **head, Compare comp) {
             node *p = *head, *a = nullptr, *b = nullptr;
             if (p->next) {
                 splitList(p, &a, &b);
-                mergeSort(&a, last, comp);
-                mergeSort(&b, last, comp);
-                *head = mergeSortedLists(a, b, last, comp);
+                mergeSort(&a, comp);
+                mergeSort(&b, comp);
+                *head = mergeSortedLists(a, b, comp);
             }
         }
     };
