@@ -311,16 +311,16 @@ void testMerge() {
     second.push_back (2.2);
     second.push_back (2.9);
 
-//    first.sort();
-//    second.sort();
+    first.sort();
+    second.sort();
 
     first.merge(second);
 
     // (second is now empty)
 
-//    second.push_back (2.1);
+    second.push_back (2.1);
 
-//    first.merge(second,mycomparison);
+    first.merge(second,mycomparison);
 
     std::cout << "first contains:";
     for (std::list<double>::iterator it=first.begin(); it!=first.end(); ++it)

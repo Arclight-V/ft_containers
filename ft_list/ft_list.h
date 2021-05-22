@@ -395,7 +395,7 @@ namespace ft {
 
         // -----------------------------------------Remove duplicate values---------------------------------------------
         void unique() {
-            unique(ft::equalTo());
+            unique(ft::equalTo<value_type>());
         }
 
         template <class BinaryPredicate>
@@ -417,12 +417,10 @@ namespace ft {
 
         // -----------------------------------------Merge Sorted Lists--------------------------------------------------
 
-
         void merge (list& x) {
             merge(x, ft::less<value_type>());
         }
 
-        /*
         template <class Compare>
         void merge (list& x, Compare comp) {
             if (this != &x) {
@@ -438,14 +436,18 @@ namespace ft {
                         x._size -= size;
                         node *f = first2, *l = tmp->previous;
                         first2 = tmp;
-
+                        unlinkNodes(&f, &l);
+                        tmp = tmp->next;
+                        linkNodes(&first1, &f, &l);
+                        first1 = tmp;
+                    }
+                    else {
+                        first1 = first1->next;
                     }
                 }
+                splice(end(), x);
             }
         }
-
-
-        */
 
         // -----------------------------------------Sort Elements In Container------------------------------------------
 
@@ -522,6 +524,14 @@ namespace ft {
             (*t)->previous = *x;
         }
 
+        // -----------------------------------------Link Nodes----------------------------------------------------------
+        void linkNodes(node **after, node **first, node **last) {
+            (*after)->previous->next = (*first);
+            (*first)->previous = (*after)->previous;
+            (*after)->previous = (*last);
+            (*last)->next = (*after);
+        }
+
         // -----------------------------------------Unlink Nodes--------------------------------------------------------
 
         void unlinkNode(node **toDelete) {
@@ -535,7 +545,6 @@ namespace ft {
         }
 
         // -----------------------------------------Insert Element------------------------------------------------------
-
         void executeInsert(node **newNode, node **positionNode, value_type const &val) {
             allocateMemoryForNodeAndConstruct(val, newNode);
             insertingNodeBefore(newNode, positionNode);
