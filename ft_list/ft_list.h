@@ -431,20 +431,19 @@ namespace ft {
 
         // -----------------------------------------Merge Sorted Lists--------------------------------------------------
 
-//        void merge (list& x) {
-//            if (this != &x) {
-//
-//            }
-//        }
-
         /*
+        void merge (list& x) {
+            merge(x, ft::less<value_type>());
+        }
 
         template <class Compare>
         void merge (list& x, Compare comp) {
-         if (this != &x) {
-
+            if (this != &x) {
+                node *first1 = _tail->next, *end1 = _tail, *first2 = x._t
             }
         }
+
+
 
         */
 
@@ -452,16 +451,7 @@ namespace ft {
 
 
         void sort() {
-
-            node *head = _tail->next, *lastBeforeSorted = nullptr;
-
-            deleteNode(&_tail);
-            head->previous->next = nullptr;
-            mergeSort(&head, &lastBeforeSorted, ft::less<value_type>());
-            head->previous = _tail;
-            _tail->next = head;
-            _tail->previous = lastBeforeSorted;
-            lastBeforeSorted->next = _tail;
+            sort(ft::less<value_type>());
         }
 
         template <class Compare>
