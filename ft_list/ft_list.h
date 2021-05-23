@@ -433,7 +433,6 @@ namespace ft {
                     }
                 }
                 splice(end(), x);
-
             }
         }
 
@@ -461,10 +460,11 @@ namespace ft {
         // -----------------------------------------Reverse The Order Of Elements---------------------------------------
 
         void reverse() {
-            node *movePrevious = _tail->previous, *moveNext = _tail;
+            node *unlink = _tail->previous, *nextNode = _tail->next;
 
-            for (; movePrevious != _tail; movePrevious = movePrevious->previous, moveNext = moveNext->next) {
-                insertingNodeBefore(&movePrevious, &moveNext);
+            for (size_type size = _size; size; unlink = unlink->previous, nextNode = nextNode->next, --size) {
+                unlinkNode(&unlink);
+                linkNodes(&nextNode, &unlink, &unlink);
             }
         }
 

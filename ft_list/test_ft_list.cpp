@@ -378,8 +378,8 @@ void iteratorTest()
 //    testSplice();
 //    testRemove();
 //    testSort();
-    testMerge();
-//    testReverse();
+//    testMerge();
+    testReverse();
 
 }
 
