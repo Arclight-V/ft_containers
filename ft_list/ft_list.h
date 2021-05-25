@@ -205,9 +205,11 @@ namespace ft {
         // -----------------------------------------Delete first element------------------------------------------------
 
         void pop_front() {
-             insertingNodeBefore(&_tail->previous, &_tail->next);
-             destroyAndDeallocateNode(_tail->next);
-             --_size;
+            node *toDelete = _tail->next;
+
+            unlinkNode(&_tail->next);
+            destroyAndDeallocateNode(toDelete);
+            --_size;
         }
 
         // -----------------------------------------Add Element At The End----------------------------------------------
