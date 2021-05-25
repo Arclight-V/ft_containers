@@ -17,6 +17,8 @@ namespace ft {
     public:
         typedef Iterator iterator_type;
         typedef typename std::iterator_traits<Iterator>::difference_type difference_type;
+        typedef typename std::iterator_traits<Iterator>::reference reference;
+        typedef typename std::iterator_traits<Iterator>::pointer pointer;
 
         /*
         ** -----------------------------------------CONSTRUCTOR---------------------------------------------------------
@@ -50,7 +52,8 @@ namespace ft {
         }
 
         typename ReverseIterator::reference operator*() const {
-            return *(--_iterator);
+            Iterator tmp = _iterator;
+            return *--tmp;
         }
 
         typename ReverseIterator::pointer operator->() const {

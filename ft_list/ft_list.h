@@ -5,7 +5,7 @@
 #ifndef FT_LIST_H
 #define FT_LIST_H
 
-//#include "stdafx.h"
+#include "stdafx.h"
 #include "listIterator.h"
 #include "NodeTraits.h"
 #include "ReverseIterator.h"
@@ -27,8 +27,8 @@ namespace ft {
 
         typedef typename ft::ListIterator<value_type>                   iterator;
         typedef typename ft::ListConstIterator<value_type, T const *>   const_iterator;
-        typedef typename ft::ReverseIterator<iterator>                     reverse_iterator;
-        typedef typename ft::ReverseIterator<const_iterator>               const_reverse_iterator;
+        typedef typename ft::ReverseIterator<iterator>                  reverse_iterator;
+        typedef typename ft::ReverseIterator<const_iterator>            const_reverse_iterator;
 
         typedef typename ft::ListIterator<value_type>::difference_type  difference_type;
 
@@ -63,9 +63,10 @@ namespace ft {
          // its corresponding element in that range, in the same order.
 
          template<class InputIterator>
-         list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type()) :_tail(allocateMemoryForNode()),
+         list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) :_tail(allocateMemoryForNode()),
                                                                                                         _alloc(alloc),
                                                                                                         _size(0) {
+            (void)isIter;
              for (; first != last; ++first) {
                  push_back(*first);
              }
@@ -119,19 +120,19 @@ namespace ft {
         }
 
         reverse_iterator  rbegin() {
-            return reverse_iterator(_tail);
+            return reverse_iterator(end());
         }
 
         const_reverse_iterator rbegin() const {
-            return const_reverse_iterator(_tail);
+            return const_reverse_iterator(end());
         }
 
         reverse_iterator rend() {
-            return reverse_iterator(_tail->next);
+            return reverse_iterator(begin());
         }
 
         const_reverse_iterator rend() const {
-            return const_reverse_iterator(_tail->next);
+            return const_reverse_iterator(begin());
         }
 
 
@@ -160,7 +161,7 @@ namespace ft {
         }
 
         reference back() {
-            return _tail->value_type;
+            return _tail->previous->value_type;
         }
 
         const_reference back() const {
@@ -199,7 +200,6 @@ namespace ft {
         // -----------------------------------------Delete first element------------------------------------------------
 
         void pop_front() {
-             node *retNode = _tail->next;
              insertingNodeBefore(&_tail->previous, &_tail->next);
              destroyAndDeallocateNode(_tail->next);
              --_size;

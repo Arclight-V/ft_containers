@@ -5,12 +5,12 @@
 #ifndef LISTITERATOR_H
 #define LISTITERATOR_H
 
-//#include "baseIterator.h"
-//#include "stdafx.h"
+#include "baseIterator.h"
+#include "stdafx.h"
 
 #include "NodeTraits.h"
 #include "ft_list.h"
-#include <list>
+//#include <list>
 
 // BIDIRECTIONAL ITERATOR
 namespace ft {
@@ -63,7 +63,7 @@ namespace ft {
         }
 
         typename ListIterator::pointer operator->() const {
-            return &_node->value;
+            return &_node->value_type;
         }
 
 
