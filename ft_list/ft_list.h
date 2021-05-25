@@ -193,8 +193,13 @@ namespace ft {
         // -----------------------------------------Insert Element At Beginning-----------------------------------------
 
         void push_front (const value_type& val) {
-            node *NewNode = nullptr;
-            executeInsert(&NewNode, &_tail, val);
+            node *newNode = nullptr;
+            allocateMemoryForNodeAndConstruct(val, &newNode);
+            _tail->next->previous = newNode;
+            newNode->next = _tail->next;
+            newNode->previous = _tail;
+            _tail->next = newNode;
+            ++_size;
         }
 
         // -----------------------------------------Delete first element------------------------------------------------
