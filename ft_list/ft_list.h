@@ -356,7 +356,7 @@ namespace ft {
                     _size += countNode;
                 }
                 --last;
-                unlinkNodes(&first._node, &last._node->previous);
+                unlinkNodes(&first._node, &last._node);
                 linkNodes(&position._node, &first._node, &last._node);
             }
         }
@@ -452,27 +452,30 @@ namespace ft {
 
         template <class Compare>
         void sort (Compare comp) {
-            node *head = _tail->next, *lastBeforeSorted = nullptr;
+            if (_size) {
+                node *head = _tail->next, *lastBeforeSorted = nullptr;
 
-            unlinkNode(&_tail);
-            head->previous->next = nullptr;
-            mergeSort(&head, comp);
-            head->previous = _tail;
-            _tail->next = head;
-            for (lastBeforeSorted = head; lastBeforeSorted->next; lastBeforeSorted = lastBeforeSorted->next)
-                ;
-            _tail->previous = lastBeforeSorted;
-            lastBeforeSorted->next = _tail;
+                unlinkNode(&_tail);
+                head->previous->next = nullptr;
+                mergeSort(&head, comp);
+                head->previous = _tail;
+                _tail->next = head;
+                for (lastBeforeSorted = head; lastBeforeSorted->next; lastBeforeSorted = lastBeforeSorted->next);
+                _tail->previous = lastBeforeSorted;
+                lastBeforeSorted->next = _tail;
+            }
         }
 
         // -----------------------------------------Reverse The Order Of Elements---------------------------------------
 
         void reverse() {
-            node *unlink = _tail->previous, *nextNode = _tail->next;
 
-            for (size_type size = _size; size; unlink = unlink->previous, nextNode = nextNode->next, --size) {
-                unlinkNode(&unlink);
-                linkNodes(&nextNode, &unlink, &unlink);
+            if (_size > 1) {
+                for (node *toSwap = _tail->next; toSwap != _tail;) {
+                    ft::swap(toSwap->previous, toSwap->next);
+                    toSwap = toSwap->previous;
+                }
+                ft::swap(_tail->previous, _tail->next);
             }
         }
 
@@ -526,7 +529,6 @@ namespace ft {
         void insertingNodeAfter(node **t, node **x) {
             (*t)->next = (*x)->next;
             (*x)->next->previous = *t;
-
             (*x)->next = *t;
             (*t)->previous = *x;
         }

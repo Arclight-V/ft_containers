@@ -9,13 +9,17 @@
 
 int main ()
 {
-    ft::list<Test> useless;
-    std::cout << "empty() : " << useless.empty()    << std::endl;
-    std::cout << "size    : " << useless.size()     << std::endl;
+    ft::list<int> mylist;
 
-    std::list<Test> useless1;
-    std::cout << "empty() : " << useless1.empty()    << std::endl;
-    std::cout << "size    : " << useless1.size()     << std::endl;
+    for (int i=1; i<10; ++i) mylist.push_back(i);
+
+    mylist.reverse();
+
+    std::cout << "mylist contains:";
+    for (ft::list<int>::iterator it=mylist.begin(); it!=mylist.end(); ++it)
+        std::cout << ' ' << *it;
+
+    std::cout << '\n';
 }
 
 
