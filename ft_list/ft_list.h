@@ -634,7 +634,7 @@ namespace ft {
 
         template <class T, class Alloc>
         bool operator>(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-            return lhs < rhs;
+            return rhs < lhs;
         }
 
         template <class T, class Alloc>
