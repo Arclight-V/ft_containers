@@ -253,10 +253,11 @@ namespace ft {
                     InputIterator last,
                     typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
             (void)isIter;
+            node *tmp = position._node;
             for (; first != last; ++first) {
                 node *NewNode = nullptr;
-                executeInsert(&NewNode, &position._node, *first);
-                ++position;
+                executeInsert(&NewNode, &tmp, *first);
+                tmp = NewNode->next;
             }
         }
 
