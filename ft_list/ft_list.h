@@ -400,8 +400,8 @@ namespace ft {
             while (second != _tail) {
                 if (binary_pred(second->value_type, second->previous->value_type)) {
                     second = second->next;
-                    destroyAndDeallocateNode(second->previous);
                     unlinkNode(&second->previous);
+                    destroyAndDeallocateNode(second->previous);
                     --_size;
                 }
                 else {
