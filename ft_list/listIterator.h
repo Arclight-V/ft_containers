@@ -6,11 +6,7 @@
 #define LISTITERATOR_H
 
 #include "baseIterator.h"
-#include "stdafx.h"
-
-#include "NodeTraits.h"
 #include "ft_list.h"
-//#include <list>
 
 // BIDIRECTIONAL ITERATOR
 namespace ft {
@@ -154,9 +150,5 @@ namespace ft {
         }
     };
 }
-
-
-
-
 
 #endif //LISTITERATOR_H

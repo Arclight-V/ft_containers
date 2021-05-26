@@ -22,6 +22,21 @@ namespace ft {
             _dl_list_TH *next;
         };
 
+        // tree-node list T on the stack
+        struct _tn_list_TS {
+            T           value_type;
+            _tn_list_TH *parent;
+            _tn_list_TH *left;
+            _tn_list_TH *right;
+        };
+
+        // tree-node list T on the heap
+        struct _tn_list_TH {
+            T           *value_type;
+            _tn_list_TH *parent;
+            _tn_list_TH *left;
+            _tn_list_TH *right;
+        };
     };
 }
 
