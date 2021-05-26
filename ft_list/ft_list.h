@@ -5,9 +5,9 @@
 #ifndef FT_LIST_H
 #define FT_LIST_H
 
-#include "stdafx.h"
+#include "../common_templates/stdafx.h"
+#include "../common_templates/NodeTraits.h"
 #include "listIterator.h"
-#include "NodeTraits.h"
 #include "ReverseIterator.h"
 #include "Algorithm.h"
 #include "utils.h"
@@ -24,14 +24,11 @@ namespace ft {
         typedef typename allocator_type::const_reference                const_reference;
         typedef typename allocator_type::pointer                        pointer;
         typedef typename allocator_type::const_pointer                  const_pointer;
-
         typedef typename ft::ListIterator<value_type>                   iterator;
         typedef typename ft::ListConstIterator<value_type, T const *>   const_iterator;
         typedef typename ft::ReverseIterator<iterator>                  reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator>            const_reverse_iterator;
-
         typedef typename ft::ListIterator<value_type>::difference_type  difference_type;
-
         typedef size_t size_type;
 
 
@@ -389,6 +386,7 @@ namespace ft {
         }
 
         // -----------------------------------------Remove duplicate values---------------------------------------------
+
         void unique() {
             unique(ft::equalTo<value_type>());
         }
@@ -469,7 +467,6 @@ namespace ft {
         // -----------------------------------------Reverse The Order Of Elements---------------------------------------
 
         void reverse() {
-
             if (_size > 1) {
                 for (node *toSwap = _tail->next; toSwap != _tail;) {
                     ft::swap(toSwap->previous, toSwap->next);
@@ -526,6 +523,7 @@ namespace ft {
         }
 
         // -----------------------------------------Inserting Node After------------------------------------------------
+
         void insertingNodeAfter(node **t, node **x) {
             (*t)->next = (*x)->next;
             (*x)->next->previous = *t;
@@ -534,6 +532,7 @@ namespace ft {
         }
 
         // -----------------------------------------Link Nodes----------------------------------------------------------
+
         void linkNodes(node **after, node **first, node **last) {
             (*after)->previous->next = (*first);
             (*first)->previous = (*after)->previous;
@@ -554,6 +553,7 @@ namespace ft {
         }
 
         // -----------------------------------------Insert Element------------------------------------------------------
+
         void executeInsert(node **newNode, node **positionNode, value_type const &val) {
             allocateMemoryForNodeAndConstruct(val, newNode);
             insertingNodeBefore(newNode, positionNode);
@@ -561,6 +561,7 @@ namespace ft {
         }
 
         // -----------------------------------------Merge Sort----------------------------------------------------------
+
         template <class Compare>
         node *mergeSortedLists(node *head1, node *head2, Compare comp){
             if (!head1) {
@@ -594,6 +595,7 @@ namespace ft {
             *bRef = slow->next;
             slow->next = nullptr;
         }
+
         template <class Compare>
         void mergeSort(node **head, Compare comp) {
             node *p = *head, *a = nullptr, *b = nullptr;
@@ -648,7 +650,6 @@ namespace ft {
         void swap (list<T,Alloc>& x, list<T,Alloc>& y) {
             x.swap(y);
         }
-
 }
 
 

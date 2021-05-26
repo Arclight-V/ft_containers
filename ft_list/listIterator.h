@@ -27,19 +27,20 @@ namespace ft {
         template<typename, typename> friend class list;
     public:
 
-        /*
-         * Requirements for a bidirectional iterator
-         */
+        // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
+
         // default-constructor
         explicit ListIterator(Node *ptr = nullptr) : _node(ptr) {};
 
         // copy-constructor
         ListIterator(ListIterator<T> const &x) : _node(x._node) {};
 
-        // destructor
+        // -----------------------------------------DESTRUCTOR----------------------------------------------------------
+
         virtual ~ListIterator() {};
 
-        // copy-assignable
+        // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
+
         ListIterator &operator=(ListIterator const &x) {
             if (this != &x) {
                 _node = x._node;
@@ -66,7 +67,6 @@ namespace ft {
             return &_node->value_type;
         }
 
-
         // Can be incremented (if in a dereferenceable state).
         // The result is either also dereferenceable or a past-the-end iterator.
         // Two iterators that compare equal, keep comparing equal after being both increased
@@ -92,7 +92,6 @@ namespace ft {
             _node = _node->previous;
             return ret;
         }
-
     };
 
     template<class T, class PointerT>
@@ -154,7 +153,6 @@ namespace ft {
             return ret;
         }
     };
-
 }
 
 
