@@ -74,7 +74,19 @@ bin
 user_bin
 user_bin_for_leaks
 
-# Clion
+# DS_Store
+.DS_Store
 
+# Clion
 .idea
+*.cbp
 cmake-build-debug/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+Testing/
+ft_list_test
+
+# VSCode
+.vscode
