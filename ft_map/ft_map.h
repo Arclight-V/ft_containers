@@ -6,7 +6,7 @@
 #define FT_MAP_H
 
 #include "../common_templates/stdafx.h"
-#include "../common_templates/NodeTraits.h"
+#include "../common_templates/RedBlackTree.h"
 #include "mapIterator.h"
 #include "../common_templates/ReverseIterator.h"
 #include "../common_templates/Algorithm.h"
@@ -17,27 +17,29 @@ namespace ft {
     template<class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> >
     class map {
 
-        typedef typename ft::NodeTraits<std::pair<const Key, T> >::_tn_list_TS node;
-        node *_end;
-
     public:
-        typedef Key key_type;
-        typedef T mapped_type;
-        typedef std::pair<const key_type, mapped_type> value_type;
-        typedef Compare key_compare;
-        typedef Alloc allocator_type;
-        typedef typename allocator_type::reference reference;
-        typedef typename allocator_type::const_reference const_reference;
-        typedef typename allocator_type::pointer pointer;
-        typedef typename allocator_type::const_pointer const_pointer;
-        typedef typename allocator_type::size_type size_type;
-        typedef typename allocator_type::size_type difference_type;
+        typedef Key                                                             key_type;
+        typedef T                                                               mapped_type;
+        typedef std::pair<const key_type, mapped_type>                          value_type;
+        typedef Compare                                                         key_compare;
+        typedef Alloc                                                           allocator_type;
+        typedef typename allocator_type::reference                              reference;
+        typedef typename allocator_type::const_reference                        const_reference;
+        typedef typename allocator_type::pointer                                pointer;
+        typedef typename allocator_type::const_pointer                          const_pointer;
+        typedef typename allocator_type::size_type                              size_type;
+        typedef typename allocator_type::size_type                              difference_type;
 
-        typedef typename ft::mapIterator<value_type> iterator;
-        typedef typename ft::mapConstIterator<value_type, value_type const *> const_iterator;
-        typedef typename ft::ReverseIterator<iterator> reverse_iterator;
-        typedef typename ft::ReverseIterator<const_iterator> const_reverse_iterator;
+        typedef typename ft::mapIterator<value_type>                            iterator;
+        typedef typename ft::mapConstIterator<value_type, value_type const *>   const_iterator;
+        typedef typename ft::ReverseIterator<iterator>                          reverse_iterator;
+        typedef typename ft::ReverseIterator<const_iterator>                    const_reverse_iterator;
 
+    private:
+        typedef typename ft::RedBlackTree<value_type, Compare, allocator_type>  tree;
+        key_compare                                                             _comp;
+        allocator_type                                                          _alloc;
+        size_type                                                               size;
 
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
@@ -47,21 +49,33 @@ namespace ft {
         // Empty container constructor (default constructor)
         // Constructs an empty container, with no elements.
 
-        explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : {}
+        explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),
+                                                                                                                _size(0) {}
 
-        /*
-         *  copy constructor
-         *  Constructs a container with a copy of each of the elements in x, in the same order.
-         *
-         * map (const map& x);
-         */
+        // Constructs a container with as many elements as the range [first,last),
+        // with each element constructed from its corresponding element in that range.
 
-        /*
-         *  map destructor
-         *  Destroys the container object.
-         *
-         * ~map();
-         */
+//        template <class InputIterator>
+//        map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(),
+//            ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+//            (void)isIter;
+//
+//        }
+
+         // Copy constructor
+         // Constructs a container with a copy of each of the elements in x.
+//         map (const map& x) : _end(allocateMemoryForNode()),
+//                              _comp(x._comp),
+//                              _alloc(x.get_allocator()),
+//                              _size(0) {
+//
+//        }
+
+        // -----------------------------------------DESTRUCTOR----------------------------------------------------------
+//        virtual ~map() {
+//            clear();
+//            destroyAndDeallocateNode(_end);
+//        }
 
         /*
          * Return iterator to beginning
@@ -94,6 +108,7 @@ namespace ft {
          * rev_it rend();
          * c_rev_it rend() const;
          */
+
 
         /*
          * Relational operators
@@ -139,6 +154,23 @@ namespace ft {
          * size_type max_size() const;
          *
          */
+
+        // -----------------------------------------ALLOCATOR-----------------------------------------------------------
+
+        allocator_type get_allocator() const {
+            return _alloc;
+        }
+
+    private:
+
+        /*
+        ** -----------------------------------------AUXILIARY FUNCTIONS-------------------------------------------------
+        */
+
+        // -----------------------------------------Allocate Memory-----------------------------------------------------
+
+        // -----------------------------------------Deallocate Memory---------------------------------------------------
+
 
     };
 }
