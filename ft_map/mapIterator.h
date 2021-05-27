@@ -9,10 +9,13 @@
 #include "../common_templates/NodeTraits.h"
 #include "ft_map.h"
 
+
 // BIDIRECTIONAL ITERATOR
 namespace ft {
     template<class T> class MapIterator;
     template<class T, class PointerT> class MapConstIterator;
+    template<class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> > >
+    class map;
 
     template<class T>
     class MapIterator : public ft::baseIterator<std::bidirectional_iterator_tag, T > {
@@ -21,6 +24,7 @@ namespace ft {
 
         template<class, class> friend class MapConstIterator;
         template<class, class, class, class> friend class map;
+
     public:
 
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------

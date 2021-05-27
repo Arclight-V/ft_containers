@@ -12,6 +12,7 @@
 #include "../common_templates/Algorithm.h"
 #include "../common_templates/utils.h"
 
+
 namespace ft {
     template<class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> > >
             class map {
@@ -36,7 +37,7 @@ namespace ft {
     private:
         typedef ft::RedBlackTree<value_type, Compare, allocator_type>           RBTree;
         RBTree                                                                  _tree;
-        
+
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
         */
@@ -104,7 +105,13 @@ namespace ft {
          * c_rev_it rend() const;
          */
 
+        // -----------------------------------------MODIFIERS-----------------------------------------------------------
 
+        // -----------------------------------------Insert elements-----------------------------------------------------
+
+        std::pair<iterator,bool> insert(const value_type& val) {
+            return _tree.insertUnique(val);
+        }
         /*
          * Relational operators
          *
