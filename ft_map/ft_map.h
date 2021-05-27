@@ -6,17 +6,15 @@
 #define FT_MAP_H
 
 #include "../common_templates/stdafx.h"
-#include "../common_templates/RedBlackTree.h"
 #include "mapIterator.h"
 #include "../common_templates/ReverseIterator.h"
+#include "../common_templates/RedBlackTree.h"
 #include "../common_templates/Algorithm.h"
 #include "../common_templates/utils.h"
 
 namespace ft {
-
-    template<class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> >
-    class map {
-
+    template<class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> > >
+            class map {
     public:
         typedef Key                                                             key_type;
         typedef T                                                               mapped_type;
@@ -30,17 +28,15 @@ namespace ft {
         typedef typename allocator_type::size_type                              size_type;
         typedef typename allocator_type::size_type                              difference_type;
 
-        typedef typename ft::mapIterator<value_type>                            iterator;
-        typedef typename ft::mapConstIterator<value_type, value_type const *>   const_iterator;
+        typedef typename ft::MapIterator<value_type>                            iterator;
+        typedef typename ft::MapConstIterator<value_type, value_type const *>   const_iterator;
         typedef typename ft::ReverseIterator<iterator>                          reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator>                    const_reverse_iterator;
 
     private:
-        typedef typename ft::RedBlackTree<value_type, Compare, allocator_type>  tree;
-        key_compare                                                             _comp;
-        allocator_type                                                          _alloc;
-        size_type                                                               size;
-
+        typedef ft::RedBlackTree<value_type, Compare, allocator_type>           RBTree;
+        RBTree                                                                  _tree;
+        
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
         */
@@ -48,9 +44,8 @@ namespace ft {
 
         // Empty container constructor (default constructor)
         // Constructs an empty container, with no elements.
-
-        explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _alloc(alloc),
-                                                                                                                _size(0) {}
+    public:
+        explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _tree(comp) {}
 
         // Constructs a container with as many elements as the range [first,last),
         // with each element constructed from its corresponding element in that range.
@@ -135,33 +130,26 @@ namespace ft {
          *
          */
 
-        /*
-         * Capacity
-         *
-         * Test whether container is empty
-         * Returns whether the map container is empty (i.e. whether its size is 0).
-         *
-         * bool empty() const;
-         *
-         * Return size
-         * Returns the number of elements in the map container.
-         *
-         * size_type size() const;
-         *
-         * Return maximum size
-         * Returns the maximum number of elements that the map container can hold.
-         *
-         * size_type max_size() const;
-         *
-         */
+        // -----------------------------------------CAPACITY------------------------------------------------------------
+
+         bool empty() const {
+             return _tree.empty();
+         }
+
+         size_type size() const {
+             return _tree.size();
+         }
+
+         size_type max_size() const {
+             return _tree.max_size();
+         }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
 
         allocator_type get_allocator() const {
-            return _alloc;
+            return _tree.get_allocator();
         }
 
-    private:
 
         /*
         ** -----------------------------------------AUXILIARY FUNCTIONS-------------------------------------------------
@@ -170,8 +158,6 @@ namespace ft {
         // -----------------------------------------Allocate Memory-----------------------------------------------------
 
         // -----------------------------------------Deallocate Memory---------------------------------------------------
-
-
     };
 }
 

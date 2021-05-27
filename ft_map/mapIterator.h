@@ -6,19 +6,18 @@
 #define MAPITERATOR_H
 
 #include "../common_templates/baseIterator.h"
+#include "../common_templates/NodeTraits.h"
 #include "ft_map.h"
-#include <map>
 
 // BIDIRECTIONAL ITERATOR
 namespace ft {
-
     template<class T> class MapIterator;
     template<class T, class PointerT> class MapConstIterator;
 
     template<class T>
     class MapIterator : public ft::baseIterator<std::bidirectional_iterator_tag, T > {
-        typedef typename ft::NodeTraits<T>::_tn_list_TS                     node;
-        node *_node;
+        typedef typename ft::NodeTraits<T>::_tn_list_TS                     Node;
+        Node *_node;
 
         template<class, class> friend class MapConstIterator;
         template<class, class, class, class> friend class map;

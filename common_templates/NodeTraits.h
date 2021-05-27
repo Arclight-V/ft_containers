@@ -27,16 +27,14 @@ namespace ft {
 
         // Red-Black tree description
 
-        struct nodeColor {
-            typedef enum { BLACK, RED, NONE } nodeColor;
-        }
+        typedef enum { BLACK, RED, NONE } nodeColor;
 
         // tree-node list T on the stack
         struct _tn_list_TS {
             T           value_type;
-            _tn_list_TH *parent;
-            _tn_list_TH *left;
-            _tn_list_TH *right;
+            _tn_list_TS *parent;
+            _tn_list_TS *left;
+            _tn_list_TS *right;
             nodeColor   color;
         };
 
