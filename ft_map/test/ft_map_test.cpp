@@ -2,26 +2,23 @@
 // Created by Arclight Natashia on 5/27/21.
 //
 
-//#include "../ft_map.h"
+#include "../ft_map.h"
 #include <iostream>
-#include <map>
+//#include <map>
 
 int main () {
 
-//    ft::map<char, std::string> map1;
-//
-//    std::cout << map1.size() << '\n';
-//    std::cout << map1.empty() << '\n';
-//    std::cout << map1.max_size() << '\n';
-//
 
-    std::map<char, std::string> map1;
-    map['a'] = "test";
+    ft::map<char, int> map1;
 
-    std::map<char, std::string>::iterator itBegin = map1.begin();
+    map1.insert(std::pair<char,int>('a',55));
+    map1.insert(std::pair<char,int>('b',40));
+    map1.insert(std::pair<char,int>('c',65));
+    map1.insert(std::pair<char,int>('z',60));
+    map1.insert(std::pair<char,int>('d',75));
+    map1.insert(std::pair<char,int>('g',57));
 
-    --itBegin;
-
+    ft::map<char, int>::iterator itBegin = map1.begin();
     std::cout << itBegin->first << '\n';
 
 

@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 #include "NodeTraits.h"
-#include "Algorithm.h"
+#include "../ft_map/mapIterator.h"
 
 #ifndef REDBLACKTREE_H
 #define REDBLACKTREE_H
@@ -18,6 +18,7 @@ namespace ft {
         typedef Alloc                                                           allocator_type;
         typedef typename allocator_type::size_type                              size_type;
         typedef typename ft::NodeTraits<value_type>::_tn_list_TS_Ptr            nodePtr;
+
         typedef typename ft::MapIterator<value_type>                            iterator;
         typedef typename ft::MapConstIterator<value_type, value_type const *>   const_iterator;
         typedef typename ft::ReverseIterator<iterator>                          reverse_iterator;
@@ -34,14 +35,23 @@ namespace ft {
 
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
-        explicit RedBlackTree(const value_compare &compare) : _root(nullptr),
-                                                              _alloc(allocator_type()), _comp(compare), _size(0) {
+        explicit RedBlackTree(const value_compare &compare, const allocator_type& alloc = allocator_type()) : _root(nullptr), _alloc(alloc), _comp(compare), _size(0) {
             _end = _allocNode.allocate(1);
             std::memset(&_end->value_type, 0, sizeof(value_type));
             _end->parent = _end;
             _end->left = _end;
             _end->right = _end;
             _end->color = NONE;
+        }
+
+        // -----------------------------------------ITERATORS-----------------------------------------------------------
+
+        iterator begin() {
+            return iterator(_end->left);
+        }
+
+        iterator end() {
+            return iterator(_end->right);
         }
 
         // -----------------------------------------CAPACITY------------------------------------------------------------
@@ -63,6 +73,20 @@ namespace ft {
         // -----------------------------------------Insert elements-----------------------------------------------------
 
     private:
+
+        void configureEndNode() {
+            findMinimumInTree();
+            findMaximumInTree();
+            linkEndFromTree();
+        }
+        void unlinkEndFromTree() {
+            _end->right->right = nullptr;
+        }
+
+        void linkEndFromTree() {
+            _end->right->right = _end;
+        }
+
         void findMinimumInTree() {
             nodePtr tmp = _root;
 
@@ -95,7 +119,7 @@ namespace ft {
             if (!x->parent) {
                 _root = y;
             }
-            else if (x = x->parent->right) {
+            else if (x == x->parent->right) {
                 x->parent->left = y;
             }
             else {
@@ -130,7 +154,7 @@ namespace ft {
             x->parent = y;
         }
 
-        insertFixup(nodePtr x) {
+        void insertFixup(nodePtr x) {
             // maintain red-black property after insertion
             nodePtr child;
 
@@ -166,17 +190,17 @@ namespace ft {
                         child->color = BLACK;
                         x->parent->color = BLACK;
                         x->parent->parent->color = RED;
-                        x->parent->parent;
+                        x = x->parent->parent;
                     }
                     else {
                         // uncle is BLACK
                         if (x == x->parent->left) {
                             x = x->parent;
-                            roetateRight(x);
+                            rotateRight(x);
                         }
                         x->parent->color = BLACK;
                         x->parent->parent->color = RED;
-                        rotateLeft(x->parent->parent)
+                        rotateLeft(x->parent->parent);
                     }
                 }
                 if (x == _root) {
@@ -188,6 +212,8 @@ namespace ft {
 
     public:
         std::pair<iterator, bool> insertUnique(const value_type& val) {
+            unlinkEndFromTree();
+
             nodePtr current, parent, x;
 
             current = _root;
@@ -195,17 +221,17 @@ namespace ft {
 
             // find where node
             while (current) {
-                if (val == current->value_type) {
-                    return std::pair<iterator(current), false>;
+                if (val.first == current->value_type.first) {
+                    return std::make_pair(iterator(current), false);
                 }
                 parent = current;
-                current = _comp(val, current->value_type) ? current->left : current->right;
+                current = _comp(val.first, current->value_type.first) ? current->left : current->right;
             }
             x = allocateNewNode(val, parent);
 
             // insert node in tree
             if (parent) {
-                if (_comp(val, parent->value_type)) {
+                if (_comp(val.first, parent->value_type.first)) {
                     parent->left = x;
                 }
                 else {
@@ -213,12 +239,11 @@ namespace ft {
                 }
             }
             else {
-                root = x;
+                _root = x;
             }
-            isertFixup(x);
-            findMinimumInTree();
-            findMaximumInTree();
-            return std::pair<iterator(x), true>;
+            insertFixup(x);
+            configureEndNode();
+            return std::make_pair(iterator(x), true);
         }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
@@ -246,7 +271,5 @@ namespace ft {
         }
     };
 }
-
-#include "../ft_map/mapIterator.h"
 
 #endif //REDBLACKTREE_H

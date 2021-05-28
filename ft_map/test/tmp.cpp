@@ -233,21 +233,25 @@ class RedBlackTree {
   }
 
   void printHelper(NodePtr root, string indent, bool last) {
-    if (root != TNULL) {
-      cout << indent;
-      if (last) {
-        cout << "R----";
-        indent += "   ";
-      } else {
-        cout << "L----";
-        indent += "|  ";
-      }
-
-      string sColor = root->color ? "RED" : "BLACK";
-      cout << root->data << "(" << sColor << ")" << endl;
-      printHelper(root->left, indent, false);
-      printHelper(root->right, indent, true);
-    }
+//    if (root != TNULL) {
+//      cout << indent;
+//      if (last) {
+//        cout << "R----";
+//        indent += "   ";
+//      } else {
+//        cout << "L----";
+//        indent += "|  ";
+//      }
+//
+//      string sColor = root->color ? "RED" : "BLACK";
+//      cout << root->data << "(" << sColor << ")" << endl;
+//      printHelper(root->left, indent, false);
+//      printHelper(root->right, indent, true);
+      if (root->left != TNULL) printHelper(root->left, "", true);
+      printf("%d ", root->data);
+      if (root->right != TNULL) printHelper(root->right, "", true);
+      if (root->parent == TNULL) printf("\n");
+//    }
   }
 
    public:
@@ -417,7 +421,7 @@ int main() {
   bst.insert(60);
   bst.insert(75);
   bst.insert(57);
-  bst.insert(55);
+  for (int i  = 0; i < 10 ; ++i) bst.insert(i);
 
   bst.printTree();
   cout << endl

@@ -14,7 +14,7 @@
 
 
 namespace ft {
-    template<class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> > >
+    template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> > >
             class map {
     public:
         typedef Key                                                             key_type;
@@ -46,7 +46,7 @@ namespace ft {
         // Empty container constructor (default constructor)
         // Constructs an empty container, with no elements.
     public:
-        explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _tree(comp) {}
+        explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _tree(comp, alloc) {}
 
         // Constructs a container with as many elements as the range [first,last),
         // with each element constructed from its corresponding element in that range.
@@ -73,13 +73,16 @@ namespace ft {
 //            destroyAndDeallocateNode(_end);
 //        }
 
-        /*
-         * Return iterator to beginning
-         * Returns an iterator pointing to the first element in the map container.
-         *
-         * it begin() {};
-         * c_it begin() const {};
-         */
+
+        iterator begin() {
+            return _tree.begin();
+        };
+
+        iterator end() {
+            return _tree.end();
+        }
+
+         // c_it begin() const {};
 
         /*
          * Return iterator to end
