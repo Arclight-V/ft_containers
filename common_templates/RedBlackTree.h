@@ -63,6 +63,55 @@ namespace ft {
         // -----------------------------------------Insert elements-----------------------------------------------------
 
     private:
+        void rotateRight(nodePtr x) {
+            // rotate node x to right
+            nodePtr y = x->left;
+
+            // establish x->left link
+            x->left = y->right;
+            if (y->right) {
+                y->right->parent = x;
+            }
+            // establish y->parent link
+            y->parent = x->parent;
+            if (!x->parent) {
+                _root = y;
+            }
+            else if (x = x->parent->right) {
+                x->parent->left = y;
+            }
+            else {
+                x->parent->right = y;
+            }
+            // link x and y
+            y->right = x;
+            x->parent = y;
+        }
+
+        void rotateLeft(nodePtr x) {
+            // rotate node x to left
+            nodePtr y = x->right;
+
+            // establish x->right link
+            x->right = y->left;
+            if (y->left) {
+                y->left->parent = x;
+            }
+            // establish y->parent link
+            if (!x->parent) {
+                _root = y;
+            }
+            else if (x == x->parent->left) {
+                x->parent->left = y;
+            }
+            else {
+                x->parent->right = y;
+            }
+            // link x and y
+            x->left = x;
+            x->parent = y;
+        }
+
         insertFixup(nodePtr x) {
             // maintain red-black property after insertion
             nodePtr child;
