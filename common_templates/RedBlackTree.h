@@ -63,6 +63,24 @@ namespace ft {
         // -----------------------------------------Insert elements-----------------------------------------------------
 
     private:
+        void findMinimumInTree() {
+            nodePtr tmp = _root;
+
+            while (tmp->left) {
+                tmp = tmp->left;
+            }
+            _end->left = tmp;
+        }
+
+        void findMaximumInTree() {
+            nodePtr  tmp = _root;
+
+            while (tmp->right) {
+                tmp = tmp->right;
+            }
+            _end->right = tmp;
+        }
+
         void rotateRight(nodePtr x) {
             // rotate node x to right
             nodePtr y = x->left;
@@ -198,6 +216,8 @@ namespace ft {
                 root = x;
             }
             isertFixup(x);
+            findMinimumInTree();
+            findMaximumInTree();
             return std::pair<iterator(x), true>;
         }
 
