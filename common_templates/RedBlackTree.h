@@ -41,7 +41,7 @@ namespace ft {
             _end->parent = _end;
             _end->left = _end;
             _end->right = _end;
-            _end->color = ft::NodeTraits<value_type>::NONE;
+            _end->color = NONE;
         }
 
         // -----------------------------------------CAPACITY------------------------------------------------------------
@@ -61,6 +61,65 @@ namespace ft {
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
 
         // -----------------------------------------Insert elements-----------------------------------------------------
+
+    private:
+        insertFixup(nodePtr x) {
+            // maintain red-black property after insertion
+            nodePtr child;
+
+            while (x->parent->color == RED) {
+                // we have a violation
+                if (x->parent == x->parent->parent->left) {
+                    child = x->parent->parent->right;
+                    if (child->color == RED ) {
+                        // uncle is RED
+                        child->color = BLACK;
+                        x->parent->color = BLACK;
+                        x->parent->parent->color = RED;
+                        x = x->parent->parent;
+                    }
+                    else {
+                        // uncle is BLACK
+                        if ( x == x->parent->right) {
+                            // make x a left child
+                            x = x->parent;
+                            rotateLeft(x);
+                        }
+                        // recolor and rotate
+                        x->parent->color = BLACK;
+                        x->parent->parent->color = RED;
+                        rotateRight(x->parent->parent);
+                    }
+                }
+                else {
+                    // mirror image of above code
+                    child = x->parent->parent->left;
+                    if (child->color == RED) {
+                        // uncle is RED
+                        child->color = BLACK;
+                        x->parent->color = BLACK;
+                        x->parent->parent->color = RED;
+                        x->parent->parent;
+                    }
+                    else {
+                        // uncle is BLACK
+                        if (x == x->parent->left) {
+                            x = x->parent;
+                            roetateRight(x);
+                        }
+                        x->parent->color = BLACK;
+                        x->parent->parent->color = RED;
+                        rotateLeft(x->parent->parent)
+                    }
+                }
+                if (x == _root) {
+                    break;
+                }
+            }
+            _root->color = BLACK;
+        }
+
+    public:
         std::pair<iterator, bool> insertUnique(const value_type& val) {
             nodePtr current, parent, x;
 
@@ -78,7 +137,6 @@ namespace ft {
             x = allocateNewNode(val, parent);
 
             // insert node in tree
-
             if (parent) {
                 if (_comp(val, parent->value_type)) {
                     parent->left = x;
@@ -91,7 +149,7 @@ namespace ft {
                 root = x;
             }
             isertFixup(x);
-            return std::pair<iterator(current), true>;
+            return std::pair<iterator(x), true>;
         }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
@@ -114,7 +172,7 @@ namespace ft {
             newNode->parent = parent;
             newNode->left = nullptr;
             newNode->right = nullptr;
-            newNode->color = ft::NodeTraits<value_type>::RED;
+            newNode->color = RED;
             return  newNode;
         }
     };

@@ -6,6 +6,11 @@
 #define NODETRAITS_H
 
 namespace ft {
+
+    // Red-Black tree description
+
+    typedef enum { BLACK, RED, NONE } nodeColor;
+
     template<typename T>
     struct NodeTraits {
         //  doubly-linked list T on the stack
@@ -24,10 +29,6 @@ namespace ft {
         };
 
         typedef _dl_list_TH *_dl_list_TH_Ptr;
-
-        // Red-Black tree description
-
-        typedef enum { BLACK, RED, NONE } nodeColor;
 
         // tree-node list T on the stack
         struct _tn_list_TS {
