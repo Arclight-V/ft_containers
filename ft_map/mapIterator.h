@@ -18,8 +18,8 @@ namespace ft {
 
     template<class T>
     class MapIterator : public ft::baseIterator<std::bidirectional_iterator_tag, T > {
-        typedef typename ft::NodeTraits<T>::_tn_list_TS                     Node;
-        Node *_node;
+        typedef typename ft::NodeTraits<T>::_tn_list_TS_Ptr                    nodePtr;
+         nodePtr _node;
 
         template<class, class> friend class MapConstIterator;
         template<class, class, class, class> friend class map;
@@ -29,7 +29,7 @@ namespace ft {
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
         // default-constructor
-        explicit MapIterator(Node *ptr = nullptr) : _node(ptr) {};
+        explicit MapIterator(nodePtr ptr = nullptr) : _node(ptr) {};
 
         // copy-constructor
         MapIterator(MapIterator<T> const &x) : _node(x._node) {};
