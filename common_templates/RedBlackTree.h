@@ -87,18 +87,16 @@ namespace ft {
         void configureEndNode() {
             findMinimumInTree();
             findMaximumInTree();
-//            linkEndFromTree();
+            linkEndFromTree();
         }
         void unlinkEndFromTree() {
-            if (_end->right != _end) {
+            if (_end->right) {
                 _end->right->right = _TNULL;
             }
         }
 
         void linkEndFromTree() {
-            if (_end->right != _end && _end->right != _TNULL) {
-                _end->right->right = _end;
-            }
+            _end->right->right = _end;
         }
 
         void findMinimumInTree() {
@@ -276,9 +274,11 @@ namespace ft {
         }
 
         void printTree() {
+            unlinkEndFromTree();
             if (_root) {
                 printHelper(_root, "", true);
             }
+            linkEndFromTree();
         }
 
 
