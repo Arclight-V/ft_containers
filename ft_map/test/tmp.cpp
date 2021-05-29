@@ -366,6 +366,8 @@ public:
 
         while (x != TNULL) {
             y = x;
+            if (key == y->data)
+                return;
             if (node->data < x->data) {
                 x = x->left;
             } else {
@@ -411,16 +413,23 @@ public:
 
 int main() {
     RedBlackTree bst;
-    bst.insert(55);
-    bst.insert(40);
-    bst.insert(65);
-    bst.insert(60);
+
+//    bst.insert(10);
+//    bst.insert(10);
+
+    std::srand(std::time(nullptr));
+
+//    for (int i = 0; i < 25; ++i) {
+//        bst.insert(std::rand() % 100);
+//    }
+
     bst.insert(75);
-    bst.insert(57);
+    bst.insert(34);
+    bst.insert(70);
 
     bst.printTree();
-    cout << endl
-         << "After deleting" << endl;
-    bst.deleteNode(40);
-    bst.printTree();
+//    cout << endl
+//         << "After deleting" << endl;
+//    bst.deleteNode(40);
+//    bst.printTree();
 }

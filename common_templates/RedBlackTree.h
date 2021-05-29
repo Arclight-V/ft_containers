@@ -89,6 +89,7 @@ namespace ft {
             findMaximumInTree();
             linkEndFromTree();
         }
+
         void unlinkEndFromTree() {
             if (_end->right) {
                 _end->right->right = _TNULL;
@@ -126,6 +127,7 @@ namespace ft {
             if (y->right != _TNULL) {
                 y->right->parent = x;
             }
+
             // establish y->parent link
             y->parent = x->parent;
             if (!x->parent) {
@@ -137,6 +139,7 @@ namespace ft {
             else {
                 x->parent->left = y;
             }
+
             // link x and y
             y->right = x;
             x->parent = y;
@@ -151,7 +154,9 @@ namespace ft {
             if (y->left != _TNULL) {
                 y->left->parent = x;
             }
+
             // establish y->parent link
+            y->parent = x->parent;
             if (!x->parent) {
                 _root = y;
             }
@@ -161,8 +166,9 @@ namespace ft {
             else {
                 x->parent->right = y;
             }
+
             // link x and y
-            x->left = x;
+            y->left = x;
             x->parent = y;
         }
 
@@ -225,15 +231,15 @@ namespace ft {
 
     public:
         std::pair<iterator, bool> insertUnique(const value_type& val) {
-            unlinkEndFromTree();
+//            unlinkEndFromTree();
 
             nodePtr y = nullptr, x = _root, newNode;
 
             while (x != _TNULL) {
                 y = x;
-                if (val.first == x->value_type.first) {
-                    configureEndNode();
-                    return std::make_pair(iterator(x), false);
+                if (val.first == y->value_type.first) {
+//                    configureEndNode();
+                    return std::make_pair(iterator(y), false);
                 }
                 x = _comp(val.first, x->value_type.first) ? x->left : x->right;
             }
@@ -252,17 +258,17 @@ namespace ft {
 
             if (!newNode->parent) {
                 newNode->color = BLACK;
-                configureEndNode();
+//                configureEndNode();
                 return std::make_pair(iterator(newNode), true);
             }
 
             if (!newNode->parent->parent) {
-                configureEndNode();
+//                configureEndNode();
                 return std::make_pair(iterator(newNode), true);
             }
 
             insertFixup(newNode);
-            configureEndNode();
+//            configureEndNode();
             return std::make_pair(iterator(newNode), true);
         }
 
@@ -274,15 +280,12 @@ namespace ft {
         }
 
         void printTree() {
-            unlinkEndFromTree();
+//            unlinkEndFromTree();
             if (_root) {
                 printHelper(_root, "", true);
             }
-            linkEndFromTree();
+//            linkEndFromTree();
         }
-
-
-
 
         private:
             void printHelper(nodePtr root, std::string indent, bool last) {

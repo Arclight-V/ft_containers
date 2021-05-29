@@ -11,18 +11,20 @@ int main () {
 
     ft::map<int, int> map1;
 
-    map1.insert(std::pair<char,int>(55,55));
-    map1.insert(std::pair<char,int>(40,40));
-    map1.insert(std::pair<char,int>(65,65));
-    map1.insert(std::pair<char,int>(60,60));
-    map1.insert(std::pair<char,int>(75,75));
-    map1.insert(std::pair<char,int>(57,57));
+    std::srand(std::time(nullptr));
 
-    ft::map<int, int>::iterator itBegin = map1.begin();
-    std::cout << itBegin->first << '\n';
+    for (int i = 0; i < 10; ++i) {
+        int in = std::rand() % 100;
+        std::cout << "in = " <<  in << '\n';
+        map1.insert(std::pair<int,int>( in ,in));
+    }
 
-    ft::map<int, int>::iterator itEnd = map1.end();
-    std::cout << itEnd->first << '\n';
+
+//    ft::map<int, int>::iterator itBegin = map1.begin();
+//    std::cout << itBegin->first << '\n';
+//
+//    ft::map<int, int>::iterator itEnd = map1.end();
+//    std::cout << itEnd->first << '\n';
 
     map1.printMap();
 
