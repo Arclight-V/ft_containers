@@ -51,6 +51,7 @@ namespace ft {
             _TNULL->color = BLACK;
 
             _root = _TNULL;
+
         }
 
         // -----------------------------------------ITERATORS-----------------------------------------------------------
@@ -60,7 +61,7 @@ namespace ft {
         }
 
         iterator end() {
-            return iterator(_end->right);
+            return iterator(_end);
         }
 
         // -----------------------------------------CAPACITY------------------------------------------------------------
@@ -89,13 +90,15 @@ namespace ft {
 //            linkEndFromTree();
         }
         void unlinkEndFromTree() {
-            if (_end->right) {
-                _end->right->right = nullptr;
+            if (_end->right != _end) {
+                _end->right->right = _TNULL;
             }
         }
 
         void linkEndFromTree() {
-            _end->right->right = _end;
+            if (_end->right != _end && _end->right != _TNULL) {
+                _end->right->right = _end;
+            }
         }
 
         void findMinimumInTree() {
@@ -224,7 +227,7 @@ namespace ft {
 
     public:
         std::pair<iterator, bool> insertUnique(const value_type& val) {
-//            unlinkEndFromTree();
+            unlinkEndFromTree();
 
             nodePtr y = nullptr, x = _root, newNode;
 
