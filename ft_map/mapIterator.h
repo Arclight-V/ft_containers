@@ -69,10 +69,25 @@ namespace ft {
         // Can be incremented (if in a dereferenceable state).
         // The result is either also dereferenceable or a past-the-end iterator.
         // Two iterators that compare equal, keep comparing equal after being both increased
-//        MapIterator operator++() {
-//            _node = _node->next;
-//            return *this;
-//        }
+        MapIterator operator++() {
+                nodePtr tmp = _node;
+                if (tmp->right->right)
+                {
+                    tmp = _node->right;
+                    while (tmp->left->left && tmp->right != _node)
+                        tmp = tmp->left;
+                }
+                else if (_node->parent)
+                {
+                    tmp = _node->parent;
+                    while (tmp->parent && tmp->value_type.first < _node->value_type.first)
+                    {
+                        tmp = tmp->parent;
+                    }
+                }
+                _node = tmp;
+                return (*this);
+        }
 //
 //        MapIterator operator++(int) {
 //            MapIterator ret(*this);
