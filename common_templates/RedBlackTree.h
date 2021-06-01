@@ -59,7 +59,7 @@ namespace ft {
         // -----------------------------------------ITERATORS-----------------------------------------------------------
 
         iterator begin() {
-            return iterator(_end->left);
+            return iterator(_end->right);
         }
 
         iterator end() {
@@ -93,13 +93,13 @@ namespace ft {
         }
 
         void unlinkEndFromTree() {
-            if (_end->right) {
-                _end->right->right = _TNULL;
+            if (_end->left) {
+                _end->left->right = _TNULL;
             }
         }
 
         void linkEndFromTree() {
-            _end->right->right = _end;
+            _end->left->right = _end;
         }
 
         void findMinimumInTree() {
@@ -108,7 +108,7 @@ namespace ft {
             while (tmp->left != _TNULL) {
                 tmp = tmp->left;
             }
-            _end->left = tmp;
+            _end->right = tmp;
         }
 
         void findMaximumInTree() {
@@ -117,7 +117,7 @@ namespace ft {
             while (tmp->right != _TNULL) {
                 tmp = tmp->right;
             }
-            _end->right = tmp;
+            _end->left = tmp;
         }
 
 
@@ -290,7 +290,6 @@ namespace ft {
             }
             linkEndFromTree();
         }
-
 
         private:
             void printHelper(nodePtr root, std::string indent, bool last) {

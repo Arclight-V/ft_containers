@@ -35,12 +35,22 @@ int main () {
 //
     ft::map<int, int>::iterator itBegin = map1.begin(), itEnd = map1.end();
     std::cout << "mym =";
-    for (;itBegin != itEnd; ++itBegin) {
+    for (int i = 0 ;itBegin != itEnd && i < 13; ++itBegin, ++i) {
 
         std::cout << " ";
         std::cout << itBegin->first;
 
     }
+    std::cout << '\n';
+
+//    itBegin = map1.begin(), itEnd = map1.end();
+//    std::cout << "mym =";
+//    for (int i = 0 ;itEnd != itBegin && i < 13; --itEnd, ++i ) {
+//
+//        std::cout << " ";
+//        std::cout << itEnd->first;
+//
+//    }
     std::cout << '\n';
 
 
