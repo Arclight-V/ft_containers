@@ -35,7 +35,7 @@ namespace ft {
         typedef typename ft::ReverseIterator<const_iterator>                                const_reverse_iterator;
 
     private:
-        typedef ft::RedBlackTree<value_type, Compare, allocator_type>                       RBTree;
+        typedef ft::RedBlackTree<key_type, value_type, Compare, allocator_type>             RBTree;
         RBTree                                                                              _tree;
 
         /*
@@ -90,16 +90,6 @@ namespace ft {
             return const_iterator(_tree.cend());
         }
 
-         // c_it begin() const {};
-
-        /*
-         * Return iterator to end
-         * Returns an iterator referring to the past-the-end element in the vector container.
-         *
-         * it end() {};
-         * c_it end() const {};
-         */
-
         /*
          * Return reverse iterator to reverse beginning
          * Returns a reverse iterator pointing to the last element in the container (i.e., its reverse beginning).
@@ -115,6 +105,20 @@ namespace ft {
          * rev_it rend();
          * c_rev_it rend() const;
          */
+
+        // -----------------------------------------CAPACITY------------------------------------------------------------
+
+        bool empty() const {
+            return _tree.empty();
+        }
+
+        size_type size() const {
+            return _tree.size();
+        }
+
+        size_type max_size() const {
+            return _tree.max_size();
+        }
 
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
 
@@ -141,7 +145,19 @@ namespace ft {
 
         // -----------------------------------------Erase Elements------------------------------------------------------
 
-//        void erase (iterator position) {
+        void erase (iterator position) {
+
+        }
+
+
+        // -----------------------------------------OPERATIONS----------------------------------------------------------
+
+        iterator find (const key_type& k) {
+            return _tree.find(k);
+
+        }
+
+//        const_iterator find (const key_type& k) const {
 //
 //        }
         /*
@@ -169,19 +185,6 @@ namespace ft {
          *
          */
 
-        // -----------------------------------------CAPACITY------------------------------------------------------------
-
-         bool empty() const {
-             return _tree.empty();
-         }
-
-         size_type size() const {
-             return _tree.size();
-         }
-
-         size_type max_size() const {
-             return _tree.max_size();
-         }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
 

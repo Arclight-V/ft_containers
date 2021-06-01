@@ -12,9 +12,10 @@
 #define REDBLACKTREE_H
 
 namespace ft {
-    template<class T, class Compare, class Alloc>
+    template<class Key, class T, class Compare, class Alloc>
         class RedBlackTree {
 
+        typedef Key                                                                             key_type;
         typedef T                                                                               value_type;
         typedef Compare                                                                         value_compare;
         typedef Alloc                                                                           allocator_type;
@@ -284,6 +285,23 @@ namespace ft {
             return std::make_pair(iterator(newNode), true);
         }
 
+        // -----------------------------------------OPERATIONS----------------------------------------------------------
+
+        private:
+
+        nodePtr findNode(const value_type &k) {
+
+        }
+
+        public:
+        iterator find(const key_type &k) {
+
+            //переделать на возврат nulptr
+
+            nodePtr findKey = findNode(k);
+
+            return iterator(findKey);
+        }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
 
