@@ -115,6 +115,11 @@ namespace ft {
         std::pair<iterator,bool> insert(const value_type& val) {
             return _tree.insertUnique(val);
         }
+
+        iterator insert(iterator position, const value_type& val) {
+            return _tree.isertUnique(val);
+        }
+
         /*
          * Relational operators
          *
