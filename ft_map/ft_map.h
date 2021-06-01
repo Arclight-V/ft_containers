@@ -76,10 +76,18 @@ namespace ft {
 
         iterator begin() {
             return _tree.begin();
-        };
+        }
 
         iterator end() {
             return _tree.end();
+        }
+
+        const_iterator begin() const {
+            return const_iterator(_tree.begin());
+        }
+
+        const_iterator end() const {
+            return const_iterator(_tree.end());
         }
 
          // c_it begin() const {};
@@ -117,7 +125,18 @@ namespace ft {
         }
 
         iterator insert(iterator position, const value_type& val) {
+            (void)
             return _tree.isertUnique(val);
+        }
+
+        template <class InputIterator>
+        void insert(InputIterator first, InputIterator last, typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+            (void)isIter;
+
+            for (; first != last; ++first) {
+                insert(*first);
+            }
+
         }
 
         /*
