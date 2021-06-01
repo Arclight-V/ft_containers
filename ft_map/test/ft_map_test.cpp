@@ -43,14 +43,14 @@ int main () {
     }
     std::cout << '\n';
 
-//    itBegin = map1.begin(), itEnd = map1.end();
-//    std::cout << "mym =";
-//    for (int i = 0 ;itEnd != itBegin && i < 13; --itEnd, ++i ) {
-//
-//        std::cout << " ";
-//        std::cout << itEnd->first;
-//
-//    }
+    itBegin = map1.begin(), itEnd = map1.end();
+    std::cout << "mym =";
+    for (int i = 0 ;itEnd != itBegin && i < 13; --itEnd, ++i ) {
+
+        std::cout << " ";
+        std::cout << itEnd->first;
+
+    }
     std::cout << '\n';
 
 

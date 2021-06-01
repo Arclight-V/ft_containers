@@ -100,20 +100,12 @@ namespace ft {
         MapIterator operator--() {
             nodePtr tmp = _node;
 
-            if (tmp->right && tmp->right->right == tmp) {
-                tmp = tmp->right;
-                if (tmp->right == _node)
-                    _node = tmp;
-                return (*this);
-            }
-
-            if (tmp->left->left)
+            if (_node->left->left)
             {
-               tmp = _node->left;
+                tmp = _node->left;
                 while (tmp->right->right && tmp->right != _node)
                     tmp = tmp->right;
             }
-
             else if (_node->parent)
             {
                 tmp = _node->parent;
@@ -125,33 +117,13 @@ namespace ft {
             _node = tmp;
             return (*this);
 
-//            {
-//                TreeNode *tmp = _node;
-//                if (tmp->left && tmp->left != _node)
-//                {
-//                    tmp = _node->left;
-//                    while (tmp->right)
-//                        tmp = tmp->right;
-//                }
-//                else if (_node->parent)
-//                {
-//                    tmp = _node->parent;
-//                    while (tmp->parent && _node->val.first < tmp->val.first)
-//                    {
-//                        tmp = tmp->parent;
-//                    }
-//                }
-//                _node = tmp;
-//                return (*this);
-//            }
-
         }
-//
-//        MapIterator operator--(int) {
-//            MapIterator ret(*this);
-//            _node = _node->previous;
-//            return ret;
-//        }
+
+        MapIterator operator--(int) {
+            MapIterator ret(*this);
+            _node = _node->previous;
+            return ret;
+        }
     };
 
     template<class T, class PointerT>
