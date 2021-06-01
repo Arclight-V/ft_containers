@@ -15,24 +15,24 @@ namespace ft {
     template<class T, class Compare, class Alloc>
         class RedBlackTree {
 
-        typedef T                                                               value_type;
-        typedef Compare                                                         value_compare;
-        typedef Alloc                                                           allocator_type;
-        typedef typename allocator_type::size_type                              size_type;
-        typedef typename ft::NodeTraits<value_type>::_tn_list_TS_Ptr            nodePtr;
+        typedef T                                                                               value_type;
+        typedef Compare                                                                         value_compare;
+        typedef Alloc                                                                           allocator_type;
+        typedef typename allocator_type::size_type                                              size_type;
+        typedef typename ft::NodeTraits<value_type>::_tn_list_TS_Ptr                            nodePtr;
 
-        typedef typename ft::MapIterator<value_type>                            iterator;
-        typedef typename ft::MapConstIterator<value_type, value_type const *>   const_iterator;
-        typedef typename ft::ReverseIterator<iterator>                          reverse_iterator;
-        typedef typename ft::ReverseIterator<const_iterator>                    const_reverse_iterator;
+        typedef typename ft::MapIterator<value_type, value_compare>                             iterator;
+        typedef typename ft::MapConstIterator<value_type, value_type const *, value_compare>    const_iterator;
+        typedef typename ft::ReverseIterator<iterator>                                          reverse_iterator;
+        typedef typename ft::ReverseIterator<const_iterator>                                    const_reverse_iterator;
 
-        nodePtr                                                                 _root;
-        nodePtr                                                                 _end;
-        nodePtr                                                                 _TNULL;
-        allocator_type                                                          _alloc;
-        std::allocator<typename ft::NodeTraits<value_type>::_tn_list_TS>        _allocNode;
-        value_compare                                                           _comp;
-        size_type                                                               _size;
+        nodePtr                                                                                 _root;
+        nodePtr                                                                                 _end;
+        nodePtr                                                                                 _TNULL;
+        allocator_type                                                                          _alloc;
+        std::allocator<typename ft::NodeTraits<value_type>::_tn_list_TS>                        _allocNode;
+        value_compare                                                                           _comp;
+        size_type                                                                               _size;
 
     public:
 
@@ -64,6 +64,14 @@ namespace ft {
 
         iterator end() {
             return iterator(_end);
+        }
+
+        const_iterator cbegin() const {
+            return const_iterator(_end->right);
+        }
+
+        const_iterator cend() const {
+            return const_iterator(_end);
         }
 
         // -----------------------------------------CAPACITY------------------------------------------------------------

@@ -17,26 +17,26 @@ namespace ft {
     template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> > >
             class map {
     public:
-        typedef Key                                                             key_type;
-        typedef T                                                               mapped_type;
-        typedef std::pair<const key_type, mapped_type>                          value_type;
-        typedef Compare                                                         key_compare;
-        typedef Alloc                                                           allocator_type;
-        typedef typename allocator_type::reference                              reference;
-        typedef typename allocator_type::const_reference                        const_reference;
-        typedef typename allocator_type::pointer                                pointer;
-        typedef typename allocator_type::const_pointer                          const_pointer;
-        typedef typename allocator_type::size_type                              size_type;
-        typedef typename allocator_type::size_type                              difference_type;
+        typedef Key                                                                         key_type;
+        typedef T                                                                           mapped_type;
+        typedef std::pair<const key_type, mapped_type>                                      value_type;
+        typedef Compare                                                                     key_compare;
+        typedef Alloc                                                                       allocator_type;
+        typedef typename allocator_type::reference                                          reference;
+        typedef typename allocator_type::const_reference                                    const_reference;
+        typedef typename allocator_type::pointer                                            pointer;
+        typedef typename allocator_type::const_pointer                                      const_pointer;
+        typedef typename allocator_type::size_type                                          size_type;
+        typedef typename allocator_type::size_type                                          difference_type;
 
-        typedef typename ft::MapIterator<value_type>                            iterator;
-        typedef typename ft::MapConstIterator<value_type, value_type const *>   const_iterator;
-        typedef typename ft::ReverseIterator<iterator>                          reverse_iterator;
-        typedef typename ft::ReverseIterator<const_iterator>                    const_reverse_iterator;
+        typedef typename ft::MapIterator<value_type, key_compare>                           iterator;
+        typedef typename ft::MapConstIterator<value_type, value_type const *, key_compare>  const_iterator;
+        typedef typename ft::ReverseIterator<iterator>                                      reverse_iterator;
+        typedef typename ft::ReverseIterator<const_iterator>                                const_reverse_iterator;
 
     private:
-        typedef ft::RedBlackTree<value_type, Compare, allocator_type>           RBTree;
-        RBTree                                                                  _tree;
+        typedef ft::RedBlackTree<value_type, Compare, allocator_type>                       RBTree;
+        RBTree                                                                              _tree;
 
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
@@ -83,11 +83,11 @@ namespace ft {
         }
 
         const_iterator begin() const {
-            return const_iterator(_tree.begin());
+            return const_iterator(_tree.cbegin());
         }
 
         const_iterator end() const {
-            return const_iterator(_tree.end());
+            return const_iterator(_tree.cend());
         }
 
          // c_it begin() const {};
@@ -125,7 +125,7 @@ namespace ft {
         }
 
         iterator insert(iterator position, const value_type& val) {
-            (void)
+            (void)position;
             return _tree.isertUnique(val);
         }
 
@@ -139,6 +139,11 @@ namespace ft {
 
         }
 
+        // -----------------------------------------Erase Elements------------------------------------------------------
+
+//        void erase (iterator position) {
+//
+//        }
         /*
          * Relational operators
          *

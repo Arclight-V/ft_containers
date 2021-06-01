@@ -13,15 +13,19 @@
 
 // BIDIRECTIONAL ITERATOR
 namespace ft {
-    template<class T> class MapIterator;
-    template<class T, class PointerT> class MapConstIterator;
+    template<class T, class Compare> class MapIterator;
+    template<class T, class PointerT, class Compare> class MapConstIterator;
 
-    template<class T>
+    template<class T, class Compare>
     class MapIterator : public ft::baseIterator<std::bidirectional_iterator_tag, T > {
-        typedef typename ft::NodeTraits<T>::_tn_list_TS_Ptr                    nodePtr;
-         nodePtr _node;
+        typedef typename ft::NodeTraits<T>::_tn_list_TS_Ptr                     nodePtr;
+        typedef Compare                                                         key_compare;
 
-        template<class, class> friend class MapConstIterator;
+        nodePtr                                                                 _node;
+        key_compare                                                             _comp;
+
+
+        template<class, class, class> friend class MapConstIterator;
         template<class, class, class, class> friend class map;
 
     public:
@@ -32,7 +36,7 @@ namespace ft {
         explicit MapIterator(nodePtr ptr = nullptr) : _node(ptr) {};
 
         // copy-constructor
-        MapIterator(MapIterator<T> const &x) : _node(x._node) {};
+        MapIterator(MapIterator<T, key_compare> const &x) : _node(x._node) {};
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
 
@@ -81,7 +85,7 @@ namespace ft {
                 else if (_node->parent)
                 {
                     tmp = _node->parent;
-                    while (tmp->parent && tmp->value_type.first < _node->value_type.first)
+                    while (tmp->parent && _comp(tmp->value_type.first, _node->value_type.first))
                     {
                         tmp = tmp->parent;
                     }
@@ -109,7 +113,7 @@ namespace ft {
             else if (_node->parent)
             {
                 tmp = _node->parent;
-                while (tmp->parent && _node->value_type.first < tmp->value_type.first)
+                while (tmp->parent && _comp(_node->value_type.first, tmp->value_type.first))
                 {
                     tmp = tmp->parent;
                 }
@@ -126,18 +130,21 @@ namespace ft {
         }
     };
 
-    template<class T, class PointerT>
+    template<class T, class PointerT, class Compare>
     class MapConstIterator : public ft::baseIterator<std::bidirectional_iterator_tag, T, PointerT> {
-        typedef typename ft::NodeTraits<T>::_dl_list_TS                     Node;
-        Node *_node;
+        typedef typename ft::NodeTraits<T>::_dl_list_TS_Ptr                     nodePtr;
+        typedef Compare                                                         key_compare;
+
+        nodePtr                                                                 _node;
+        key_compare                                                             _comp;
 
         template<class, class, class, class> friend class map;
 
     public:
 
-        explicit MapConstIterator(Node *ptr = nullptr) : _node(ptr) {};
+        explicit MapConstIterator(nodePtr ptr = nullptr) : _node(ptr) {};
 
-        MapConstIterator(MapIterator<T> const &x) : _node(x._node) {};
+        MapConstIterator(MapIterator<T, key_compare> const &x) : _node(x._node) {};
 
         virtual ~MapConstIterator() {};
 
@@ -164,27 +171,63 @@ namespace ft {
             return &_node->value_type;
         }
 
-//        MapConstIterator operator++() {
-//            _node = _node->next;
-//            return *this;
-//        }
-//
-//        MapConstIterator operator++(int) {
-//            MapConstIterator ret(*this);
-//            _node = _node->next;
-//            return ret;
-//        }
-//
-//        MapConstIterator operator--() {
-//            _node = _node->previous;
-//            return *this;
-//        }
-//
-//        MapConstIterator operator--(int) {
-//            MapConstIterator ret(*this);
-//            _node = _node->previous;
-//            return ret;
-//        }
+// Can be incremented (if in a dereferenceable state).
+        // The result is either also dereferenceable or a past-the-end iterator.
+        // Two iterators that compare equal, keep comparing equal after being both increased
+        MapConstIterator operator++() {
+            nodePtr tmp = _node;
+
+            if (_node->right->right)
+            {
+                tmp = _node->right;
+                while (tmp->left->left && tmp->left != _node)
+                    tmp = tmp->left;
+            }
+            else if (_node->parent)
+            {
+                tmp = _node->parent;
+                while (tmp->parent && _comp(tmp->value_type.first, _node->value_type.first))
+                {
+                    tmp = tmp->parent;
+                }
+            }
+            _node = tmp;
+            return (*this);
+        }
+
+        MapConstIterator operator++(int) {
+            MapConstIterator ret(*this);
+            operator++();
+            return ret;
+        }
+
+        // Can be decremented (if a dereferenceable iterator value precedes it).
+        MapConstIterator operator--() {
+            nodePtr tmp = _node;
+
+            if (_node->left->left)
+            {
+                tmp = _node->left;
+                while (tmp->right->right && tmp->right != _node)
+                    tmp = tmp->right;
+            }
+            else if (_node->parent)
+            {
+                tmp = _node->parent;
+                while (tmp->parent && _comp(_node->value_type.first, tmp->value_type.first))
+                {
+                    tmp = tmp->parent;
+                }
+            }
+            _node = tmp;
+            return (*this);
+        }
+
+        MapConstIterator operator--(int) {
+            MapConstIterator ret(*this);
+            _node = _node->previous;
+            return ret;
+        }
     };
 }
 
