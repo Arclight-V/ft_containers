@@ -63,6 +63,11 @@ int main () {
     }
     std::cout << '\n';
 
+    ft::map<int, int>::iterator find =  map1.find(4);
+
+    std::cout << "find - ";
+    std::cout << find->first << '\n';
+
 
 
     return 0;

@@ -145,17 +145,20 @@ namespace ft {
 
         // -----------------------------------------Erase Elements------------------------------------------------------
 
-        void erase (iterator position) {
-
-        }
+//        void erase(iterator position) {
+//
+//        }
 
 
         // -----------------------------------------OPERATIONS----------------------------------------------------------
 
-        iterator find (const key_type& k) {
+        iterator find(const key_type& k) {
             return _tree.find(k);
-
         }
+
+//        const_iterator find(const key_type& k) const{
+//            return _tree.find(k);
+//        }
 
 //        const_iterator find (const key_type& k) const {
 //

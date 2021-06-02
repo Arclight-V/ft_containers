@@ -287,20 +287,24 @@ namespace ft {
 
         // -----------------------------------------OPERATIONS----------------------------------------------------------
 
-        private:
-
-        nodePtr findNode(const value_type &k) {
-
+    private:
+        nodePtr findNode(const key_type &k) {
+            nodePtr current = _root;
+            while (current != _TNULL) {
+                if (k == current->value_type.first) {
+                    return current;
+                }
+                current = _comp(k, current->value_type.first) ? current->left : current->right;
+            }
+            return nullptr;
         }
 
-        public:
+    public:
         iterator find(const key_type &k) {
-
-            //переделать на возврат nulptr
-
             nodePtr findKey = findNode(k);
-
-            return iterator(findKey);
+            if (findKey)
+                return iterator(findKey);
+            return end();
         }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
