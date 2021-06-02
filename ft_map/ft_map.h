@@ -145,9 +145,9 @@ namespace ft {
 
         // -----------------------------------------Erase Elements------------------------------------------------------
 
-//        void erase(iterator position) {
-//
-//        }
+        void erase(iterator position) {
+            _tree.erase(position);
+        }
 
 
         // -----------------------------------------OPERATIONS----------------------------------------------------------
@@ -156,9 +156,9 @@ namespace ft {
             return _tree.find(k);
         }
 
-//        const_iterator find(const key_type& k) const{
-//            return _tree.find(k);
-//        }
+        const_iterator find(const key_type& k) const {
+            return _tree.find(k);
+        }
 
 //        const_iterator find (const key_type& k) const {
 //

@@ -32,20 +32,11 @@ int main () {
     }
     std::cout << '\n';
 
-    mapstd.insert(mapstd.begin(), std::pair<int,int>( 100 ,100) );
-
-    itBeginStd = mapstd.begin(), itEndStd = mapstd.end();
-    std::cout << "std =";
-    for (; itBeginStd != itEndStd; ++itBeginStd) {
-        std::cout << " ";
-        std::cout << itBeginStd->first;
-    }
-    std::cout << '\n';
 //
 //
     ft::map<int, int>::iterator itBegin = map1.begin(), itEnd = map1.end();
     std::cout << "mym =";
-    for (int i = 0 ;itBegin != itEnd && i < 13; ++itBegin, ++i) {
+    for (int i = 0 ;itBegin != itEnd ; ++itBegin, ++i) {
 
         std::cout << " ";
         std::cout << itBegin->first;
@@ -53,20 +44,17 @@ int main () {
     }
     std::cout << '\n';
 
-    itBegin = map1.begin(), itEnd = map1.end();
-    std::cout << "mym =";
-    for (int i = 0 ;itEnd != itBegin && i < 13; --itEnd, ++i ) {
+    map1.erase(map1.begin());
+    itBegin = map1.begin();
+    itEnd = map1.end();
+    std::cout << "erase =";
+    for (int i = 0 ;itBegin != itEnd ; ++itBegin, ++i) {
 
         std::cout << " ";
-        std::cout << itEnd->first;
+        std::cout << itBegin->first;
 
     }
     std::cout << '\n';
-
-    ft::map<int, int>::iterator find =  map1.find(4);
-
-    std::cout << "find - ";
-    std::cout << find->first << '\n';
 
 
 

@@ -27,6 +27,7 @@ namespace ft {
 
         template<class, class, class> friend class MapConstIterator;
         template<class, class, class, class> friend class map;
+        template<class, class, class, class> friend class RedBlackTree;
 
     public:
 
