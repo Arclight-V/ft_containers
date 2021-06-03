@@ -431,6 +431,22 @@ namespace ft {
             ft::swap(_size, x._size);
         }
 
+        // -----------------------------------------Clear content-------------------------------------------------------
+
+    private:
+        void deleteRBTree(nodePtr root) {
+           if (root != _TNULL) {
+               deleteRBTree(root->left);
+               deleteRBTree(root->right);
+               destroyAndDeallocateNode(root);
+           }
+        }
+
+    public:
+        void clear() {
+            deleteRBTree(_root);
+        }
+
         // -----------------------------------------OPERATIONS----------------------------------------------------------
 
     private:
@@ -496,6 +512,7 @@ namespace ft {
         /*
         ** -----------------------------------------AUXILIARY FUNCTIONS-------------------------------------------------
         */
+
         // -----------------------------------------Allocate Memory-----------------------------------------------------
 
         nodePtr allocateNewNode(const value_type &val, nodePtr parent) {
@@ -507,6 +524,13 @@ namespace ft {
             newNode->right = _TNULL;
             newNode->color = RED;
             return newNode;
+        }
+
+        // -----------------------------------------Deallocate Memory---------------------------------------------------
+
+        void destroyAndDeallocateNode(nodePtr node) {
+            _alloc.destroy(&node->value_type);
+            _allocNode.deallocate(node, 1);
         }
     };
 }
