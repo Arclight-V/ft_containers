@@ -61,12 +61,8 @@ namespace ft {
 
          // Copy constructor
          // Constructs a container with a copy of each of the elements in x.
-//         map (const map& x) : _end(allocateMemoryForNode()),
-//                              _comp(x._comp),
-//                              _alloc(x.get_allocator()),
-//                              _size(0) {
-//
-//        }
+         map (const map& x) : _tree(x._tree) {
+        }
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
         virtual ~map() {

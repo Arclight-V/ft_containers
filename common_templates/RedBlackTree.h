@@ -58,6 +58,17 @@ namespace ft {
 
         }
 
+        RedBlackTree(const RedBlackTree& x) :   _end(x._end),
+                                                _TNULL(x._TNULL),
+                                                _alloc(x._alloc),
+                                                _allocNode(x._allocNode),
+                                                _comp(x._comp),
+                                                _size(x._size) {
+            for (iterator itBegin = x.begn(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
+                erase(*itBegin);
+            }
+        }
+
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
         virtual ~RedBlackTree() {
             clear();
