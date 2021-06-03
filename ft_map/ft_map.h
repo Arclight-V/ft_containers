@@ -146,12 +146,18 @@ namespace ft {
         // -----------------------------------------Erase Elements------------------------------------------------------
 
         void erase(iterator position) {
-            erase(position->first);
+            _tree.erase(position->first);
         }
 
         size_type erase(const key_type& k) {
             _tree.erase(k);
             return 1;
+        }
+
+        void erase(iterator first, iterator last) {
+            while(first != last) {
+                _tree.erase(first->first);
+            }
         }
 
 
