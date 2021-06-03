@@ -43,20 +43,21 @@ namespace ft {
         */
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
-        // Empty container constructor (default constructor)
-        // Constructs an empty container, with no elements.
     public:
         explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _tree(comp, alloc) {}
 
         // Constructs a container with as many elements as the range [first,last),
         // with each element constructed from its corresponding element in that range.
 
-//        template <class InputIterator>
-//        map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(),
-//            ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
-//            (void)isIter;
-//
-//        }
+        template <class InputIterator>
+        map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(),
+            ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) : _tree(comp, alloc) {
+            (void)isIter;
+
+            for (; first != last; ++first) {
+                _tree.insert(*first);
+            }
+        }
 
          // Copy constructor
          // Constructs a container with a copy of each of the elements in x.
