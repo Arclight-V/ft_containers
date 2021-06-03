@@ -272,6 +272,7 @@ namespace ft {
 
             insertFixup(newNode);
             configureEndNode();
+            ++_size;
             return std::make_pair(iterator(newNode), true);
         }
 
@@ -414,7 +415,20 @@ namespace ft {
                 deleteFix(x);
             }
             configureEndNode();
+            --_size;
             return true;
+        }
+
+        // -----------------------------------------Swap content--------------------------------------------------------
+
+        void swap(RedBlackTree& x) {
+            ft::swap(_root, x._root);
+            ft::swap(_end, x._end);
+            ft::swap(_TNULL, x._TNULL);
+            ft::swap(_alloc, x._alloc);
+            ft::swap(_allocNode, x._allocNode);
+            ft::swap(_comp, x._comp);
+            ft::swap(_size, x._size);
         }
 
         // -----------------------------------------OPERATIONS----------------------------------------------------------
