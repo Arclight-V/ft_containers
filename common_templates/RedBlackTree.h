@@ -58,6 +58,13 @@ namespace ft {
 
         }
 
+        // -----------------------------------------DESTRUCTOR----------------------------------------------------------
+        virtual ~RedBlackTree() {
+            clear();
+            destroyAndDeallocateNode(_end);
+            destroyAndDeallocateNode(_TNULL);
+        }
+
         // -----------------------------------------ITERATORS-----------------------------------------------------------
 
         iterator begin() {

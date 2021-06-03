@@ -68,10 +68,8 @@ namespace ft {
 //        }
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
-//        virtual ~map() {
-//            clear();
-//            destroyAndDeallocateNode(_end);
-//        }
+        virtual ~map() {
+        }
 
 
         iterator begin() {
