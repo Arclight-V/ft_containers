@@ -373,15 +373,15 @@ namespace ft {
         }
 
     public:
-        void erase(iterator &position) {
+        bool erase(const key_type &k) {
 
             unlinkEndFromTree();
 
             nodePtr z = _TNULL, x = nullptr, y = nullptr;
 
-            if (!(z = findNode(position._node))) {
+            if (!(z = findNodeKey(k))) {
                 linkEndFromTree();
-                return;
+                return false;
             }
 
             y = z;
@@ -414,6 +414,7 @@ namespace ft {
                 deleteFix(x);
             }
             configureEndNode();
+            return true;
         }
 
         // -----------------------------------------OPERATIONS----------------------------------------------------------
