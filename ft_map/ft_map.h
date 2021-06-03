@@ -55,7 +55,7 @@ namespace ft {
             (void)isIter;
 
             for (; first != last; ++first) {
-                _tree.insert(*first);
+                _tree.insertUnique(*first);
             }
         }
 
@@ -68,6 +68,11 @@ namespace ft {
         virtual ~map() {
         }
 
+        // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
+
+        map operator=(const map &x) {
+            _tree = x._tree;
+        }
 
         iterator begin() {
             return _tree.begin();
@@ -120,7 +125,6 @@ namespace ft {
         mapped_type& operator[] (const key_type& k) {
             (*((this->insert(make_pair(k,mapped_type()))).first)).second;
         }
-
 
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
 

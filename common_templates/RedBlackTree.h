@@ -65,7 +65,7 @@ namespace ft {
                                                 _comp(x._comp),
                                                 _size(x._size) {
             for (iterator itBegin = x.begn(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
-                erase(*itBegin);
+                insertUnique(*itBegin);
             }
         }
 
@@ -74,6 +74,17 @@ namespace ft {
             clear();
             destroyAndDeallocateNode(_end);
             destroyAndDeallocateNode(_TNULL);
+        }
+
+        // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
+
+        RedBlackTree operator=(const RedBlackTree &x) {
+            if (this != &x) {
+                clear();
+                for (iterator itBegin = x.begn(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
+                    insertUnique(*itBegin);
+                }
+            }
         }
 
         // -----------------------------------------ITERATORS-----------------------------------------------------------
