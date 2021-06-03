@@ -51,7 +51,7 @@ namespace ft {
 
         template <class InputIterator>
         map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(),
-            ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) : _tree(comp, alloc) {
+            typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) : _tree(comp, alloc) {
             (void)isIter;
 
             for (; first != last; ++first) {
