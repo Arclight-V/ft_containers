@@ -24,8 +24,8 @@ namespace ft {
 
         typedef typename ft::MapIterator<value_type, value_compare> iterator;
         typedef typename ft::MapConstIterator<value_type, value_type const *, value_compare> const_iterator;
-        typedef typename ft::ReverseIterator<iterator> reverse_iterator;
-        typedef typename ft::ReverseIterator<const_iterator> const_reverse_iterator;
+//        typedef typename ft::ReverseIterator<iterator> reverse_iterator;
+//        typedef typename ft::ReverseIterator<const_iterator> const_reverse_iterator;
 
         nodePtr _root;
         nodePtr _end;
@@ -474,6 +474,14 @@ namespace ft {
     public:
         void clear() {
             deleteRBTree(_root);
+        }
+
+        // -----------------------------------------OBSERVERS-----------------------------------------------------------
+
+        // -----------------------------------------Return Key Comparison Object----------------------------------------
+
+        value_compare key_comp() const {
+            return _comp;
         }
 
         // -----------------------------------------OPERATIONS----------------------------------------------------------
