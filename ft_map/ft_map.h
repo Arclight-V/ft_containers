@@ -74,6 +74,8 @@ namespace ft {
             _tree = x._tree;
         }
 
+        // -----------------------------------------ITERATORS-----------------------------------------------------------
+
         iterator begin() {
             return _tree.begin();
         }
@@ -90,21 +92,21 @@ namespace ft {
             return const_iterator(_tree.cend());
         }
 
-        /*
-         * Return reverse iterator to reverse beginning
-         * Returns a reverse iterator pointing to the last element in the container (i.e., its reverse beginning).
-         *
-         * rev_it rbegin();
-         * c_rev_it rbegin() const;
-         */
+        reverse_iterator  rbegin() {
+            return reverse_iterator(end());
+        }
 
-        /*
-         * Return reverse iterator to reverse end
-         * Returns a reverse iterator pointing to the theoretical element preceding the first element in the map container (which is considered its reverse end).
-         *
-         * rev_it rend();
-         * c_rev_it rend() const;
-         */
+        const_reverse_iterator rbegin() const {
+            return const_reverse_iterator(end());
+        }
+
+        reverse_iterator rend() {
+            return reverse_iterator(begin());
+        }
+
+        const_reverse_iterator rend() const {
+            return const_reverse_iterator(begin());
+        }
 
         // -----------------------------------------CAPACITY------------------------------------------------------------
 
