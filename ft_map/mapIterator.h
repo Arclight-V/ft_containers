@@ -132,7 +132,7 @@ namespace ft {
 
     template<class T, class PointerT, class Compare>
     class MapConstIterator : public ft::baseIterator<std::bidirectional_iterator_tag, T, PointerT> {
-        typedef typename ft::NodeTraits<T>::_dl_list_TS_Ptr                     nodePtr;
+        typedef typename ft::NodeTraits<T>::_tn_list_TS_Ptr                     nodePtr;
         typedef Compare                                                         key_compare;
 
         nodePtr                                                                 _node;
@@ -144,7 +144,7 @@ namespace ft {
 
         explicit MapConstIterator(nodePtr ptr = nullptr) : _node(ptr) {};
 
-        MapConstIterator(MapIterator<T, key_compare> const &x) : _node(x._node) {};
+        MapConstIterator(MapConstIterator const &x) : _node(x._node) {};
 
         virtual ~MapConstIterator() {};
 

@@ -98,11 +98,11 @@ namespace ft {
         }
 
         const_iterator begin() const {
-            return const_iterator(_tree.cbegin());
+            return _tree.begin();
         }
 
         const_iterator end() const {
-            return const_iterator(_tree.cend());
+            return _tree.end();
         }
 
         reverse_iterator  rbegin() {
@@ -151,7 +151,7 @@ namespace ft {
 
         iterator insert(iterator position, const value_type& val) {
             (void)position;
-            return _tree.isertUnique(val);
+            return _tree.insertUnique(val);
         }
 
         template <class InputIterator>
@@ -235,6 +235,14 @@ namespace ft {
 
         const_iterator upper_bound(const key_type& k) const {
             return _tree.upper_bond(k);
+        }
+
+        std::pair<const_iterator,const_iterator> equal_range(const key_type& k) const {
+            return _tree.equal_range(k);
+        }
+
+        std::pair<iterator,iterator> equal_range(const key_type& k) {
+            return _tree.equal_range(k);
         }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------

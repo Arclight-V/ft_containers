@@ -77,7 +77,7 @@ namespace ft {
                                                 _allocNode(x._allocNode),
                                                 _comp(x._comp),
                                                 _size(x._size) {
-            for (iterator itBegin = x.begn(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
+            for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
                 insertUnique(*itBegin);
             }
         }
@@ -110,11 +110,11 @@ namespace ft {
             return iterator(_end);
         }
 
-        const_iterator cbegin() const {
+        const_iterator begin() const {
             return const_iterator(_end->right);
         }
 
-        const_iterator cend() const {
+        const_iterator end() const {
             return const_iterator(_end);
         }
 
@@ -578,7 +578,13 @@ namespace ft {
             return end();
         }
 
+        std::pair<const_iterator,const_iterator> equal_range(const key_type& k) const {
+            return std::make_pair(lower_bound(k), upper_bond(k));
+        }
 
+        std::pair<iterator,iterator> equal_range(const key_type& k) {
+            return std::make_pair(lower_bound(k), upper_bond(k));
+        }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
 
