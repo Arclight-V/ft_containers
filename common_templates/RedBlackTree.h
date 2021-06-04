@@ -532,6 +532,54 @@ namespace ft {
             return 0;
         }
 
+        iterator lower_bound (const key_type& k) {
+            nodePtr node = findNodeKey(k);
+            if (node) {
+                if ((node = findNode(node->left))) {
+                    return iterator(node);
+                }
+            }
+            return end();
+        }
+
+
+
+        const_iterator lower_bound (const key_type& k) const {
+            nodePtr node = findNodeKey(k);
+            if (node) {
+                if ((node = findNode(node->left))) {
+                    return iterator(node);
+                }
+            }
+            return end();
+        }
+
+        iterator upper_bond(const key_type &k) {
+            nodePtr node = findNodeKey(k);
+            if (node) {
+                iterator it = const_iterator(node);
+                ++it;
+                if ((node = findNode(it->first))) {
+                    return iterator(node);
+                }
+            }
+            return end();
+        }
+
+        const_iterator upper_bond(const key_type &k) const {
+            nodePtr node = findNodeKey(k);
+            if (node) {
+                const_iterator it = const_iterator(node);
+                ++it;
+                if ((node = findNode(it->first))) {
+                    return const_iterator(node);
+                }
+            }
+            return end();
+        }
+
+
+
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
 
         allocator_type get_allocator() const {

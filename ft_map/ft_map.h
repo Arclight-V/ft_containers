@@ -51,20 +51,6 @@ namespace ft {
         typedef ft::RedBlackTree<key_type, value_type, Compare, allocator_type>             RBTree;
         RBTree                                                                              _tree;
 
-
-//        class value_compare : public std::binary_function<value_type, value_type, bool>
-//        {
-//            friend class RedBlackTree;
-//        protected:
-//            Compare comp;
-//            value_compare(Compare c) : comp(c) {}
-//        public:
-//            bool operator() (const value_type& x, const value_type& y) const
-//            {
-//                return comp(x.first, y.first);
-//            }
-//        };
-
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
         */
@@ -235,35 +221,21 @@ namespace ft {
         size_type count(const key_type& k) const {
             return _tree.count(k);
         }
+        iterator lower_bound(const key_type& k) {
+            return _tree.lower_bond(k);
+        }
 
-//        const_iterator find (const key_type& k) const {
-//
-//        }
-        /*
-         * Relational operators
-         *
-         */
-        /*
-        template <class T, class Alloc>
-        bool operator== (const map<T,Alloc>& lhs, const map<T,Alloc>& rhs);
+        const_iterator lower_bound(const key_type& k) const {
+            return _tree.lower_bond(k);
+        }
 
-        template <class T, class Alloc>
-        bool operator!= (const map<T,Alloc>& lhs, const map<T,Alloc>& rhs);
+        iterator upper_bound(const key_type& k) {
+            return _tree.upper_bond(k);
+        }
 
-        template <class T, class Alloc>
-        bool operator<  (const map<T,Alloc>& lhs, const map<T,Alloc>& rhs);
-
-        template <class T, class Alloc>
-        bool operator<= (const map<T,Alloc>& lhs, const map<T,Alloc>& rhs);
-
-        template <class T, class Alloc>
-        bool operator>  (const map<T,Alloc>& lhs, const map<T,Alloc>& rhs);
-
-        template <class T, class Alloc>
-        bool operator>= (const map<T,Alloc>& lhs, const map<T,Alloc>& rhs);
-         *
-         */
-
+        const_iterator upper_bound(const key_type& k) const {
+            return _tree.upper_bond(k);
+        }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
 
