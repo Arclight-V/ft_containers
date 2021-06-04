@@ -34,18 +34,18 @@ namespace ft {
         typedef typename ft::ReverseIterator<iterator>                                      reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator>                                const_reverse_iterator;
 
-                class value_compare
-                {
-                    friend class map;
-                protected:
-                    key_compare comp;
-                    value_compare (Compare c) : comp(c) {}
-                public:
-                    typedef bool result_type;
-                    bool operator() (const value_type& x, const value_type& y) const {
-                        return comp(x.first, y.first);
-                    }
-                };
+        class value_compare
+        {
+            friend class map;
+        protected:
+            key_compare comp;
+            value_compare (Compare c) : comp(c) {}
+        public:
+            typedef bool result_type;
+            bool operator() (const value_type& x, const value_type& y) const {
+                return comp(x.first, y.first);
+            }
+        };
 
     private:
         typedef ft::RedBlackTree<key_type, value_type, Compare, allocator_type>             RBTree;
