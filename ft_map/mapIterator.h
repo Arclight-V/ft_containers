@@ -24,7 +24,6 @@ namespace ft {
         nodePtr                                                                 _node;
         key_compare                                                             _comp;
 
-
         template<class, class, class> friend class MapConstIterator;
         template<class, class, class, class> friend class map;
         template<class, class, class, class> friend class RedBlackTree;

@@ -34,9 +34,36 @@ namespace ft {
         typedef typename ft::ReverseIterator<iterator>                                      reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator>                                const_reverse_iterator;
 
+                class value_compare
+                {
+                    friend class map;
+                protected:
+                    key_compare comp;
+                    value_compare (Compare c) : comp(c) {}
+                public:
+                    typedef bool result_type;
+                    bool operator() (const value_type& x, const value_type& y) const {
+                        return comp(x.first, y.first);
+                    }
+                };
+
     private:
         typedef ft::RedBlackTree<key_type, value_type, Compare, allocator_type>             RBTree;
         RBTree                                                                              _tree;
+
+
+//        class value_compare : public std::binary_function<value_type, value_type, bool>
+//        {
+//            friend class RedBlackTree;
+//        protected:
+//            Compare comp;
+//            value_compare(Compare c) : comp(c) {}
+//        public:
+//            bool operator() (const value_type& x, const value_type& y) const
+//            {
+//                return comp(x.first, y.first);
+//            }
+//        };
 
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
@@ -188,6 +215,12 @@ namespace ft {
             return _tree.key_comp();
         }
 
+        // -----------------------------------------Return value Comparison Object----------------------------------------
+
+        value_compare value_comp() const {
+            return _tree.value_comp();
+        }
+
 
         // -----------------------------------------OPERATIONS----------------------------------------------------------
 
@@ -197,6 +230,10 @@ namespace ft {
 
         const_iterator find(const key_type& k) const {
             return _tree.find(k);
+        }
+
+        size_type count(const key_type& k) const {
+            return _tree.count(k);
         }
 
 //        const_iterator find (const key_type& k) const {

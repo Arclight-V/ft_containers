@@ -24,8 +24,21 @@ namespace ft {
 
         typedef typename ft::MapIterator<value_type, value_compare> iterator;
         typedef typename ft::MapConstIterator<value_type, value_type const *, value_compare> const_iterator;
-//        typedef typename ft::ReverseIterator<iterator> reverse_iterator;
-//        typedef typename ft::ReverseIterator<const_iterator> const_reverse_iterator;
+        typedef typename ft::ReverseIterator<iterator> reverse_iterator;
+        typedef typename ft::ReverseIterator<const_iterator> const_reverse_iterator;
+
+//        class valuecompare : public std::binary_function<value_type, value_type, bool>
+//        {
+//            friend class RedBlackTree;
+//        protected:
+//            Compare comp;
+//            valuecompare(Compare c) : comp(c) {}
+//        public:
+//            bool operator() (const value_type& x, const value_type& y) const
+//            {
+//                return comp(x.first, y.first);
+//            }
+//        };
 
         nodePtr _root;
         nodePtr _end;
@@ -35,8 +48,8 @@ namespace ft {
         value_compare _comp;
         size_type _size;
 
-    public:
 
+    public:
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
         explicit RedBlackTree(const value_compare &compare, const allocator_type &alloc = allocator_type()) : _root(
@@ -511,6 +524,12 @@ namespace ft {
             if (findKey)
                 return const_iterator(findKey);
             return end();
+        }
+
+        size_type count(const key_type& k) const {
+            if (findNodeKey(k))
+                return 1;
+            return 0;
         }
 
         // -----------------------------------------ALLOCATOR-----------------------------------------------------------
