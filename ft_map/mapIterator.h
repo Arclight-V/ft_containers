@@ -36,7 +36,7 @@ namespace ft {
         explicit MapIterator(nodePtr ptr = nullptr) : _node(ptr) {};
 
         // copy-constructor
-        MapIterator(MapIterator<T, key_compare> const &x) : _node(x._node) {};
+        MapIterator(MapIterator const &x) : _node(x._node) {};
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
 
@@ -144,7 +144,7 @@ namespace ft {
 
         explicit MapConstIterator(nodePtr ptr = nullptr) : _node(ptr) {};
 
-        MapConstIterator(MapConstIterator const &x) : _node(x._node) {};
+        MapConstIterator(MapIterator<T, Compare> const &x) : _node(x._node) {};
 
         virtual ~MapConstIterator() {};
 

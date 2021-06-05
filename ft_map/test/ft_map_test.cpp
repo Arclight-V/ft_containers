@@ -382,35 +382,35 @@ void reverse_iterator() {
 }
 
 int main() {
-	// Constructors
-	// default_constructor();
-	// constructor_first_last();
-	// copy_constructor();
-	// // ------------
-
-	// // Element access
-	// brackets();
-	// // at();
-	// // ------------
-
-	// //Modifiers
-	// insert_val();
-	// insert_position_val();
-	// insert_first_last();
-	// erase_position();
-	// erase_key();
-	// erase_firts_last();
-	// swap();
-	// clear();
-	// // ------------
-
-	// // Operations
-	// find();
-	// count();
-	// lower_bound();
-	// upper_bound();
-	// equal_range();
-	// // ------------
-	// reverse_iterator();
+//	 Constructors
+	 default_constructor();
+	 constructor_first_last();
+//	 copy_constructor();
+//	 // ------------
+//
+//	 // Element access
+//	 brackets();
+//	 // at();
+//	 // ------------
+//
+//	 //Modifiers
+//	 insert_val();
+//	 insert_position_val();
+//	 insert_first_last();
+//	 erase_position();
+//	 erase_key();
+//	 erase_firts_last();
+//	 swap();
+//	 clear();
+//	 // ------------
+//
+//	 // Operations
+//	 find();
+//	 count();
+//	 lower_bound();
+//	 upper_bound();
+//	 equal_range();
+//	 // ------------
+//	 reverse_iterator();
 	return 0;
 }

@@ -138,7 +138,7 @@ namespace ft {
         // -----------------------------------------ELEMENT ACCESS------------------------------------------------------
 
         mapped_type& operator[] (const key_type& k) {
-            (*((this->insert(make_pair(k,mapped_type()))).first)).second;
+            return (*((this->insert(std::make_pair(k,mapped_type()))).first)).second;
         }
 
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
@@ -151,7 +151,9 @@ namespace ft {
 
         iterator insert(iterator position, const value_type& val) {
             (void)position;
-            return _tree.insertUnique(val);
+
+            std::pair<typename ft::map<key_type, mapped_type>::iterator,bool> ret = insert(val);
+            return ret.first;
         }
 
         template <class InputIterator>
@@ -222,7 +224,7 @@ namespace ft {
             return _tree.count(k);
         }
         iterator lower_bound(const key_type& k) {
-            return _tree.lower_bond(k);
+            return _tree.lower_bound(k);
         }
 
         const_iterator lower_bound(const key_type& k) const {

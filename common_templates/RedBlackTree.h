@@ -27,19 +27,6 @@ namespace ft {
         typedef typename ft::ReverseIterator<iterator> reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator> const_reverse_iterator;
 
-//        class valuecompare : public std::binary_function<value_type, value_type, bool>
-//        {
-//            friend class RedBlackTree;
-//        protected:
-//            Compare comp;
-//            valuecompare(Compare c) : comp(c) {}
-//        public:
-//            bool operator() (const value_type& x, const value_type& y) const
-//            {
-//                return comp(x.first, y.first);
-//            }
-//        };
-
         nodePtr _root;
         nodePtr _end;
         nodePtr _TNULL;
@@ -500,7 +487,7 @@ namespace ft {
         // -----------------------------------------OPERATIONS----------------------------------------------------------
 
     private:
-        nodePtr findNodeKey(const key_type &k) {
+        nodePtr findNodeKey(const key_type &k) const {
             nodePtr current = _root;
             while (current != _TNULL) {
                 if (k == current->value_type.first) {
@@ -557,9 +544,9 @@ namespace ft {
         iterator upper_bond(const key_type &k) {
             nodePtr node = findNodeKey(k);
             if (node) {
-                iterator it = const_iterator(node);
+                iterator it = iterator(node);
                 ++it;
-                if ((node = findNode(it->first))) {
+                if ((node = findNodeKey(it->first))) {
                     return iterator(node);
                 }
             }
