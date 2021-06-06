@@ -58,12 +58,25 @@ namespace ft {
 
         }
 
-        RedBlackTree(const RedBlackTree& x) :   _end(x._end),
-                                                _TNULL(x._TNULL),
-                                                _alloc(x._alloc),
+        RedBlackTree(const RedBlackTree& x) :   _alloc(x._alloc),
                                                 _allocNode(x._allocNode),
                                                 _comp(x._comp),
-                                                _size(x._size) {
+                                                _size(0) {
+            _end = _allocNode.allocate(1);
+            std::memset(&_end->value_type, 0, sizeof(value_type));
+            _end->parent = _end;
+            _end->left = _end;
+            _end->right = _end;
+            _end->color = NONE;
+
+            _TNULL = _allocNode.allocate(1);
+            std::memset(&_TNULL->value_type, 0, sizeof(value_type));
+            _TNULL->left = nullptr;
+            _TNULL->right = nullptr;
+            _TNULL->color = BLACK;
+
+            _root = _TNULL;
+
             for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
                 insertUnique(*itBegin);
             }

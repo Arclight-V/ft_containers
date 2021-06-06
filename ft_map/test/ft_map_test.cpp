@@ -385,7 +385,7 @@ int main() {
 //	 Constructors
 	 default_constructor();
 	 constructor_first_last();
-//	 copy_constructor();
+	 copy_constructor();
 //	 // ------------
 //
 //	 // Element access
@@ -412,5 +412,6 @@ int main() {
 //	 equal_range();
 //	 // ------------
 //	 reverse_iterator();
+
 	return 0;
 }
