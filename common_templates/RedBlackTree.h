@@ -71,6 +71,7 @@ namespace ft {
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
         virtual ~RedBlackTree() {
+            unlinkEndFromTree();
             clear();
             destroyAndDeallocateNode(_end);
             destroyAndDeallocateNode(_TNULL);
@@ -291,11 +292,13 @@ namespace ft {
             if (!newNode->parent) {
                 newNode->color = BLACK;
                 configureEndNode();
+                ++_size;
                 return std::make_pair(iterator(newNode), true);
             }
 
             if (!newNode->parent->parent) {
                 configureEndNode();
+                ++_size;
                 return std::make_pair(iterator(newNode), true);
             }
 

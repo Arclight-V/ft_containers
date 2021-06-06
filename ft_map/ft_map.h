@@ -68,6 +68,10 @@ namespace ft {
             (void)isIter;
 
             for (; first != last; ++first) {
+
+                // перисать
+                // создать модуль для добавления одного элемента и обернуть inseertUnique в шаблон
+
                 _tree.insertUnique(*first);
             }
         }
