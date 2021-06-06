@@ -174,7 +174,7 @@ void erase_position() {
 
 	for (int i = 0; i < 20; ++i) {
 		src.push_back(std::pair<int, Test>(i, i));
-		src.push_back(std::pair<int, Test>(i, i));
+//		src.push_back(std::pair<int, Test>(i, i));
 	}
 
 	lib::con<int, Test>           def(src.begin(), src.end());
@@ -389,15 +389,15 @@ int main() {
 //	 // ------------
 //
 //	 // Element access
-//	 brackets();
+	 brackets();
 //	 // at();
 //	 // ------------
 //
 //	 //Modifiers
-//	 insert_val();
-//	 insert_position_val();
-//	 insert_first_last();
-//	 erase_position();
+	 insert_val();
+	 insert_position_val();
+	 insert_first_last();
+	 erase_position();
 //	 erase_key();
 //	 erase_firts_last();
 //	 swap();

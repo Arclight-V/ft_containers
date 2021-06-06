@@ -341,6 +341,9 @@ namespace ft {
             } else if (u == u->parent->left) {
                 u->parent->left = v;
             }
+            else {
+                u->parent->right = v;
+            }
             v->parent = u->parent;
         }
 
@@ -455,7 +458,7 @@ namespace ft {
                 y->left->parent = y;
                 y->color = z->color;
             }
-            delete z;
+            destroyAndDeallocateNode(z);
             if (y_original_color == BLACK) {
                 deleteFix(x);
             }
