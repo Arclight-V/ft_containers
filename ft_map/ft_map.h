@@ -177,8 +177,9 @@ namespace ft {
         }
 
         size_type erase(const key_type& k) {
-            _tree.erase(k);
-            return 1;
+            if (_tree.erase(k))
+                return 1;
+            return 0;
         }
 
         void erase(iterator first, iterator last) {

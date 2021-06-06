@@ -398,7 +398,7 @@ int main() {
 	 insert_position_val();
 	 insert_first_last();
 	 erase_position();
-//	 erase_key();
+	 erase_key();
 //	 erase_firts_last();
 //	 swap();
 //	 clear();
