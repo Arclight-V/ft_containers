@@ -557,9 +557,7 @@ namespace ft {
         iterator lower_bound (const key_type& k) {
             nodePtr node = findNodeKey(k);
             if (node) {
-                if ((node = findNode(node->left))) {
                     return iterator(node);
-                }
             }
             return end();
         }

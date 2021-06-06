@@ -404,13 +404,15 @@ int main() {
 //	 // ------------
 //
 //	 // Operations
-//	 find();
-//	 count();
-//	 lower_bound();
-//	 upper_bound();
-//	 equal_range();
+	 find();
+	 count();
+	 lower_bound();
+	 upper_bound();
+	 equal_range();
 //	 // ------------
-//	 reverse_iterator();
+	 reverse_iterator();
+
+//	 while (1);
 
 	return 0;
 }
