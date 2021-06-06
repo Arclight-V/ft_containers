@@ -226,6 +226,7 @@ void erase_firts_last() {
 	++first; ++first; ++first; ++first;
 	--last; --last; --last; --last;
 
+
 	def.erase(first, last);
 	print_map<int, Test>(def);
 	def.erase(def.begin(), def.end());
@@ -267,10 +268,8 @@ void clear() {
 	}
 
 	lib::con<int, Test> def(src.begin(), src.end());
-
 	def.clear();
 	print_map<int, Test>(def);
-
 }
 
 void find() {
@@ -386,22 +385,22 @@ int main() {
 	 default_constructor();
 	 constructor_first_last();
 	 copy_constructor();
-//	 // ------------
-//
-//	 // Element access
+	 // ------------
+
+	 // Element access
 	 brackets();
-//	 // at();
-//	 // ------------
-//
-//	 //Modifiers
+	 // at();
+	 // ------------
+
+	 //Modifiers
 	 insert_val();
 	 insert_position_val();
 	 insert_first_last();
 	 erase_position();
 	 erase_key();
-//	 erase_firts_last();
-//	 swap();
-//	 clear();
+	 erase_firts_last();
+	 swap();
+	 clear();
 //	 // ------------
 //
 //	 // Operations

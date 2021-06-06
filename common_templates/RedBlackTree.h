@@ -84,8 +84,9 @@ namespace ft {
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
         virtual ~RedBlackTree() {
-            unlinkEndFromTree();
-            clear();
+            if (size()) {
+                clear();
+            }
             destroyAndDeallocateNode(_end);
             destroyAndDeallocateNode(_TNULL);
         }
@@ -156,18 +157,28 @@ namespace ft {
         }
 
         void findMinimumInTree() {
+
+            if (_root == _TNULL) {
+                _end->right = _end;
+                return;
+            }
             nodePtr tmp = _root;
 
-            while (tmp->left != _TNULL) {
+            while (tmp->left != _TNULL && tmp->left) {
                 tmp = tmp->left;
             }
             _end->right = tmp;
         }
 
         void findMaximumInTree() {
+            if (_root == _TNULL) {
+                _end->right = _end;
+                return;
+            }
+
             nodePtr tmp = _root;
 
-            while (tmp->right != _TNULL) {
+            while (tmp->right != _TNULL && tmp->right ) {
                 tmp = tmp->right;
             }
             _end->left = tmp;
@@ -487,12 +498,17 @@ namespace ft {
                deleteRBTree(root->left);
                deleteRBTree(root->right);
                destroyAndDeallocateNode(root);
+
            }
         }
 
     public:
         void clear() {
+            unlinkEndFromTree();
             deleteRBTree(_root);
+            _size = 0;
+            _end->right = _end;
+            _end->left = _end;
         }
 
         // -----------------------------------------OBSERVERS-----------------------------------------------------------

@@ -79,7 +79,7 @@ namespace ft {
                 if (_node->right->right)
                 {
                     tmp = _node->right;
-                    while (tmp->left->left && tmp->left != _node)
+                    while (tmp->left && tmp->left->left && tmp->left != _node)
                         tmp = tmp->left;
                 }
                 else if (_node->parent)
@@ -107,7 +107,7 @@ namespace ft {
             if (_node->left->left)
             {
                 tmp = _node->left;
-                while (tmp->right->right && tmp->right != _node)
+                while (tmp->right && tmp->right->right && tmp->right != _node)
                     tmp = tmp->right;
             }
             else if (_node->parent)
