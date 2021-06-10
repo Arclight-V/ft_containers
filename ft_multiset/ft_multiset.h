@@ -5,158 +5,253 @@
 #ifndef FT_MULTISET_H
 #define FT_MULTISET_H
 
-#include "stdafx.h"
+#include "../common_templates/stdafx.h"
+#include "MultisetIterator.h"
+#include "../common_templates/ReverseIterator.h"
+#include "../common_templates/Algorithm.h"
+#include "RedBlackTreeMultiSet.h"
+#include "../common_templates/utils.h"
+#include <set>
 
-namespace ft
+namespace ft {
 
-template<class T, class Alloc = std::allocator<T> >
-class multiset {
+template < class T, class Compare = ft::less<T>, class Alloc = std::allocator<T> >
+        class multiset {
 
-private:
-    
-public:
-    /* common type definitions for all containers */
-    typedef T                                               value_type;
-    typedef Alloc                                           allocator_type;
-    typedef typename allocator_type::reference              reference;
-    typedef typename allocator_type::const_reference        const_reference;
-    typedef typename allocator_type::pointer                pointer;
-    typedef typename allocator_type::const_pointer          const_pointer;
+        public:
+            typedef T                                                                           key_type;
+            typedef T                                                                           value_type;
+            typedef Compare                                                                     key_compare;
+//            typedef Compare                                                                     value_compare;
+            typedef Alloc                                                                       allocator_type;
+            typedef typename allocator_type::reference                                          reference;
+            typedef typename allocator_type::const_reference                                    const_reference;
+            typedef typename allocator_type::pointer                                            pointer;
+            typedef typename allocator_type::const_pointer                                      const_pointer;
+            typedef typename allocator_type::size_type                                          size_type;
+            typedef typename allocator_type::size_type                                          difference_type;
 
-    /*
-     * define iterators
-     *
-     * typedef typename iterator;
-     * typedef typename const_iterator;
-     * typedef typename reverse_iterator:
-     * typedef typename const_reverse_iterator;
-     *
-     */
+            typedef typename ft::MultisetIterator<value_type, key_compare>                           iterator;
+            typedef typename ft::MultisetConstIterator<value_type, value_type const *, key_compare>  const_iterator;
+            typedef typename ft::ReverseIterator<iterator>                                      reverse_iterator;
+            typedef typename ft::ReverseIterator<const_iterator>                                const_reverse_iterator;
 
-    /* define difference_type
-     * ...
-     *
-     */
+            class value_compare
+            {
+                friend class multiset;
+            protected:
+                key_compare comp;
+                value_compare (Compare c) : comp(c) {}
+            public:
+                typedef bool result_type;
+                bool operator() (const value_type& x, const value_type& y) const {
+                    return comp(x.first, y.first);
+                }
+            };
 
-    using size_type = size_t;
-    using ref = reference;
-    using c_ref = const_reference;
-    using ptr = pointer;
-    using c_ptr = const_pointer;
-    /*
-     * using
-     * using it = iterator;
-     * using c_it = const_iterator;
-     * using rev_it = reverse_iterator;
-     * using c_rev_it = const_reverse_iterator
-     * using diff = difference_type;
-     */
+        private:
+            typedef ft::RedBlackTreeMultiSeT<key_type, value_type, Compare, allocator_type>     RBTree;
+            RBTree                                                                              _tree;
 
-    /*
-     * * * * * * * * * * * * * * * * * * * * * * * *
-     * common member functions for all containers  *
-     * * * * * * * * * * * * * * * * * * * * * * * *
-    */
+            /*
+            ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
+            */
+            // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
-    /*
-     *  empty container constructor (default constructor)
-     *  Constructs an empty container, with no elements.
-     *
-     * explicit multiset (const allocator_type& alloc = allocator_type());
-     *
-     */
-    /*
-     *  copy constructor
-     *  Constructs a container with a copy of each of the elements in x, in the same order.
-     *
-     * multiset (const multiset& x);
-     */
+        public:
+            explicit multiset(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) : _tree(comp, alloc) {}
 
-    /*
-     *  multiset destructor
-     *  Destroys the container object.
-     *
-     * ~multiset();
-     */
+            // Constructs a container with as many elements as the range [first,last),
+            // with each element constructed from its corresponding element in that range.
 
-    /*
-     * Return iterator to beginning
-     * Returns an iterator pointing to the first element in the multiset container.
-     *
-     * it begin() {};
-     * c_it begin() const {};
-     */
+            template <class InputIterator>
+            multiset(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(),
+            typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) : _tree(comp, alloc) {
+                (void)isIter;
 
-    /*
-     * Return iterator to end
-     * Returns an iterator referring to the past-the-end element in the vector container.
-     *
-     * it end() {};
-     * c_it end() const {};
-     */
+                for (; first != last; ++first) {
+                    _tree.insertMulti(*first);
+                }
+            }
 
-    /*
-     * Return reverse iterator to reverse beginning
-     * Returns a reverse iterator pointing to the last element in the container (i.e., its reverse beginning).
-     *
-     * rev_it rbegin();
-     * c_rev_it rbegin() const;
-     */
+            // Copy constructor
+            // Constructs a container with a copy of each of the elements in x.
+            multiset (const multiset& x) : _tree(x._tree) {
+            }
 
-    /*
-     * Return reverse iterator to reverse end
-     * Returns a reverse iterator pointing to the theoretical element preceding the first element in the multiset container (which is considered its reverse end).
-     *
-     * rev_it rend();
-     * c_rev_it rend() const;
-     */
+            // -----------------------------------------DESTRUCTOR----------------------------------------------------------
+            virtual ~multiset() {
+            }
 
-    /*
-     * Relational operators
-     *
-     */
-    /*
-    template <class T, class Alloc>
-    bool operator== (const multiset<T,Alloc>& lhs, const multiset<T,Alloc>& rhs);
+            // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
 
-    template <class T, class Alloc>
-    bool operator!= (const multiset<T,Alloc>& lhs, const multiset<T,Alloc>& rhs);
+            multiset operator=(const multiset &x) {
+                _tree = x._tree;
+                return *this;
+            }
 
-    template <class T, class Alloc>
-    bool operator<  (const multiset<T,Alloc>& lhs, const multiset<T,Alloc>& rhs);
+            // -----------------------------------------ITERATORS-----------------------------------------------------------
 
-    template <class T, class Alloc>
-    bool operator<= (const multiset<T,Alloc>& lhs, const multiset<T,Alloc>& rhs);
+            iterator begin() {
+                return _tree.begin();
+            }
 
-    template <class T, class Alloc>
-    bool operator>  (const multiset<T,Alloc>& lhs, const multiset<T,Alloc>& rhs);
+            iterator end() {
+                return _tree.end();
+            }
 
-    template <class T, class Alloc>
-    bool operator>= (const multiset<T,Alloc>& lhs, const multiset<T,Alloc>& rhs);
-     *
-     */
+            const_iterator begin() const {
+                return _tree.begin();
+            }
 
-    /*
-     * Capacity
-     *
-     * Test whether container is empty
-     * Returns whether the multiset container is empty (i.e. whether its size is 0).
-     *
-     * bool empty() const;
-     *
-     * Return size
-     * Returns the number of elements in the multiset container.
-     *
-     * size_type size() const;
-     *
-     * Return maximum size
-     * Returns the maximum number of elements that the multiset container can hold.
-     *
-     * size_type max_size() const;
-     *
-     */
+            const_iterator end() const {
+                return _tree.end();
+            }
 
-};
+            reverse_iterator  rbegin() {
+                return reverse_iterator(end());
+            }
+
+            const_reverse_iterator rbegin() const {
+                return const_reverse_iterator(end());
+            }
+
+            reverse_iterator rend() {
+                return reverse_iterator(begin());
+            }
+
+            const_reverse_iterator rend() const {
+                return const_reverse_iterator(begin());
+            }
+
+            // -----------------------------------------CAPACITY------------------------------------------------------------
+
+            bool empty() const {
+                return _tree.empty();
+            }
+
+            size_type size() const {
+                return _tree.size();
+            }
+
+            size_type max_size() const {
+                return _tree.max_size();
+            }
+
+            // -----------------------------------------MODIFIERS-----------------------------------------------------------
+
+            // -----------------------------------------Insert elements-----------------------------------------------------
+
+            iterator insert(const value_type& val) {
+                return _tree.insertMulti(val);
+            }
+
+            iterator insert(iterator position, const value_type& val) {
+                (void)position;
+                return insert(val);
+            }
+
+            template <class InputIterator>
+            void insert(InputIterator first, InputIterator last, typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+                (void)isIter;
+
+                for (; first != last; ++first) {
+                    insert(*first);
+                }
+
+            }
+
+            // -----------------------------------------Erase Elements------------------------------------------------------
+
+            void erase(iterator position) {
+                _tree.erase(position._node->value_type);
+            }
+
+            size_type erase(const key_type& k) {
+                size_type num = 0;
+
+                while(_tree.erase(k))
+                    ++num;
+                return num;
+            }
+
+            void erase(iterator first, iterator last) {
+                while(first != last) {
+                    _tree.erase((first++)._node->value_type);
+                }
+            }
+
+            // -----------------------------------------Swap Content--------------------------------------------------------
+
+            void swap(multiset& x) {
+                _tree.swap(x._tree);
+            }
+
+            // -----------------------------------------Clear Content-------------------------------------------------------
+
+            void clear() {
+                _tree.clear();
+            }
+
+            // -----------------------------------------OBSERVERS-----------------------------------------------------------
+
+            // -----------------------------------------Return Key Comparison Object----------------------------------------
+
+            key_compare key_comp() const {
+                return _tree.key_comp();
+            }
+
+            // -----------------------------------------Return value Comparison Object----------------------------------------
+
+            value_compare value_comp() const {
+                return _tree.value_comp();
+            }
+
+
+            // -----------------------------------------OPERATIONS----------------------------------------------------------
+
+            iterator find(const key_type& k) {
+                return _tree.find(k);
+            }
+
+            const_iterator find(const key_type& k) const {
+                return _tree.find(k);
+            }
+
+            size_type count(const key_type& k) const {
+                return _tree.count(k);
+            }
+            iterator lower_bound(const key_type& k) {
+                return _tree.lower_bound(k);
+            }
+
+            const_iterator lower_bound(const key_type& k) const {
+                return _tree.lower_bond(k);
+            }
+
+            iterator upper_bound(const key_type& k) {
+                return _tree.upper_bond(k);
+            }
+
+            const_iterator upper_bound(const key_type& k) const {
+                return _tree.upper_bond(k);
+            }
+
+            std::pair<const_iterator,const_iterator> equal_range(const key_type& k) const {
+                return _tree.equal_range(k);
+            }
+
+            std::pair<iterator,iterator> equal_range(const key_type& k) {
+                return _tree.equal_range(k);
+            }
+
+            // -----------------------------------------ALLOCATOR-----------------------------------------------------------
+
+            allocator_type get_allocator() const {
+                return _tree.get_allocator();
+            }
+        };
+}
 
 
 #endif //FT_MULTISET_H

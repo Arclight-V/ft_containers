@@ -4,9 +4,7 @@
 
 #include "stdafx.h"
 #include "NodeTraits.h"
-#include "../ft_map/mapIterator.h"
-
-#include <iomanip>
+#include "mapIterator.h"
 
 #ifndef REDBLACKTREE_H
 #define REDBLACKTREE_H
@@ -71,6 +69,7 @@ namespace ft {
 
             _TNULL = _allocNode.allocate(1);
             std::memset(&_TNULL->value_type, 0, sizeof(value_type));
+            _TNULL->parent = _TNULL;
             _TNULL->left = nullptr;
             _TNULL->right = nullptr;
             _TNULL->color = BLACK;
@@ -93,13 +92,14 @@ namespace ft {
 
         // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
 
-        RedBlackTree operator=(const RedBlackTree &x) {
+        RedBlackTree& operator=(const RedBlackTree &x) {
             if (this != &x) {
                 clear();
-                for (iterator itBegin = x.begn(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
+                for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
                     insertUnique(*itBegin);
                 }
             }
+            return *this;
         }
 
         // -----------------------------------------ITERATORS-----------------------------------------------------------
@@ -332,6 +332,45 @@ namespace ft {
             return std::make_pair(iterator(newNode), true);
         }
 
+        iterator insertMulti(const value_type &val) {
+            unlinkEndFromTree();
+
+            nodePtr y = nullptr, x = _root, newNode;
+
+            while (x != _TNULL) {
+                y = x;
+                x = _comp(val, x->value_type) ? x->left : x->right;
+            }
+
+            newNode = allocateNewNode(val, y);
+
+            if (y == nullptr) {
+                _root = newNode;
+            } else if (_comp(newNode->value_type, y->value_type)) {
+                y->left = newNode;
+            } else {
+                y->right = newNode;
+            }
+
+            if (!newNode->parent) {
+                newNode->color = BLACK;
+                configureEndNode();
+                ++_size;
+                return iterator(newNode);
+            }
+
+            if (!newNode->parent->parent) {
+                configureEndNode();
+                ++_size;
+                return iterator(newNode);
+            }
+
+            insertFixup(newNode);
+            configureEndNode();
+            ++_size;
+            return iterator(newNode);
+        }
+
         // -----------------------------------------Erase Elements------------------------------------------------------
 
     private:
@@ -481,6 +520,8 @@ namespace ft {
         // -----------------------------------------Swap content--------------------------------------------------------
 
         void swap(RedBlackTree& x) {
+            if (this == &x)
+                return;
             ft::swap(_root, x._root);
             ft::swap(_end, x._end);
             ft::swap(_TNULL, x._TNULL);
@@ -504,6 +545,8 @@ namespace ft {
 
     public:
         void clear() {
+            if (!_size)
+                return;
             unlinkEndFromTree();
             deleteRBTree(_root);
             _size = 0;
@@ -613,11 +656,16 @@ namespace ft {
         }
 
         void printTree() {
-            unlinkEndFromTree();
-            if (_root) {
-                printHelper(_root, "", true);
+            // unlinkEndFromTree();
+            // if (_root) {
+            //     printHelper(_root, "", true);
+            // }
+            // linkEndFromTree();
+
+            for (iterator itbegin = begin(), itEnd = end(); itbegin != itEnd; ++itbegin) {
+                std::cout << (*itbegin).first << " " << (*itbegin).second << '\n'; 
             }
-            linkEndFromTree();
+            
         }
 
     private:

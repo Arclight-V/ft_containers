@@ -6,12 +6,12 @@
 #define FT_MAP_H
 
 #include "../common_templates/stdafx.h"
-#include "mapIterator.h"
+#include "../common_templates/mapIterator.h"
 #include "../common_templates/ReverseIterator.h"
 #include "../common_templates/RedBlackTree.h"
 #include "../common_templates/Algorithm.h"
 #include "../common_templates/utils.h"
-
+#include <map>
 
 namespace ft {
     template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator < std::pair<const Key, T> > >
@@ -46,7 +46,7 @@ namespace ft {
                 return comp(x.first, y.first);
             }
         };
-
+        
     private:
         typedef ft::RedBlackTree<key_type, value_type, Compare, allocator_type>             RBTree;
         RBTree                                                                              _tree;
@@ -68,10 +68,6 @@ namespace ft {
             (void)isIter;
 
             for (; first != last; ++first) {
-
-                // перисать
-                // создать модуль для добавления одного элемента и обернуть inseertUnique в шаблон
-
                 _tree.insertUnique(*first);
             }
         }
@@ -89,6 +85,7 @@ namespace ft {
 
         map operator=(const map &x) {
             _tree = x._tree;
+            return *this;
         }
 
         // -----------------------------------------ITERATORS-----------------------------------------------------------
@@ -267,10 +264,42 @@ namespace ft {
             _tree.printTree();
         }
 
-        // -----------------------------------------Allocate Memory-----------------------------------------------------
-
-        // -----------------------------------------Deallocate Memory---------------------------------------------------
     };
+        /*
+        ** -----------------------------------------NON-MEMBER FUNCTIONS------------------------------------------------
+        */
+
+        // -----------------------------------------Relational Operators------------------------------------------------
+
+        template <class Key, class T, class Compare, class Alloc>
+        bool operator==(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs) {
+            return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+        }
+
+        template <class Key, class T, class Compare, class Alloc>
+        bool operator!=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs) {
+            return !(lhs == rhs);
+        }
+
+        template <class Key, class T, class Compare, class Alloc>
+        bool operator<(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs) {
+            return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+        }
+
+        template <class Key, class T, class Compare, class Alloc>
+        bool operator<=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs) {
+            return !(rhs < lhs);
+        }
+
+        template <class Key, class T, class Compare, class Alloc>
+        bool operator>(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs) {
+            return rhs < lhs;
+        }
+
+        template <class Key, class T, class Compare, class Alloc>
+        bool operator>=(const map<Key, T, Compare, Alloc>& lhs, const map<Key, T, Compare, Alloc>& rhs) {
+            return !(lhs < rhs);
+        }
 }
 
 #endif //FT_MAP_H

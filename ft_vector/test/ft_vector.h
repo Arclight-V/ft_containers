@@ -1,35 +1,36 @@
 //
-// Created by Arclight Natashia on 4/28/21.
+// Created by Arclight Natashia on 6/10/21.
 //
 
-#ifndef FT_LIST_H
-#define FT_LIST_H
+#ifndef FT_VECTOR_H
+#define FT_VECTOR_H
 
 #include "../common_templates/stdafx.h"
 #include "../common_templates/NodeTraits.h"
-#include "listIterator.h"
-#include "ReverseIterator.h"
-#include "Algorithm.h"
-#include "utils.h"
+#include "vectorIterator.h"
+#include "../common_templates/ReverseIterator.h"
+#include "../common_templates/Algorithm.h"
+#include "../common_templates/utils.h"
 
 namespace ft {
-    template<typename T, typename Alloc = std::allocator<T> >
-    class list {
+    template < class T, class Alloc = allocator<T> >
+    class vector {
         typedef typename ft::NodeTraits<T>::_dl_list_TS node;
-        node *_tail;   //  using the tail has access to the head
+
     public:
-        typedef T value_type;
-        typedef Alloc allocator_type;
-        typedef typename allocator_type::reference                      reference;
-        typedef typename allocator_type::const_reference                const_reference;
-        typedef typename allocator_type::pointer                        pointer;
-        typedef typename allocator_type::const_pointer                  const_pointer;
-        typedef typename ft::ListIterator<value_type>                   iterator;
-        typedef typename ft::ListConstIterator<value_type, T const *>   const_iterator;
-        typedef typename ft::ReverseIterator<iterator>                  reverse_iterator;
-        typedef typename ft::ReverseIterator<const_iterator>            const_reverse_iterator;
-        typedef typename ft::ListIterator<value_type>::difference_type  difference_type;
-        typedef size_t size_type;
+        typedef T                                                           value_type;
+        typedef Alloc                                                       allocator_type;
+        typedef typename allocator_type::reference                          reference;
+        typedef typename allocator_type::const_reference                    const_reference;
+        typedef typename allocator_type::pointer                            pointer;
+        typedef typename allocator_type::const_pointer                      const_pointer;
+
+        typedef typename ft::VectorIterator<value_type>                     iterator;
+        typedef typename ft::VectorConstIterator<value_type, T const *>     const_iterator;
+        typedef typename ft::ReverseIterator<iterator>                      reverse_iterator;
+        typedef typename ft::ReverseIterator<const_iterator>                const_reverse_iterator;
+        typedef typename ft::VectorIterator<value_type>::difference_type    difference_type;
+        typedef size_t                                                      size_type;
 
 
         /*
@@ -40,56 +41,44 @@ namespace ft {
         // Empty container constructor (default constructor)
         // Constructs an empty container, with no elements.
 
-        explicit list(const allocator_type &alloc = allocator_type()) : _tail(allocateMemoryForNode()),
-                                                                        _alloc(alloc),
-                                                                        _size(0) {}
+        explicit vector (const allocator_type& alloc = allocator_type()) {
+
+        }
 
         //  Fill constructor
         //  Constructs a container with n elements. Each element is a copy of val.
 
-         explicit list(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()) : _tail(allocateMemoryForNode()),
-                                                                                                                             _alloc(alloc),
-                                                                                                                             _size(0) {
-            for (size_type i = 0; i < n ; ++i) {
-                push_back(val);
-            }
-         }
+        explicit vector (size_type n, const value_type& val = value_type(),
+                         const allocator_type& alloc = allocator_type()) {
 
-         // Range constructor
-         // Constructs a container with as many elements as the range [first,last), with each element constructed from
-         // its corresponding element in that range, in the same order.
+        }
 
-         template<class InputIterator>
-         list(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(), typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) :_tail(allocateMemoryForNode()),
-                                                                                                        _alloc(alloc),
-                                                                                                        _size(0) {
-            (void)isIter;
-             for (; first != last; ++first) {
-                 push_back(*first);
-             }
-         }
+        // Range constructor
+        // Constructs a container with as many elements as the range [first,last), with each element constructed from
+        // its corresponding element in that range, in the same order.
+
+        template <class InputIterator>
+        vector (InputIterator first, InputIterator last,
+                const allocator_type& alloc = allocator_type(), typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+
+        }
 
         //  Copy constructor
         //  Constructs a container with a copy of each of the elements in x, in the same order.
 
-        list (const list& x) : _tail(allocateMemoryForNode()),
-                               _alloc(x.get_allocator()),
-                               _size(0) {
-            for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
-                push_back(*itBegin);
-            }
-        };
+        vector (const vector& x) {
+
+        }
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
 
-        virtual ~list() {
+        virtual ~vector() {
             clear();
-            destroyAndDeallocateNode(_tail);
         }
 
         // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
 
-        list &operator=(const list& x) {
+        vector &operator=(const vector& x) {
             if (this != &x) {
                 clear();
                 for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
@@ -98,7 +87,7 @@ namespace ft {
             }
             return *this;
         }
-
+/*
         // -----------------------------------------ITERATORS-----------------------------------------------------------
 
         iterator begin() {
@@ -144,9 +133,9 @@ namespace ft {
             return _size;
         };
 
-         size_type max_size() const {
-             return _alloc.max_size();
-         };
+        size_type max_size() const {
+            return _alloc.max_size();
+        };
 
         // -----------------------------------------ELEMENT ACCESS------------------------------------------------------
 
@@ -261,21 +250,21 @@ namespace ft {
 
         // -----------------------------------------Erase Elements------------------------------------------------------
 
-         iterator erase(iterator position) {
+        iterator erase(iterator position) {
             unlinkNodes(&position._node, &position._node);
-             node *retNode = position._node->next;
-             destroyAndDeallocateNode(position._node);
-             --_size;
-             return iterator(retNode);
-         }
+            node *retNode = position._node->next;
+            destroyAndDeallocateNode(position._node);
+            --_size;
+            return iterator(retNode);
+        }
 
-         iterator erase(iterator first, iterator last) {
+        iterator erase(iterator first, iterator last) {
             unlinkNodes(&first._node, &last._node->previous);
-             for (; first != last; ++first) {
-                 destroyAndDeallocateNode(first._node);
-                 --_size;
-             }
-             return last;
+            for (; first != last; ++first) {
+                destroyAndDeallocateNode(first._node);
+                --_size;
+            }
+            return last;
         }
 
         // -----------------------------------------Swap Content--------------------------------------------------------
@@ -494,164 +483,53 @@ namespace ft {
 
         // -----------------------------------------Allocate Memory-----------------------------------------------------
 
-        node *allocateMemoryForNode() {
-            node *newNode = _allocNode.allocate(1);
-            std::memset(&newNode->value_type, 0, sizeof(value_type));
-            newNode->previous = newNode;
-            newNode->next = newNode;
-            return newNode;
-        }
-
-        void allocateMemoryForNodeAndConstruct(value_type const &val, node **node) {
-            *node = allocateMemoryForNode();
-            _alloc.construct(&(*node)->value_type, val);
-        }
-
-        // -----------------------------------------Deallocate Memory---------------------------------------------------
-
-        void destroyAndDeallocateNode(node *node) {
-            _alloc.destroy(&node->value_type);
-            _allocNode.deallocate(node, 1);
-        }
-
-        // -----------------------------------------Inserting Node Before-----------------------------------------------
-
-        void insertingNodeBefore(node **node1, node **node2) {
-            (*node1)->next = *node2;
-            (*node1)->previous = (*node2)->previous;
-            (*node2)->previous->next = *node1;
-            (*node2)->previous = *node1;
-        }
-
-        // -----------------------------------------Inserting Node After------------------------------------------------
-
-        void insertingNodeAfter(node **t, node **x) {
-            (*t)->next = (*x)->next;
-            (*x)->next->previous = *t;
-            (*x)->next = *t;
-            (*t)->previous = *x;
-        }
-
-        // -----------------------------------------Link Nodes----------------------------------------------------------
-
-        void linkNodes(node **after, node **first, node **last) {
-            (*after)->previous->next = (*first);
-            (*first)->previous = (*after)->previous;
-            (*after)->previous = (*last);
-            (*last)->next = (*after);
-        }
-
-        // -----------------------------------------Unlink Nodes--------------------------------------------------------
-
-        void unlinkNode(node **toDelete) {
-            (*toDelete)->next->previous =(*toDelete)->previous;
-            (*toDelete)->previous->next = (*toDelete)->next;
-        }
-
-        void unlinkNodes(node **first, node **last) {
-            (*first)->previous->next = (*last)->next;
-            (*last)->next->previous = (*first)->previous;
-        }
-
-        // -----------------------------------------Insert Element------------------------------------------------------
-
-        void executeInsert(node **newNode, node **positionNode, value_type const &val) {
-            allocateMemoryForNodeAndConstruct(val, newNode);
-            insertingNodeBefore(newNode, positionNode);
-            ++_size;
-        }
-
-        // -----------------------------------------Merge Sort----------------------------------------------------------
-
-        template <class Compare>
-        node *mergeSortedLists(node *head1, node *head2, Compare comp){
-            if (!head1) {
-                return head2;
-            }
-            if (!head2) {
-                return head1;
-            }
-            if (comp(head1->value_type, head2->value_type)) {
-                head1->next = mergeSortedLists(head1->next, head2, comp);
-                head1->next->previous = head1;
-                head1->previous = nullptr;
-                return head1;
-            }
-            head2->next = mergeSortedLists(head1, head2->next, comp);
-            head2->next->previous = head2;
-            head2->previous = nullptr;
-            return head2;
-        }
-
-        void splitList(node *src, node **fRef, node **bRef) {
-            node *fast = src->next, *slow = src;
-            while (fast) {
-                fast = fast->next;
-                if (fast) {
-                    slow = slow->next;
-                    fast = fast->next;
-                }
-            }
-            *fRef = src;
-            *bRef = slow->next;
-            slow->next = nullptr;
-        }
-
-        template <class Compare>
-        void mergeSort(node **head, Compare comp) {
-            node *p = *head, *a = nullptr, *b = nullptr;
-            if (p->next) {
-                splitList(p, &a, &b);
-                mergeSort(&a, comp);
-                mergeSort(&b, comp);
-                *head = mergeSortedLists(a, b, comp);
-            }
-        }
     };
 
-        /*
-        ** -----------------------------------------NON-MEMBER FUNCTIONS------------------------------------------------
-        */
+    /*
+    ** -----------------------------------------NON-MEMBER FUNCTIONS------------------------------------------------
+    */
 
-        // -----------------------------------------Relational Operators------------------------------------------------
+    // -----------------------------------------Relational Operators------------------------------------------------
 
-        template <class T, class Alloc>
-        bool operator==(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-            return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
-        }
 
-        template <class T, class Alloc>
-        bool operator!=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-            return !(lhs == rhs);
-        }
+    template <class T, class Alloc>
+    bool operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+        return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+    }
 
-        template <class T, class Alloc>
-        bool operator<(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-            return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
-        }
+    template <class T, class Alloc>
+    bool operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+        return !(lhs == rhs);
+    }
 
-        template <class T, class Alloc>
-        bool operator<=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-            return !(rhs < lhs);
-        }
+    template <class T, class Alloc>
+    bool operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+        return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    }
 
-        template <class T, class Alloc>
-        bool operator>(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-            return rhs < lhs;
-        }
+    template <class T, class Alloc>
+    bool operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+        return !(rhs < lhs);
+    }
 
-        template <class T, class Alloc>
-        bool operator>=(const list<T,Alloc>& lhs, const list<T,Alloc>& rhs) {
-            return !(lhs < rhs);
-        }
+    template <class T, class Alloc>
+    bool operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+        return rhs < lhs;
+    }
 
-        // -----------------------------------------Swap----------------------------------------------------------------
+    template <class T, class Alloc>
+    bool operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
+        return !(lhs < rhs);
+    }
 
-        template <class T, class Alloc>
-        void swap (list<T,Alloc>& x, list<T,Alloc>& y) {
-            x.swap(y);
-        }
+    // -----------------------------------------Swap----------------------------------------------------------------
+
+    template <class T, class Alloc>
+    void swap (vector<T,Alloc>& x, vector<T,Alloc>& y) {
+        x.swap(y);
+    }
 }
 
 
-#endif //FT_LIST_H
+
+#endif //FT_VECTOR_H

@@ -41,9 +41,7 @@ namespace ft {
         */
 
         ReverseIterator &operator=(ReverseIterator const &x) {
-            if (this != x) {
-                _iterator = x;
-            }
+                _iterator = x.base();
             return *this;
         }
 
