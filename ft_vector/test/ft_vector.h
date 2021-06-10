@@ -18,21 +18,26 @@ namespace ft {
         typedef typename ft::NodeTraits<T>::_dl_list_TS node;
 
     public:
-        typedef T                                                           value_type;
-        typedef Alloc                                                       allocator_type;
-        typedef typename allocator_type::reference                          reference;
-        typedef typename allocator_type::const_reference                    const_reference;
-        typedef typename allocator_type::pointer                            pointer;
-        typedef typename allocator_type::const_pointer                      const_pointer;
+        typedef T                                                                   value_type;
+        typedef Alloc                                                               allocator_type;
+        typedef typename allocator_type::reference                                  reference;
+        typedef typename allocator_type::const_reference                            const_reference;
+        typedef typename allocator_type::pointer                                    pointer;
+        typedef typename allocator_type::const_pointer                              const_pointer;
 
-        typedef typename ft::VectorIterator<value_type>                     iterator;
-        typedef typename ft::VectorConstIterator<value_type, T const *>     const_iterator;
-        typedef typename ft::ReverseIterator<iterator>                      reverse_iterator;
-        typedef typename ft::ReverseIterator<const_iterator>                const_reverse_iterator;
-        typedef typename ft::VectorIterator<value_type>::difference_type    difference_type;
-        typedef size_t                                                      size_type;
+        typedef typename ft::VectorIterator<value_type, value_type *>               iterator;
+        typedef typename ft::VectorConstIterator<value_type, value_type const *>    const_iterator;
+        typedef typename ft::ReverseIterator<iterator>                              reverse_iterator;
+        typedef typename ft::ReverseIterator<const_iterator>                        const_reverse_iterator;
+        typedef typename ft::VectorIterator<value_type>::difference_type            difference_type;
+        typedef size_t                                                              size_type;
 
+    private:
+        allocator_type                                                              _alloc;
+        std::allocator<node>                                                        _allocNode;
+        size_type                                                                   _size;
 
+    public:
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------
         */
@@ -471,11 +476,6 @@ namespace ft {
         allocator_type get_allocator() const {
             return _alloc;
         }
-
-    private:
-        allocator_type _alloc;
-        std::allocator<node> _allocNode;
-        size_type _size;
 
         /*
         ** -----------------------------------------AUXILIARY FUNCTIONS-------------------------------------------------
