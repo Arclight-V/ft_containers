@@ -100,7 +100,13 @@ namespace ft {
             return VectorIterator(_ptr - b);
         }
 
+        VectorIterator operator-(VectorIterator b) {
+            return VectorIterator(_ptr - b);
+        }
 
+        bool operator<(VectorIterator a, VectorIterator b) {
+            return *a._ptr < *b._ptr;
+        }
 
     };
 }
