@@ -13,7 +13,8 @@
 #include "../common_templates/utils.h"
 
 #define MUlTIPLIER_CAPACITY 2
-#define DIVISOR_CAPACITY 1.5
+#define DIVISOR_CAPACITY    0.5
+//#define START_CAPACITY      100
 
 
 
@@ -33,7 +34,7 @@ namespace ft {
         typedef typename ft::VectorIterator<value_type, value_type const *>         const_iterator;
         typedef typename ft::ReverseIterator<iterator>                              reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator>                        const_reverse_iterator;
-//        typedef typename ft::VectorIterator<value_type, value_type *>::difference_type            difference_type;
+        typedef typename ft::VectorIterator<value_type, value_type *>::difference_type            difference_type;
         typedef size_t                                                              size_type;
 
     private:
@@ -52,39 +53,71 @@ namespace ft {
         // Empty container constructor (default constructor)
         // Constructs an empty container, with no elements.
 
-        explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _size(0), _capacity(0), _begin(nullptr), _end(nullptr) {
-
-        }
+        explicit vector (const allocator_type& alloc = allocator_type()) :  _alloc(alloc),
+                                                                            _size(0),
+                                                                            _capacity(0),
+                                                                            _begin(nullptr),
+                                                                            _end(nullptr) {}
 
         //  Fill constructor
         //  Constructs a container with n elements. Each element is a copy of val.
 
-//        explicit vector (size_type n, const value_type& val = value_type(),
-//                         const allocator_type& alloc = allocator_type()) {
-//
-//        }
+        explicit vector (size_type n, const value_type& val = value_type(),
+                         const allocator_type& alloc = allocator_type()) : _alloc(alloc), _size(n), _capacity(_size) {
+
+            _begin = _alloc.allocate(_capacity + 1);
+            size_type i = 0;
+
+            while (i < n) {
+                _alloc.construct(_begin + i, val);
+                ++i;
+            }
+            _end = _begin + i + 1;
+        }
 
         // Range constructor
         // Constructs a container with as many elements as the range [first,last), with each element constructed from
         // its corresponding element in that range, in the same order.
 
-//        template <class InputIterator>
-//        vector (InputIterator first, InputIterator last,
-//                const allocator_type& alloc = allocator_type(), typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
-//
-//        }
+        template <class InputIterator>
+        vector (InputIterator first, InputIterator last,
+                const allocator_type& alloc = allocator_type(),
+                typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) :
+                _alloc(alloc), _size(last._ptr - first._ptr), _capacity(_size * MUlTIPLIER_CAPACITY) {
+            (void)isIter;
+            pointer firstPtr = first._ptr, lastPtr = last._ptr;
+            _begin = _alloc.allocate(_capacity + 1);
+
+            size_type i = 0;
+            for (; firstPtr != lastPtr; ++firstPtr, ++i) {
+                _alloc.construct(_begin + i, firstPtr);
+            }
+            _end = _begin + i + 1;
+        }
 
         //  Copy constructor
         //  Constructs a container with a copy of each of the elements in x, in the same order.
 
-//        vector (const vector& x) {
-//
-//        }
+        vector (const vector& x) : _alloc(x._alloc), _size(x._size), _capacity(x._capacity) {
+            _begin = _alloc.allocate(_capacity + 1);
+
+            size_type i = 0;
+            for (; i < x._size; ++i) {
+                _alloc.construct(_begin + i, x[i]);
+            }
+            _end = _begin + i + 1;
+        }
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
 
 //        virtual ~vector() {
-//            clear();
+//            for(; _size; --_size) {
+//                _alloc.destroy(_begin + _size);
+//            }
+//            _alloc.deallocate(_begin, _capacity);
+//            _begin = nullptr;
+//            _end = nullptr;
+//            _capacity = 0;
 //        }
 
         // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
@@ -320,18 +353,13 @@ namespace ft {
 
         // -----------------------------------------Clear Content-------------------------------------------------------
 
+ */
         void clear() {
-            node *nextNode = nullptr, *toDeleted = _tail->next;
-
-            for (; _size != 0; --_size) {
-                nextNode = toDeleted->next;
-                destroyAndDeallocateNode(toDeleted);
-                toDeleted = nextNode;
+            for(; _size; --_size) {
+                _alloc.destroy(_begin + _size);
             }
-            _tail->previous = _tail;
-            _tail->next = _tail;
         }
-
+/*
         // -----------------------------------------OPERATIONS----------------------------------------------------------
 
         // -----------------------------------------Transfer elements from list to list---------------------------------

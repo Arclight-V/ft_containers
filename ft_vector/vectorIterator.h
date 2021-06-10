@@ -116,6 +116,7 @@ namespace ft {
         reference operator[](difference_type index) {
             return _ptr[index];
         }
+
     };
 
     template <class Iter>

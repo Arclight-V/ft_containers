@@ -31,62 +31,62 @@ void ft_defoult_constructor() {
 	std::cout << std::endl;
 
 }
-//
-//void ft_n_constructor() {
-//	std::cout << "\nn_constructor\n" << std::endl;
-//	lib::con<Test> useless(20);
-//	for (size_t i = 0; i < useless.size(); ++i) {
-//		useless[i].some_ = i;
-//	}
-//
-//	std::cout << "empty() : " << useless.empty()    << std::endl;
-//	std::cout << "size    : " << useless.size()     << std::endl;
-//	std::cout << "capacity: " << useless.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < useless.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << useless[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//}
-//
-//void ft_n_val_constructor() {
-//	std::cout << "\nn_val_constructor\n" << std::endl;
-//	lib::con<Test> useless(128, 2);
-//
-//	std::cout << "size    : " << useless.size()     << std::endl;
-//	std::cout << "capacity: " << useless.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < useless.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << useless[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//}
-//
-//void ft_copy_constructor() {
-//	std::cout << "\ncopy_constructor\n" << std::endl;
-//	lib::con<Test> base(128);
-//	for (size_t i = 0; i < base.size(); ++i) {
-//		base[i].some_ = i;
-//	}
-//
-//	lib::con<Test> copy(base);
-//
-//	std::cout << "size    : " << copy.size()     << std::endl;
-//	std::cout << "capacity: " << copy.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < copy.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << copy[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//}
+
+void ft_n_constructor() {
+	std::cout << "\nn_constructor\n" << std::endl;
+	lib::con<Test> useless(20);
+	for (size_t i = 0; i < useless.size(); ++i) {
+		useless[i].some_ = i;
+	}
+
+	std::cout << "empty() : " << useless.empty()    << std::endl;
+	std::cout << "size    : " << useless.size()     << std::endl;
+	std::cout << "capacity: " << useless.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < useless.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << useless[i].some_ << " ";
+	}
+	std::cout << std::endl;
+}
+
+void ft_n_val_constructor() {
+	std::cout << "\nn_val_constructor\n" << std::endl;
+	lib::con<Test> useless(128, 2);
+
+	std::cout << "size    : " << useless.size()     << std::endl;
+	std::cout << "capacity: " << useless.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < useless.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << useless[i].some_ << " ";
+	}
+	std::cout << std::endl;
+
+}
+
+void ft_copy_constructor() {
+	std::cout << "\ncopy_constructor\n" << std::endl;
+	lib::con<Test> base(128);
+	for (size_t i = 0; i < base.size(); ++i) {
+		base[i].some_ = i;
+	}
+
+	lib::con<Test> copy(base);
+
+	std::cout << "size    : " << copy.size()     << std::endl;
+	std::cout << "capacity: " << copy.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < copy.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << copy[i].some_ << " ";
+	}
+	std::cout << std::endl;
+
+}
 //
 //void ft_resize_test() {
 //	std::cout << "\nresize_test\n" << std::endl;
@@ -303,9 +303,9 @@ void ft_defoult_constructor() {
 //
 void ft_constructors_capacity_test() {
 	ft_defoult_constructor();
-	// ft_n_constructor();
-	// ft_n_val_constructor();
-	// ft_copy_constructor();
+	 ft_n_constructor();
+	 ft_n_val_constructor();
+	 ft_copy_constructor();
 	// ft_resize_test();
 	// ft_reserve_test();
 }
