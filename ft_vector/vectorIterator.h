@@ -17,9 +17,12 @@ namespace ft {
 
         template<typename, typename> friend class vector;
 
-        typedef PointerT                            pointer;
-        typedef ptrdiff_t                           difference_type;
+        typedef typename VectorIterator::pointer            pointer;
+        typedef typename VectorIterator::reference          reference;
+        typedef typename VectorIterator::difference_type    difference_type;
+
         pointer                                     _ptr;
+
     public:
 
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
@@ -54,37 +57,37 @@ namespace ft {
         }
 
         // Can be dereferenced as an rvalue (if in a dereferenceable state)
-        typename VectorIterator::reference operator*() const {
-            return _ptr->value_type;
+        reference operator*() const {
+            return *_ptr;
         }
 
-        typename VectorIterator::pointer operator->() const {
-            return &_ptr->value_type;
+        pointer operator->() const {
+            return &_ptr;
         }
 
         // Can be incremented (if in a dereferenceable state).
         // The result is either also dereferenceable or a past-the-end iterator.
         // Two iterators that compare equal, keep comparing equal after being both increased
         VectorIterator operator++() {
-            _ptr = _ptr->next;
+            _ptr++;
             return *this;
         }
 
         VectorIterator operator++(int) {
             VectorIterator ret(*this);
-            _ptr = _ptr->next;
+            _ptr++;
             return ret;
         }
 
         // Can be decremented (if a dereferenceable iterator value precedes it).
         VectorIterator operator--() {
-            _ptr = _ptr->previous;
+            _ptr--;
             return *this;
         }
 
         VectorIterator operator--(int) {
             VectorIterator ret(*this);
-            _ptr = _ptr->previous;
+            _ptr--;
             return ret;
         }
 
@@ -100,37 +103,41 @@ namespace ft {
             return VectorIterator(_ptr - b);
         }
 
-        bool operator<(VectorIterator a, VectorIterator b) {
-            return *a._ptr < *b._ptr;
-        }
-
-        bool operator>(VectorIterator a, VectorIterator b) {
-            return !(a < b);
-        }
-
-        bool operator<=(VectorIterator a, VectorIterator b) {
-            return *a._ptr <= *b._ptr;
-        }
-
-        bool operator>=(VectorIterator a, VectorIterator b) {
-            return *a._ptr <= *b._ptr;
-        }
-
-        VectorIterator operator-=(difference_type n) {
-            _ptr +=n
+        reference operator+=(difference_type n) {
+            _ptr += n;
             return *this;
         }
 
-        VectorIterator operator-=(VectorIterator b) {
+        reference operator-=(difference_type n) {
             _ptr -= n;
             return *this;
         }
 
-        &operator[](difference_type index) {
+        reference operator[](difference_type index) {
             return _ptr[index];
         }
-
     };
+
+    template <class Iter>
+    bool operator<(Iter const &a, Iter const &b) {
+        return *a._ptr < *b._ptr;
+    }
+
+    template <class Iter>
+    bool operator>(Iter a, Iter b) {
+        return !(a < b);
+    }
+
+    template <class Iter>
+    bool operator<=(Iter a, Iter b) {
+        return *a._ptr <= *b._ptr;
+    }
+
+    template <class Iter>
+    bool operator>=(Iter a, Iter b) {
+        return *a._ptr <= *b._ptr;
+    }
+
 }
 
 #endif //VECTORITERATOR_H

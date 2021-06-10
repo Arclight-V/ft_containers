@@ -7,15 +7,19 @@
 
 #include "../common_templates/stdafx.h"
 #include "../common_templates/NodeTraits.h"
-//#include "vectorIterator.h"
+#include "vectorIterator.h"
 #include "../common_templates/ReverseIterator.h"
 #include "../common_templates/Algorithm.h"
 #include "../common_templates/utils.h"
 
+#define MUlTIPLIER_CAPACITY 2
+#define DIVISOR_CAPACITY 1.5
+
+
+
 namespace ft {
-    template < class T, class Alloc = allocator<T> >
+    template < class T, class Alloc = std::allocator<T> >
     class vector {
-        typedef typename ft::NodeTraits<T>::_dl_list_TS node;
 
     public:
         typedef T                                                                   value_type;
@@ -26,16 +30,18 @@ namespace ft {
         typedef typename allocator_type::const_pointer                              const_pointer;
 
         typedef typename ft::VectorIterator<value_type, value_type *>               iterator;
-        typedef typename ft::VectorConstIterator<value_type, value_type const *>    const_iterator;
+        typedef typename ft::VectorIterator<value_type, value_type const *>         const_iterator;
         typedef typename ft::ReverseIterator<iterator>                              reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator>                        const_reverse_iterator;
-        typedef typename ft::VectorIterator<value_type>::difference_type            difference_type;
+//        typedef typename ft::VectorIterator<value_type, value_type *>::difference_type            difference_type;
         typedef size_t                                                              size_type;
 
     private:
         allocator_type                                                              _alloc;
-        std::allocator<node>                                                        _allocNode;
         size_type                                                                   _size;
+        size_type                                                                   _capacity;
+        pointer                                                                     _begin;
+        pointer                                                                     _end;
 
     public:
         /*
@@ -46,69 +52,68 @@ namespace ft {
         // Empty container constructor (default constructor)
         // Constructs an empty container, with no elements.
 
-        explicit vector (const allocator_type& alloc = allocator_type()) {
+        explicit vector (const allocator_type& alloc = allocator_type()) : _alloc(alloc), _size(0), _capacity(0), _begin(nullptr), _end(nullptr) {
 
         }
 
         //  Fill constructor
         //  Constructs a container with n elements. Each element is a copy of val.
 
-        explicit vector (size_type n, const value_type& val = value_type(),
-                         const allocator_type& alloc = allocator_type()) {
-
-        }
+//        explicit vector (size_type n, const value_type& val = value_type(),
+//                         const allocator_type& alloc = allocator_type()) {
+//
+//        }
 
         // Range constructor
         // Constructs a container with as many elements as the range [first,last), with each element constructed from
         // its corresponding element in that range, in the same order.
 
-        template <class InputIterator>
-        vector (InputIterator first, InputIterator last,
-                const allocator_type& alloc = allocator_type(), typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
-
-        }
+//        template <class InputIterator>
+//        vector (InputIterator first, InputIterator last,
+//                const allocator_type& alloc = allocator_type(), typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+//
+//        }
 
         //  Copy constructor
         //  Constructs a container with a copy of each of the elements in x, in the same order.
 
-        vector (const vector& x) {
-
-        }
+//        vector (const vector& x) {
+//
+//        }
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
 
-        virtual ~vector() {
-            clear();
-        }
+//        virtual ~vector() {
+//            clear();
+//        }
 
         // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
 
-        vector &operator=(const vector& x) {
-            if (this != &x) {
-                clear();
-                for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
-                    push_back(*itBegin);
-                }
-            }
-            return *this;
-        }
-/*
+//        vector &operator=(const vector& x) {
+//            if (this != &x) {
+//                clear();
+//                for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
+//                    push_back(*itBegin);
+//                }
+//            }
+//            return *this;
+//        }
         // -----------------------------------------ITERATORS-----------------------------------------------------------
 
         iterator begin() {
-            return iterator(_tail->next);
+            return iterator(_begin);
         };
 
         const_iterator begin() const {
-            return const_iterator(_tail->next);
+            return const_iterator(_begin);
         };
 
         iterator end() {
-            return iterator(_tail);
+            return iterator(_end);
         }
 
         const_iterator end() const {
-            return const_iterator(_tail);
+            return const_iterator(_end);
         }
 
         reverse_iterator  rbegin() {
@@ -127,8 +132,7 @@ namespace ft {
             return const_reverse_iterator(begin());
         }
 
-
-        // -----------------------------------------CAPACITY------------------------------------------------------------
+            // -----------------------------------------CAPACITY------------------------------------------------------------
 
         bool empty() const {
             return _size == 0;
@@ -136,14 +140,26 @@ namespace ft {
 
         size_type size() const {
             return _size;
-        };
+        }
 
         size_type max_size() const {
             return _alloc.max_size();
-        };
+        }
+
+        size_type capacity() const {
+            return _capacity;
+        }
 
         // -----------------------------------------ELEMENT ACCESS------------------------------------------------------
 
+        reference operator[] (size_type n) {
+            return _begin[n];
+        }
+
+        const_reference operator[] (size_type n) const {
+            return _begin[n];
+        }
+/*
         reference front() {
             return _tail->next->value_type;
         }
@@ -477,6 +493,8 @@ namespace ft {
             return _alloc;
         }
 
+ */
+
         /*
         ** -----------------------------------------AUXILIARY FUNCTIONS-------------------------------------------------
         */
@@ -490,7 +508,6 @@ namespace ft {
     */
 
     // -----------------------------------------Relational Operators------------------------------------------------
-
 
     template <class T, class Alloc>
     bool operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs) {
