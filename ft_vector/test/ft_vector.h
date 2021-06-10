@@ -7,7 +7,7 @@
 
 #include "../common_templates/stdafx.h"
 #include "../common_templates/NodeTraits.h"
-#include "vectorIterator.h"
+//#include "vectorIterator.h"
 #include "../common_templates/ReverseIterator.h"
 #include "../common_templates/Algorithm.h"
 #include "../common_templates/utils.h"

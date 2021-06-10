@@ -88,24 +88,46 @@ namespace ft {
             return ret;
         }
 
-        VectorIterator operator+(difference_type n) {
+        VectorIterator operator+(difference_type n) const {
             return VectorIterator(_ptr + n);
         }
 
-        VectorIterator operator-(difference_type n) {
+        VectorIterator operator-(difference_type n) const {
             return VectorIterator(_ptr - n);
         }
 
-        VectorIterator operator-(VectorIterator b) {
-            return VectorIterator(_ptr - b);
-        }
-
-        VectorIterator operator-(VectorIterator b) {
+        VectorIterator operator-(VectorIterator b) const{
             return VectorIterator(_ptr - b);
         }
 
         bool operator<(VectorIterator a, VectorIterator b) {
             return *a._ptr < *b._ptr;
+        }
+
+        bool operator>(VectorIterator a, VectorIterator b) {
+            return !(a < b);
+        }
+
+        bool operator<=(VectorIterator a, VectorIterator b) {
+            return *a._ptr <= *b._ptr;
+        }
+
+        bool operator>=(VectorIterator a, VectorIterator b) {
+            return *a._ptr <= *b._ptr;
+        }
+
+        VectorIterator operator-=(difference_type n) {
+            _ptr +=n
+            return *this;
+        }
+
+        VectorIterator operator-=(VectorIterator b) {
+            _ptr -= n;
+            return *this;
+        }
+
+        &operator[](difference_type index) {
+            return _ptr[index];
         }
 
     };
