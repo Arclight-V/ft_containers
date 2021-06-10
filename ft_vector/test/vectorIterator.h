@@ -95,6 +95,13 @@ namespace ft {
         VectorIterator operator-(difference_type n) {
             return VectorIterator(_ptr - n);
         }
+
+        VectorIterator operator-(VectorIterator b) {
+            return VectorIterator(_ptr - b);
+        }
+
+
+
     };
 }
 
