@@ -5,10 +5,10 @@
 #ifndef LISTITERATOR_H
 #define LISTITERATOR_H
 
-#include "baseIterator.h"
+#include "../common_templates/baseIterator.h"
 #include "ft_list.h"
 
-// BIDIRECTIONAL ITERATOR
+// RANDOM ACCESS ITERATOR
 namespace ft {
 
     template<class T> class ListIterator;

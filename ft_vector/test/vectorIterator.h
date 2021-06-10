@@ -88,11 +88,13 @@ namespace ft {
             return ret;
         }
 
-//        VectorIterator operator-(int) {
-//            VectorIterator ret(*this);
-//            _ptr = _ptr->previous;
-//            return ret;
-//        }
+        VectorIterator operator+(difference_type n) {
+            return VectorIterator(_ptr + n);
+        }
+
+        VectorIterator operator-(difference_type n) {
+            return VectorIterator(_ptr - n);
+        }
     };
 }
 
