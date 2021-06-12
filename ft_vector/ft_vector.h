@@ -326,9 +326,9 @@ namespace ft {
 
         iterator insert (iterator position, const value_type& val) {
 
-            if ((_size + 1) >= _capacity) {
-//                size_type capacity = _capacity ? _capacity : 1;
-                size_type newCapacity = _capacity * MUlTIPLIER_CAPACITY;
+            if ((_size + 1) > _capacity) {
+                size_type capacity = _capacity ? _capacity : 1;
+                size_type newCapacity = capacity * MUlTIPLIER_CAPACITY;
                 pointer newArray = _alloc.allocate(newCapacity + 1);
                 pointer tmpNewArray = newArray, tmpBegin = _begin, positionPtr = position._ptr;
 
@@ -349,12 +349,7 @@ namespace ft {
                 _capacity = newCapacity;
                 return iterator(toReturn);
             }
-
-            pointer x = _end, y = _end - 1;
-
-            for( ; x != position._ptr; --x, --y) {
-                x = y;
-            }
+            std::move(position._ptr, _end, position._ptr + 1);
             _alloc.construct(position._ptr, val);
             ++_end;
             ++_size;
