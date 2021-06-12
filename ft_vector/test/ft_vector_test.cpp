@@ -730,41 +730,41 @@ void ft_insert_iter_val_test() {
 	}
 
 
-//	mouse.insert(mouse.begin(), 100);
-//
-//	std::cout << "size    : " << mouse.size()     << std::endl;
-//	std::cout << "capacity: " << mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << mouse.at(i).some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	mouse.insert(mouse.end(), 100);
-//
-//	std::cout << "size    : " << mouse.size()     << std::endl;
-//	std::cout << "capacity: " << mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << mouse.at(i).some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	big_empty.insert(big_empty.begin(), 88);
-//
-//	std::cout << "size    : " << big_empty.size()     << std::endl;
-//	std::cout << "capacity: " << big_empty.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < big_empty.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << big_empty.at(i).some_ << " ";
-//	}
-//	std::cout << std::endl;
+	mouse.insert(mouse.begin(), 100);
+
+	std::cout << "size    : " << mouse.size()     << std::endl;
+	std::cout << "capacity: " << mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << mouse.at(i).some_ << " ";
+	}
+	std::cout << std::endl;
+
+	mouse.insert(mouse.end(), 100);
+
+	std::cout << "size    : " << mouse.size()     << std::endl;
+	std::cout << "capacity: " << mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << mouse.at(i).some_ << " ";
+	}
+	std::cout << std::endl;
+
+	big_empty.insert(big_empty.begin(), 88);
+
+	std::cout << "size    : " << big_empty.size()     << std::endl;
+	std::cout << "capacity: " << big_empty.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < big_empty.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << big_empty.at(i).some_ << " ";
+	}
+	std::cout << std::endl;
 //
 //	empty.insert(empty.begin(), 9);
 //	empty.insert(empty.begin(), 7);
