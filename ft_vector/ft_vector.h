@@ -64,16 +64,8 @@ namespace ft {
 
         explicit vector (size_type n, const value_type& val = value_type(),
                          const allocator_type& alloc = allocator_type()) : _alloc(alloc), _size(n), _capacity(_size) {
-
             _begin = _alloc.allocate(_capacity + 1);
             size_type i = 0;
-
-//            while (i < n) {
-//                _alloc.construct(_begin + i, val);
-//                ++i;
-//            }
-//            _end = _begin + i;
-
             pointer tmp = _begin;
 
             while (i < n) {
@@ -94,14 +86,13 @@ namespace ft {
                 typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) :
                 _alloc(alloc), _size(last._ptr - first._ptr), _capacity(_size) {
             (void)isIter;
-            pointer firstPtr = first._ptr, lastPtr = last._ptr;
+            pointer firstPtr = first._ptr, lastPtr = last._ptr, tmp = _begin;
             _begin = _alloc.allocate(_capacity + 1);
 
-            size_type i = 0;
-            for (; firstPtr != lastPtr; ++firstPtr, ++i) {
-                _alloc.construct(_begin + i, firstPtr);
+            for (; firstPtr != lastPtr; ++firstPtr, ++tmp) {
+                _alloc.construct(tmp, firstPtr);
             }
-            _end = _begin + i;
+            _end = tmp;
         }
 
         //  Copy constructor
@@ -325,56 +316,53 @@ namespace ft {
         iterator insert (iterator position, const value_type& val) {
 
             if ((_size + 1) >= _capacity) {
-                pointer newArray = _alloc.allocate(_capacity * MUlTIPLIER_CAPACITY + 1),
+                size_type newCapacity = _capacity * MUlTIPLIER_CAPACITY;
+                pointer newArray = _alloc.allocate(newCapacity + 1);
                 pointer tmpNewArray = newArray, tmpBegin = _begin, positionPtr = position._ptr;
 
                 for (; tmpBegin != positionPtr; ++tmpNewArray, ++tmpBegin) {
-                    _alloc.construct(tmpNewArray, tmpBegin)
+                    _alloc.construct(tmpNewArray, tmpBegin);
                 }
                 _alloc.construct(tmpNewArray++, &val);
                 for (; tmpBegin != _end; ++tmpNewArray, ++tmpBegin) {
-                    _alloc.construct(tmpNewArray, tmpBegin)
+                    _alloc.construct(tmpNewArray, tmpBegin);
                 }
                 destroyAllElements();
                 deallocateMemory();
                 ++_size;
                 _begin = newArray;
                 _end = tmpNewArray;
+                _capacity = newCapacity;
             }
-
-            difference_type index = position._ptr - _begin;
-
-            _alloc.construct(  val)
-            _alloc.construct(_begin + i, firstPtr);
+            std::move(position._ptr + 1, _end, position._ptr);
+            _alloc.construct(position._ptr, &val);
 
 
         }
 
-        void insert (iterator position, size_type n, const value_type& val) {
-
-        }
-
-        template <class InputIterator>
-        void insert (iterator position,
-                     InputIterator first,
-                     InputIterator last,
-                     typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
-            (void)isIter;
-
-
-        }
+//        void insert (iterator position, size_type n, const value_type& val) {
+//
+//        }
+//
+//        template <class InputIterator>
+//        void insert (iterator position,
+//                     InputIterator first,
+//                     InputIterator last,
+//                     typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+//            (void)isIter;
+//
+//        }
 
 
 
         // -----------------------------------------Erase Elements------------------------------------------------------
 
         iterator erase(iterator position) {
-            difference_type index = position._ptr - _begin;
-            pointer ptr = _begin + index;
-            _alloc.destroy(_begin + index);
+            pointer ptr = position._ptr;
+            _alloc.destroy(ptr);
             std::move(ptr + 1, _end, ptr);
             --_size;
-            _end = _begin + _size;
+            --_end;
             return iterator(ptr);
         }
 
