@@ -716,19 +716,20 @@ void ft_operator_assignment() {
 //	std::cout << std::endl;
 //}
 //
-//void ft_insert_iter_val_test() {
-//	std::cout << "\ninsert_iter_val\n" << std::endl;
-//	lib::con<Test> mouse(128);
-//	lib::con<Test> fat_mouse(1023);
-//	lib::con<Test> small_mouse(11);
-//	lib::con<Test> empty;
-//	lib::con<Test> empty2;
-//	lib::con<Test> big_empty;
-//	big_empty.reserve(2023);
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		mouse[i].some_ = i;
-//	}
-//
+void ft_insert_iter_val_test() {
+	std::cout << "\ninsert_iter_val\n" << std::endl;
+	lib::con<Test> mouse(128);
+	lib::con<Test> fat_mouse(1023);
+	lib::con<Test> small_mouse(11);
+	lib::con<Test> empty;
+	lib::con<Test> empty2;
+	lib::con<Test> big_empty;
+	big_empty.reserve(2023);
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		mouse[i].some_ = i;
+	}
+
+
 //	mouse.insert(mouse.begin(), 100);
 //
 //	std::cout << "size    : " << mouse.size()     << std::endl;
@@ -802,7 +803,7 @@ void ft_operator_assignment() {
 //		std::cout << empty2.at(i).some_ << " ";
 //	}
 //	std::cout << std::endl;
-//}
+}
 //void ft_insert_iter_n_val_test() {
 //	std::cout << "\ninsert_iter_n_val\n" << std::endl;
 //	lib::con<Test> mouse(128);
@@ -1455,7 +1456,7 @@ void ft_modifiers_test() {
 //	ft_assign_n_val_test();
 //	ft_push_back_test();
 //	ft_pop_back_test();
-//	ft_insert_iter_val_test();
+	ft_insert_iter_val_test();
 //	ft_insert_iter_n_val_test();
 //	ft_insert_iter_iter_iter_test();
 //	ft_insert_iter_iter_iter_8390_leaks_test();
