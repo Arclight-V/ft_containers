@@ -68,11 +68,20 @@ namespace ft {
             _begin = _alloc.allocate(_capacity + 1);
             size_type i = 0;
 
+//            while (i < n) {
+//                _alloc.construct(_begin + i, val);
+//                ++i;
+//            }
+//            _end = _begin + i;
+
+            pointer tmp = _begin;
+
             while (i < n) {
-                _alloc.construct(_begin + i, val);
+                _alloc.construct(tmp, val);
                 ++i;
+                ++tmp;
             }
-            _end = _begin + i + 1;
+            _end = tmp;
         }
 
         // Range constructor
@@ -83,7 +92,7 @@ namespace ft {
         vector (InputIterator first, InputIterator last,
                 const allocator_type& alloc = allocator_type(),
                 typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) :
-                _alloc(alloc), _size(last._ptr - first._ptr), _capacity(_size * MUlTIPLIER_CAPACITY) {
+                _alloc(alloc), _size(last._ptr - first._ptr), _capacity(_size) {
             (void)isIter;
             pointer firstPtr = first._ptr, lastPtr = last._ptr;
             _begin = _alloc.allocate(_capacity + 1);
@@ -92,7 +101,7 @@ namespace ft {
             for (; firstPtr != lastPtr; ++firstPtr, ++i) {
                 _alloc.construct(_begin + i, firstPtr);
             }
-            _end = _begin + i + 1;
+            _end = _begin + i;
         }
 
         //  Copy constructor
@@ -105,32 +114,37 @@ namespace ft {
             for (; i < x._size; ++i) {
                 _alloc.construct(_begin + i, x[i]);
             }
-            _end = _begin + i + 1;
+            _end = _begin + i;
         }
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
 
-//        virtual ~vector() {
-//            for(; _size; --_size) {
-//                _alloc.destroy(_begin + _size);
-//            }
-//            _alloc.deallocate(_begin, _capacity);
-//            _begin = nullptr;
-//            _end = nullptr;
-//            _capacity = 0;
-//        }
+        virtual ~vector() {
+            clear();
+            deallocateMemory();
+            _begin = nullptr;
+            _end = nullptr;
+            _capacity = 0;
+        }
 
         // -----------------------------------------ASSIGN CONTENT------------------------------------------------------
 
-//        vector &operator=(const vector& x) {
-//            if (this != &x) {
-//                clear();
-//                for (const_iterator itBegin = x.begin(), itEnd = x.end(); itBegin != itEnd; ++itBegin) {
-//                    push_back(*itBegin);
-//                }
-//            }
-//            return *this;
-//        }
+        vector &operator=(const vector& x) {
+            if (this != &x) {
+                clear();
+                _alloc = x._alloc;
+                _size = x._size;
+                _capacity = x._capacity;
+                _begin = _alloc.allocate(_capacity + 1);
+                size_type i = 0;
+                for (; i < x._size; ++i) {
+                    _alloc.construct(_begin + i, x[i]);
+                }
+                _end = _begin + i;
+            }
+            return *this;
+        }
+
         // -----------------------------------------ITERATORS-----------------------------------------------------------
 
         iterator begin() {
@@ -165,7 +179,7 @@ namespace ft {
             return const_reverse_iterator(begin());
         }
 
-            // -----------------------------------------CAPACITY------------------------------------------------------------
+        // -----------------------------------------CAPACITY------------------------------------------------------------
 
         bool empty() const {
             return _size == 0;
@@ -174,6 +188,33 @@ namespace ft {
         size_type size() const {
             return _size;
         }
+
+//        void resize(size_type n, value_type val = value_type()) {
+////            if (n < _size) {
+////                --_size;
+////                for (; n != _size; --_size) {
+////                    _alloc.destroy(_begin + _size);
+////                }
+////                _alloc.destroy(_begin + _size);
+////                if ((_capacity / _size) >= 2) {
+////                    size_type newCapacity = _capacity - _capacity / 4;
+////                    pointer tmp = _begin + newCapacity;
+////                    _alloc.deallocate(tmp, _capacity - newCapacity + 1);
+////                }
+////                _end = _begin + _size + 1;
+////            }
+////            else if (n > _size && n < _capacity) {
+////                pointer tmp += _size;
+////                for (; _size < n; ++_size) {
+////                    _alloc.construct(_tmp, val);
+////                }
+////                _end = _begin + _size + 1;
+////            }
+////            else {
+////                clear();
+////
+////            }
+//        }
 
         size_type max_size() const {
             return _alloc.max_size();
@@ -192,6 +233,15 @@ namespace ft {
         const_reference operator[] (size_type n) const {
             return _begin[n];
         }
+
+        reference at(size_type n) {
+            return _begin[n];
+        }
+
+        const_reference at(size_type n) const {
+            return _begin[n];
+        }
+
 /*
         reference front() {
             return _tail->next->value_type;
@@ -264,63 +314,85 @@ namespace ft {
 
         // -----------------------------------------Delete last element-------------------------------------------------
 
+*/
         void pop_back() {
-            node *toDeleted = _tail->previous;
-            _tail->previous->previous->next = _tail;
-            _tail->previous = _tail->previous->previous;
-            destroyAndDeallocateNode(toDeleted);
+            _alloc.destroy(_begin + _size);
             --_size;
+            --_end;
         }
 
         // -----------------------------------------Insert Elements-----------------------------------------------------
+        iterator insert (iterator position, const value_type& val) {
 
-        iterator insert(iterator position, value_type const &val) {
-            node *NewNode = nullptr;
-            executeInsert(&NewNode, &position._node, val);
-            return iterator(NewNode);
+            if ((_size + 1) >= _capacity) {
+                pointer newArray = _alloc.allocate(_capacity * MUlTIPLIER_CAPACITY + 1),
+                pointer tmpNewArray = newArray, tmpBegin = _begin, positionPtr = position._ptr;
+
+                for (; tmpBegin != positionPtr; ++tmpNewArray, ++tmpBegin) {
+                    _alloc.construct(tmpNewArray, tmpBegin)
+                }
+                _alloc.construct(tmpNewArray++, &val);
+                for (; tmpBegin != _end; ++tmpNewArray, ++tmpBegin) {
+                    _alloc.construct(tmpNewArray, tmpBegin)
+                }
+                destroyAllElements();
+                deallocateMemory();
+                ++_size;
+                _begin = newArray;
+                _end = tmpNewArray;
+            }
+
+            difference_type index = position._ptr - _begin;
+
+            _alloc.construct(  val)
+            _alloc.construct(_begin + i, firstPtr);
+
+
         }
 
-        void insert(iterator position, size_type n, value_type const &val)
-        {
-            for (size_type i = 0; i < n ; ++i) {
-                node *NewNode = nullptr;
-                executeInsert(&NewNode, &position._node, val);
-            }
+        void insert (iterator position, size_type n, const value_type& val) {
+
         }
 
         template <class InputIterator>
-        void insert(iterator position,
-                    InputIterator first,
-                    InputIterator last,
-                    typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+        void insert (iterator position,
+                     InputIterator first,
+                     InputIterator last,
+                     typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
             (void)isIter;
-            node *tmp = position._node;
-            for (; first != last; ++first) {
-                node *NewNode = nullptr;
-                executeInsert(&NewNode, &tmp, *first);
-                tmp = NewNode->next;
-            }
+
+
         }
+
+
 
         // -----------------------------------------Erase Elements------------------------------------------------------
 
         iterator erase(iterator position) {
-            unlinkNodes(&position._node, &position._node);
-            node *retNode = position._node->next;
-            destroyAndDeallocateNode(position._node);
+            difference_type index = position._ptr - _begin;
+            pointer ptr = _begin + index;
+            _alloc.destroy(_begin + index);
+            std::move(ptr + 1, _end, ptr);
             --_size;
-            return iterator(retNode);
+            _end = _begin + _size;
+            return iterator(ptr);
         }
 
         iterator erase(iterator first, iterator last) {
-            unlinkNodes(&first._node, &last._node->previous);
-            for (; first != last; ++first) {
-                destroyAndDeallocateNode(first._node);
-                --_size;
+            difference_type indexFirst = first._ptr - _begin, indexLast = last._ptr - _begin;
+            pointer ptr = _begin + (first._ptr - _begin);
+            if (first != last) {
+                for (pointer tmp = first._ptr; tmp != first._ptr; ++last._ptr) {
+                    _alloc.destroy(tmp);
+                }
+                std::move(ptr + (indexLast - indexFirst), _end, ptr);
             }
-            return last;
+            _size -= indexLast - indexFirst;
+            _end = _begin + _size;
+            return iterator(ptr);
         }
 
+        /*
         // -----------------------------------------Swap Content--------------------------------------------------------
 
         void swap (list& x) {
@@ -355,9 +427,11 @@ namespace ft {
 
  */
         void clear() {
-            for(; _size; --_size) {
-                _alloc.destroy(_begin + _size);
+            if (!_begin) {
+                return;
             }
+            destroyAllElements();
+            _size = 0;
         }
 /*
         // -----------------------------------------OPERATIONS----------------------------------------------------------
@@ -528,6 +602,21 @@ namespace ft {
         */
 
         // -----------------------------------------Allocate Memory-----------------------------------------------------
+
+
+        // -----------------------------------------Deallocate Memory---------------------------------------------------
+
+        void destroyAllElements() {
+            for(pointer tmp = _begin; tmp != _end; ++tmp) {
+                _alloc.destroy(tmp);
+            }
+        }
+
+        void deallocateMemory() {
+            _alloc.deallocate(_begin, _capacity);
+        }
+
+
 
     };
 

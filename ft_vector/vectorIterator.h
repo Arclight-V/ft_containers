@@ -62,7 +62,7 @@ namespace ft {
         }
 
         pointer operator->() const {
-            return &_ptr;
+            return _ptr;
         }
 
         // Can be incremented (if in a dereferenceable state).

@@ -7,6 +7,16 @@
 #define lib ft
 #define con vector
 
+void testIterator(lib::con<Test> &useless) {
+    lib::con<Test>::iterator itBegin = useless.begin(), itEnd = useless.end();
+    for(; itBegin != itEnd; ++itBegin) {
+        std::cout << (*itBegin).some_ << ' ';
+    }
+    std::cout << std::endl;
+
+    std::cout << "size : " << useless.size() << '\n';
+}
+
 // Constructors ================================================================
 
 void ft_defoult_constructor() {
@@ -30,6 +40,7 @@ void ft_defoult_constructor() {
 	}
 	std::cout << std::endl;
 
+	testIterator(useless);
 }
 
 void ft_n_constructor() {
@@ -49,6 +60,8 @@ void ft_n_constructor() {
 		std::cout << useless[i].some_ << " ";
 	}
 	std::cout << std::endl;
+
+    testIterator(useless);
 }
 
 void ft_n_val_constructor() {
@@ -64,7 +77,7 @@ void ft_n_val_constructor() {
 		std::cout << useless[i].some_ << " ";
 	}
 	std::cout << std::endl;
-
+    testIterator(useless);
 }
 
 void ft_copy_constructor() {
@@ -85,7 +98,7 @@ void ft_copy_constructor() {
 		std::cout << copy[i].some_ << " ";
 	}
 	std::cout << std::endl;
-
+    testIterator(copy);
 }
 //
 //void ft_resize_test() {
@@ -309,32 +322,33 @@ void ft_constructors_capacity_test() {
 	// ft_resize_test();
 	// ft_reserve_test();
 }
-//
+
 //// =============================================================================
-//
+
 //// Operator '=' ================================================================
-//
-//void ft_operator_assignment() {
-//	std::cout << "\noperator_assignment\n" << std::endl;
-//	lib::con<Test> base(128);
-//	for (size_t i = 0; i < base.size(); ++i) {
-//		base[i].some_ = i;
-//	}
-//
-//	lib::con<Test> copy;
-//	copy = base;
-//
-//	std::cout << "size    : " << copy.size()     << std::endl;
-//	std::cout << "capacity: " << copy.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < copy.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << copy[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//}
+
+void ft_operator_assignment() {
+	std::cout << "\noperator_assignment\n" << std::endl;
+	lib::con<Test> base(128);
+	for (size_t i = 0; i < base.size(); ++i) {
+		base[i].some_ = i;
+	}
+
+	lib::con<Test> copy;
+	copy = base;
+
+	std::cout << "size    : " << copy.size()     << std::endl;
+	std::cout << "capacity: " << copy.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < copy.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << copy[i].some_ << " ";
+	}
+	std::cout << std::endl;
+
+    testIterator(copy);
+}
 //
 //// =============================================================================
 //
@@ -1046,76 +1060,82 @@ void ft_constructors_capacity_test() {
 //
 //}
 //
-//void ft_erase_2540_leaks_test() {
-//	std::cout << "erase_2540_leaks_test" << std::endl;
-//	lib::con<Test> mouse(129);
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		mouse[i].some_ = i;
-//	}
-//	lib::con<Test> big_mouse(1023);
-//	for (size_t i = 0; i < big_mouse.size(); ++i) {
-//		big_mouse[i].some_ = i + 1000;
-//	}
-//
-//	std::cout << mouse.erase(mouse.begin())->some_ << std::endl;
-//
-//	std::cout << "size    : " << mouse.size()     << std::endl;
-//	std::cout << "capacity: " << mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << mouse.at(i).some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	mouse.erase(mouse.end() - 1);
-//
-//	std::cout << "size    : " << mouse.size()     << std::endl;
-//	std::cout << "capacity: " << mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << mouse.at(i).some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	mouse.erase(mouse.begin() + 100);
-//
-//	std::cout << "size    : " << mouse.size()     << std::endl;
-//	std::cout << "capacity: " << mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << mouse.at(i).some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	big_mouse.erase(big_mouse.begin() + 100, big_mouse.end() - 100);
-//
-//	std::cout << "size    : " << big_mouse.size()     << std::endl;
-//	std::cout << "capacity: " << big_mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < big_mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << big_mouse.at(i).some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	big_mouse.erase(big_mouse.begin(), big_mouse.end());
-//
-//	std::cout << "size    : " << big_mouse.size()     << std::endl;
-//	std::cout << "capacity: " << big_mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < big_mouse.size(); ++i) {
-//		// if (i != 0 && i % 32 == 0)
-//		std::cout << big_mouse.at(i).some_ << " ";
-//	}
-//	std::cout << std::endl;
-//}
+void ft_erase_2540_leaks_test() {
+	std::cout << "erase_2540_leaks_test" << std::endl;
+	lib::con<Test> mouse(129);
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		mouse[i].some_ = i;
+	}
+	lib::con<Test> big_mouse(1023);
+	for (size_t i = 0; i < big_mouse.size(); ++i) {
+		big_mouse[i].some_ = i + 1000;
+	}
+
+
+	std::cout << mouse.erase(mouse.begin())->some_ << std::endl;
+
+	std::cout << "size    : " << mouse.size()     << std::endl;
+	std::cout << "capacity: " << mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << mouse.at(i).some_ << " ";
+	}
+	std::cout << std::endl;
+
+    testIterator(mouse);
+
+	mouse.erase(mouse.end() - 1);
+
+	std::cout << "size    : " << mouse.size()     << std::endl;
+	std::cout << "capacity: " << mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << mouse.at(i).some_ << " ";
+	}
+	std::cout << std::endl;
+
+    testIterator(mouse);
+
+	mouse.erase(mouse.begin() + 100);
+
+	std::cout << "size    : " << mouse.size()     << std::endl;
+	std::cout << "capacity: " << mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << mouse.at(i).some_ << " ";
+	}
+	std::cout << std::endl;
+    testIterator(mouse);
+
+	big_mouse.erase(big_mouse.begin() + 100, big_mouse.end() - 100);
+
+	std::cout << "size    : " << big_mouse.size()     << std::endl;
+	std::cout << "capacity: " << big_mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < big_mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << big_mouse.at(i).some_ << " ";
+	}
+	std::cout << std::endl;
+
+	big_mouse.erase(big_mouse.begin(), big_mouse.end());
+
+	std::cout << "size    : " << big_mouse.size()     << std::endl;
+	std::cout << "capacity: " << big_mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < big_mouse.size(); ++i) {
+		// if (i != 0 && i % 32 == 0)
+		std::cout << big_mouse.at(i).some_ << " ";
+	}
+	std::cout << std::endl;
+}
 //
 //void ft_swap_test() {
 //	std::cout << "swap_test" << std::endl;
@@ -1428,7 +1448,7 @@ void ft_constructors_capacity_test() {
 //	std::cout << (rit != rcit) << std::endl;
 //}
 //
-//void ft_modifiers_test() {
+void ft_modifiers_test() {
 //	ft_assign_iter_iter_leaks_test();
 //	ft_assign_iter_iter_1280b_leaks_test();
 //
@@ -1439,22 +1459,22 @@ void ft_constructors_capacity_test() {
 //	ft_insert_iter_n_val_test();
 //	ft_insert_iter_iter_iter_test();
 //	ft_insert_iter_iter_iter_8390_leaks_test();
-//
-//	ft_erase_2540_leaks_test();
+
+	ft_erase_2540_leaks_test();
 //	ft_swap_test();
 //	ft_clear_test();
 //	ft_relational_operators();
-//}
+}
 
 // =============================================================================
 
 int main(void)
 {
 	ft_constructors_capacity_test();
-	// ft_operator_assignment();
+	 ft_operator_assignment();
 	// ft_iterator_test();
 	// ft_el_access_test();
-	// ft_modifiers_test();
+	 ft_modifiers_test();
 
 	// const_iterators();
 	// reverse_iterators();
