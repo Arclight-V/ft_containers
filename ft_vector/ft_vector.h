@@ -325,45 +325,115 @@ namespace ft {
         // -----------------------------------------Insert Elements-----------------------------------------------------
 
         iterator insert (iterator position, const value_type& val) {
-
-            if ((_size + 1) > _capacity) {
-                size_type capacity = _capacity ? _capacity : 1;
-                size_type newCapacity = capacity * MUlTIPLIER_CAPACITY;
-                pointer newArray = _alloc.allocate(newCapacity + 1);
-                pointer tmpNewArray = newArray, tmpBegin = _begin, positionPtr = position._ptr;
-
-                for (; tmpBegin != positionPtr; ++tmpNewArray, ++tmpBegin) {
-                    _alloc.construct(tmpNewArray, *tmpBegin);
-                }
-                pointer toReturn = tmpNewArray;
-                _alloc.construct(tmpNewArray++, val);
-                for (; tmpBegin != _end; ++tmpNewArray, ++tmpBegin) {
-                    _alloc.construct(tmpNewArray, *tmpBegin);
-                }
-                destroyAllElements();
-                if (_capacity)
-                    deallocateMemory();
-                ++_size;
-                _begin = newArray;
-                _end = tmpNewArray;
-                _capacity = newCapacity;
-                return iterator(toReturn);
-            }
-            std::move(position._ptr, _end, position._ptr + 1);
-            _alloc.construct(position._ptr, val);
-            ++_end;
-            ++_size;
+            insert(position, 1, val);
             return position;
         }
-//
-//        template <class InputIterator>
-//        void insert (iterator position,
-//                     InputIterator first,
-//                     InputIterator last,
-//                     typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
-//            (void)isIter;
-//
-//        }
+
+        void insert (iterator position, size_type n, const value_type& val) {
+            if (n > 0) {
+                if ((_size + n) >= _capacity) {
+                    size_type capacity = _capacity ? _capacity : 1;
+                    size_type newCapacity = capacity * MUlTIPLIER_CAPACITY;
+                    if (newCapacity < _size + n)
+                        newCapacity += n;
+                    pointer newArray = _alloc.allocate(newCapacity + 1);
+                    pointer tmpNewArray = newArray, tmpBegin = _begin;
+
+                    for (; tmpBegin != position._ptr; ++tmpNewArray, ++tmpBegin) {
+                        _alloc.construct(tmpNewArray, *tmpBegin);
+                    }
+                    for (size_type i = 0 ; i < n; ++tmpNewArray, ++i) {
+                        _alloc.construct(tmpNewArray, val);
+                    }
+                    for (; tmpBegin != _end; ++tmpNewArray, ++tmpBegin) {
+                        _alloc.construct(tmpNewArray, *tmpBegin);
+                    }
+                    destroyAllElements();
+                    if (_capacity)
+                        deallocateMemory();
+                    _size += n;
+                    _begin = newArray;
+                    _end = tmpNewArray;
+                    _capacity = newCapacity;
+                }
+                else {
+                    size_type countShift = _end - position._ptr;
+                    pointer shift = _end + n + 1, toShift = _end - 1;
+                    for (size_type i = 0; i < countShift; ++i, --shift, --toShift) {
+                        *shift = *toShift;
+                    }
+                    pointer tmp = position._ptr;
+                    for (size_type i = 0; i < n; ++tmp, ++i) {
+                        _alloc.construct(tmp, val);
+                    }
+                    _end += n;
+                    _size += n;
+                }
+            }
+        }
+
+
+        template <class InputIterator>
+        void insert( iterator position,
+                     InputIterator first,
+                     InputIterator last,
+                     typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
+            (void)isIter;
+
+            if (first != last) {
+                size_type size = last._ptr - first._ptr;
+                if ((_size + size) > _capacity) {
+                    size_type capacity = _capacity ? _capacity : 1;
+                    size_type newCapacity = capacity * MUlTIPLIER_CAPACITY;
+                    if (newCapacity < _size + size)
+                        newCapacity += size;
+                    pointer newArray = _alloc.allocate(newCapacity + 1);
+                    pointer tmpNewArray = newArray, tmpBegin = _begin;
+
+                    for (; tmpBegin != position._ptr; ++tmpNewArray, ++tmpBegin) {
+                        _alloc.construct(tmpNewArray, *tmpBegin);
+                    }
+                    pointer f = first._ptr;
+                    for (size_type i = 0 ; i < size; ++tmpNewArray, ++i, ++f) {
+                        _alloc.construct(tmpNewArray, *f);
+                    }
+                    for (; tmpBegin != _end; ++tmpNewArray, ++tmpBegin) {
+                        _alloc.construct(tmpNewArray, *tmpBegin);
+                    }
+                    destroyAllElements();
+                    if (_capacity)
+                        deallocateMemory();
+                    _size += size;
+                    _begin = newArray;
+                    _end = tmpNewArray;
+                    _capacity = newCapacity;
+                }
+                else {
+                    size_type actualSize = size - 1;
+                    pointer tmpArray = _alloc.allocate(actualSize);
+                    for (pointer tmpFirst = first._ptr, tmpLast = last._ptr, tmpArr = tmpArray; tmpFirst != tmpLast; ++tmpFirst, ++tmpArr) {
+                        _alloc.construct(tmpArr, *tmpFirst);
+                    }
+
+                    size_type countShift = _end - position._ptr;
+                    pointer shift = _end + actualSize, toShift = _end - 1;
+                    _end = shift + 1;
+                    for (size_type i = 0; i < countShift; ++i, --shift, --toShift) {
+                        *shift = *toShift;
+                    }
+                    pointer tmpBegin = tmpArray;
+                    for (size_type i = 0; i < size; ++position._ptr, ++i, ++tmpBegin) {
+                        _alloc.construct(position._ptr, *tmpBegin);
+                    }
+                    pointer tmpBegin1 = tmpArray;
+                    for(size_type i = 0; i < actualSize; ++tmpBegin1, ++i) {
+                        _alloc.destroy(tmpBegin1);
+                    }
+                    _alloc.deallocate(tmpArray, actualSize);
+                    _size += size;
+                }
+            }
+        }
 
 
 
@@ -605,7 +675,7 @@ namespace ft {
         void augmenterСapacity(size_type newCapacity) {
             pointer newArray = _alloc.allocate(newCapacity + 1);
             pointer tmp = newArray, begin = _begin;
-            for (;begin != _end; ++begin, ++tmp) {
+            for (; begin != _end; ++begin, ++tmp) {
                 _alloc.construct(tmp, *begin);
             }
             destroyAllElements();

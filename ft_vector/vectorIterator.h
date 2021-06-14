@@ -28,7 +28,7 @@ namespace ft {
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
         // default-constructor
-        explicit VectorIterator(pointer ptr) : _ptr(ptr) {};
+        explicit VectorIterator(pointer ptr = nullptr) : _ptr(ptr) {};
 
         // copy-constructor
         VectorIterator(VectorIterator<T, PointerT> const &x) : _ptr(x._ptr) {};
