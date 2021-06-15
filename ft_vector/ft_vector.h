@@ -169,13 +169,19 @@ namespace ft {
 
         // -----------------------------------------CAPACITY------------------------------------------------------------
 
+        // -----------------------------------------Test Whether Vector Is Empty----------------------------------------
+
         bool empty() const {
             return _size == 0;
         }
 
+        // -----------------------------------------Return Size---------------------------------------------------------
+
         size_type size() const {
             return _size;
         }
+
+        // -----------------------------------------Change Size---------------------------------------------------------
 
         void resize(size_type n, value_type val = value_type()) {
             if (n < _size) {
@@ -222,6 +228,8 @@ namespace ft {
 
         // -----------------------------------------ELEMENT ACCESS------------------------------------------------------
 
+        // -----------------------------------------Access Element------------------------------------------------------
+
         reference operator[] (size_type n) {
             return _begin[n];
         }
@@ -238,15 +246,17 @@ namespace ft {
             return _begin[n];
         }
 
-/*
+        // -----------------------------------------Access First Element------------------------------------------------
+
         reference front() {
-            return _tail->next->value_type;
+            return _begin;
         }
 
         const_reference front() const {
-            return _tail->next->value_type;
+            return _begin;
         }
 
+        /*
         reference back() {
             return _tail->previous->value_type;
         }
