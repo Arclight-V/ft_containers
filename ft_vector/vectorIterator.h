@@ -17,10 +17,12 @@ namespace ft {
 
         template<typename, typename> friend class vector;
 
+    public:
         typedef typename VectorIterator::pointer            pointer;
         typedef typename VectorIterator::reference          reference;
         typedef typename VectorIterator::difference_type    difference_type;
 
+    private:
         pointer                                     _ptr;
 
     public:

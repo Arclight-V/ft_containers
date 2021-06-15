@@ -100,12 +100,12 @@ namespace ft {
 
         vector (const vector& x) : _alloc(x._alloc), _size(x._size), _capacity(x._capacity) {
             _begin = _alloc.allocate(_capacity + 1);
-            size_type i = 0;
 
-            for (; i < x._size; ++i) {
-                _alloc.construct(_begin + i, x[i]);
+            pointer begin = _begin;
+            for (pointer beginX = x._begin; beginX != x._end; ++beginX, ++begin) {
+                _alloc.construct(begin, *beginX);
             }
-            _end = _begin + i;
+            _end = begin;
         }
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
@@ -177,48 +177,48 @@ namespace ft {
             return _size;
         }
 
-//        void resize(size_type n, value_type val = value_type()) {
-////            if (n < _size) {
-////                --_size;
-////                for (; n != _size; --_size) {
-////                    _alloc.destroy(_begin + _size);
-////                }
-////                _alloc.destroy(_begin + _size);
-////                if ((_capacity / _size) >= 2) {
-////                    size_type newCapacity = _capacity - _capacity / 4;
-////                    pointer tmp = _begin + newCapacity;
-////                    _alloc.deallocate(tmp, _capacity - newCapacity + 1);
-////                }
-////                _end = _begin + _size + 1;
-////            }
-////            else if (n > _size && n < _capacity) {
-////                pointer tmp += _size;
-////                for (; _size < n; ++_size) {
-////                    _alloc.construct(_tmp, val);
-////                }
-////                _end = _begin + _size + 1;
-////            }
-////            else {
-////                clear();
-////
-////            }
-//        }
+        void resize(size_type n, value_type val = value_type()) {
+            if (n < _size) {
+                size_type countToDelete = _size - n;
+                pointer toDelete = _end - 1;
+                for (size_type count = 0; count < countToDelete; --toDelete, ++count) {
+                    _alloc.destroy(toDelete);
+                }
+                _end = ++toDelete;
+                _size = n;
+            }
+            else if (n > _size && n < _capacity) {
+                for (; _size < n; ++_size, ++_end) {
+                    _alloc.construct(_end, val);
+                }
+            }
+            else {
+                reserve(n);
+                for (; _size < n; ++_size, ++_end) {
+                    _alloc.construct(_end, val);
+                }
+            }
+        }
+
+        // -----------------------------------------Return Maximum Size-------------------------------------------------
 
         size_type max_size() const {
             return _alloc.max_size();
         }
 
+        // -----------------------------------------Return size of allocated storage capacity---------------------------
+
         size_type capacity() const {
             return _capacity;
         }
 
-        // -----------------------------------------Request a change in capacity----------------------------------------
+        // -----------------------------------------Request A Change In Capacity----------------------------------------
+
         void reserve(size_type n) {
             if (n > _capacity) {
                 augmenterСapacity(n);
             }
         }
-
 
         // -----------------------------------------ELEMENT ACCESS------------------------------------------------------
 
@@ -470,27 +470,6 @@ namespace ft {
             ft::swap(_alloc,x._alloc);
             ft::swap(_allocNode, x._allocNode);
             ft::swap(_size,x._size);
-        }
-
-        // -----------------------------------------Change size---------------------------------------------------------
-
-        void resize (size_type n, value_type val = value_type()) {
-            (void) val; // for initial testing only
-            if (n < _size) {
-                node *currentNode = _tail->previous->previous, *toDelete = currentNode->next;
-                for (; n != _size; --_size) {
-                    destroyAndDeallocateNode(toDelete);
-                    currentNode = currentNode->previous;
-                    toDelete = currentNode->next;
-                }
-                currentNode->next->next = _tail;
-                _tail->previous = currentNode->next;
-            }
-            else {
-                for (size_type size = n - _size; size; --size) {
-                    push_back(val);
-                };
-            }
         }
 
         // -----------------------------------------Clear Content-------------------------------------------------------

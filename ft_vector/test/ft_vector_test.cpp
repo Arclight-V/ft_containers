@@ -101,104 +101,105 @@ void ft_copy_constructor() {
 	std::cout << std::endl;
     testIterator(copy);
 }
-//
-//void ft_resize_test() {
-//	std::cout << "\nresize_test\n" << std::endl;
-//	lib::con<Test> mouse(128);
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		mouse[i].some_ = i;
-//	}
-//	lib::con<Test> big_empty(mouse);
-//	lib::con<Test> small_mouse(mouse);
-//	lib::con<Test> big_mouse(mouse);
-//
-//	std::cout << "size    : " << mouse.size()     << std::endl;
-//	std::cout << "capacity: " << mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << mouse[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//	std::cout << (*mouse.begin()).some_      << std::endl;
-//	std::cout << (*(mouse.end() - 1)).some_  << std::endl;
-//	std::cout << (*mouse.rbegin()).some_     << std::endl;
-//	std::cout << (*(mouse.rend() - 1)).some_ << std::endl;
-//
-//	big_empty.resize(64, 7);
-//	std::cout << "size    : " << big_empty.size()     << std::endl;
-//	std::cout << "capacity: " << big_empty.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < big_empty.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << big_empty[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	small_mouse.resize(64, 7);
-//	std::cout << "size    : " << small_mouse.size()     << std::endl;
-//	std::cout << "capacity: " << small_mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < small_mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << small_mouse[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	small_mouse.resize(1, 7);
-//	std::cout << "size    : " << small_mouse.size()     << std::endl;
-//	std::cout << "capacity: " << small_mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < small_mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << small_mouse[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	small_mouse.resize(0, 7);
-//	std::cout << "size    : " << small_mouse.size()     << std::endl;
-//	std::cout << "capacity: " << small_mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < small_mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << small_mouse[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	big_mouse.resize(256, 7);
-//	std::cout << "size    : " << big_mouse.size()     << std::endl;
-//	std::cout << "capacity: " << big_mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < big_mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << big_mouse[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//
-//	try {
-//		big_mouse.resize(big_mouse.max_size() + 10);
-//
-//	} catch(std::exception & e) {
-//		std::cout << e.what() << std::endl;
-//	}
-//
-//	std::cout << "size    : " << big_mouse.size()     << std::endl;
-//	std::cout << "capacity: " << big_mouse.capacity() << std::endl;
-//	std::cout << "arr     :" << std::endl;
-//	for (size_t i = 0; i < big_mouse.size(); ++i) {
-//		if (i != 0 && i % 32 == 0)
-//			std::cout << std::endl;
-//		std::cout << big_mouse[i].some_ << " ";
-//	}
-//	std::cout << std::endl;
-//}
-//
+
+void ft_resize_test() {
+	std::cout << "\nresize_test\n" << std::endl;
+	lib::con<Test> mouse(128);
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		mouse[i].some_ = i;
+	}
+	lib::con<Test> big_empty(mouse);
+	lib::con<Test> small_mouse(mouse);
+	lib::con<Test> big_mouse(mouse);
+
+	std::cout << "size    : " << mouse.size()     << std::endl;
+	std::cout << "capacity: " << mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << mouse[i].some_ << " ";
+	}
+
+	std::cout << std::endl;
+	std::cout << (*mouse.begin()).some_      << std::endl;
+	std::cout << (*(mouse.end() - 1)).some_  << std::endl;
+	std::cout << (*mouse.rbegin()).some_     << std::endl;
+	std::cout << (*(mouse.rend() - 1)).some_ << std::endl;
+
+	big_empty.resize(64, 7);
+	std::cout << "size    : " << big_empty.size()     << std::endl;
+	std::cout << "capacity: " << big_empty.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < big_empty.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << big_empty[i].some_ << " ";
+	}
+	std::cout << std::endl;
+
+	small_mouse.resize(64, 7);
+	std::cout << "size    : " << small_mouse.size()     << std::endl;
+	std::cout << "capacity: " << small_mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < small_mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << small_mouse[i].some_ << " ";
+	}
+	std::cout << std::endl;
+
+	small_mouse.resize(1, 7);
+	std::cout << "size    : " << small_mouse.size()     << std::endl;
+	std::cout << "capacity: " << small_mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < small_mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << small_mouse[i].some_ << " ";
+	}
+	std::cout << std::endl;
+
+	small_mouse.resize(0, 7);
+	std::cout << "size    : " << small_mouse.size()     << std::endl;
+	std::cout << "capacity: " << small_mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < small_mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << small_mouse[i].some_ << " ";
+	}
+	std::cout << std::endl;
+
+	big_mouse.resize(256, 7);
+	std::cout << "size    : " << big_mouse.size()     << std::endl;
+	std::cout << "capacity: " << big_mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < big_mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << big_mouse[i].some_ << " ";
+	}
+	std::cout << std::endl;
+
+	try {
+		big_mouse.resize(big_mouse.max_size() + 10);
+
+	} catch(std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << "size    : " << big_mouse.size()     << std::endl;
+	std::cout << "capacity: " << big_mouse.capacity() << std::endl;
+	std::cout << "arr     :" << std::endl;
+	for (size_t i = 0; i < big_mouse.size(); ++i) {
+		if (i != 0 && i % 32 == 0)
+			std::cout << std::endl;
+		std::cout << big_mouse[i].some_ << " ";
+	}
+	std::cout << std::endl;
+}
+
 //void ft_reserve_test() {
 //	std::cout << "\nreserve_test\n" << std::endl;
 //	lib::con<Test> mouse(128);
@@ -320,7 +321,7 @@ void ft_constructors_capacity_test() {
 	 ft_n_constructor();
 	 ft_n_val_constructor();
 	 ft_copy_constructor();
-	// ft_resize_test();
+	 ft_resize_test();
 	// ft_reserve_test();
 }
 
@@ -1484,7 +1485,7 @@ void ft_modifiers_test() {
 
 int main(void)
 {
-//	ft_constructors_capacity_test();
+	ft_constructors_capacity_test();
 //	 ft_operator_assignment();
 	// ft_iterator_test();
 	// ft_el_access_test();
