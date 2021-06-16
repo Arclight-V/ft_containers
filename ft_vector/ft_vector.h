@@ -408,7 +408,7 @@ namespace ft {
                 }
                 else {
                     size_type countShift = _end - position._ptr;
-                    pointer shift = _end + n + 1, toShift = _end - 1;
+                    pointer shift = _end + n - 1, toShift = _end - 1;
                     for (size_type i = 0; i < countShift; ++i, --shift, --toShift) {
                         *shift = *toShift;
                     }
