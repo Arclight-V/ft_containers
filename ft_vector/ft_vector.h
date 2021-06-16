@@ -352,8 +352,9 @@ namespace ft {
 */
         void push_back(value_type const &val) {
             if (_size + 1 > _capacity) {
+                value_type toPush = val;
                 augmenterСapacity((_capacity = _capacity ? _capacity : 1) * MUlTIPLIER_CAPACITY);
-                _alloc.construct(_end, val);
+                _alloc.construct(_end, toPush);
                 ++_end;
             }
             else {
