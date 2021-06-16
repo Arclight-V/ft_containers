@@ -249,32 +249,53 @@ namespace ft {
         // -----------------------------------------Access First Element------------------------------------------------
 
         reference front() {
-            return _begin;
+            return *_begin;
         }
 
         const_reference front() const {
-            return _begin;
+            return *_begin;
         }
 
-        /*
+        // -----------------------------------------Access Back Element-------------------------------------------------
+
         reference back() {
-            return _tail->previous->value_type;
+            return *(_end - 1);
         }
 
         const_reference back() const {
-            return _tail->value_type;
+            return *(_end - 1);
         }
+
 
         // -----------------------------------------MODIFIERS-----------------------------------------------------------
 
-        // -----------------------------------------Assign new content to container-------------------------------------
+        // -----------------------------------------Assign Vector Content-----------------------------------------------
 
         template <class InputIterator>
         void assign(InputIterator first, InputIterator last, typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) {
             (void)isIter;
             clear();
-            for(;first != last; ++first) {
-                push_back(*first);
+            size_type newSize = last._ptr - first._ptr;
+            _size = newSize;
+
+            if (newSize > _capacity ) {
+                deallocateMemory();
+                _capacity = newSize;
+                _begin = _alloc.allocate(_capacity + 1);
+                pointer firstPtr = first._ptr, lastPtr = last._ptr, beginVector = _begin;
+
+                for (; firstPtr != lastPtr; ++firstPtr, ++beginVector) {
+                    _alloc.construct(beginVector, *firstPtr);
+                }
+                _end = beginVector;
+            }
+            else {
+                pointer firstPtr = first._ptr, lastPtr = last._ptr, begin = _begin;
+
+                for (; firstPtr != lastPtr; ++firstPtr, ++begin) {
+                    _alloc.construct(begin, *firstPtr);
+                }
+                _end = begin;
             }
         }
 
@@ -282,11 +303,29 @@ namespace ft {
 
         void assign(size_type n, const value_type& val) {
             clear();
-            for(;n; --n) {
-                push_back(val);
+            _size = n;
+
+            if (n > _capacity) {
+                deallocateMemory();
+                _begin = _alloc.allocate(n + 1);
+                pointer begin = _begin;
+
+                for (; n; --n, ++begin) {
+                    _alloc.construct(begin, val);
+                }
+                _end = begin;
+            }
+            else {
+                pointer begin = _begin;
+
+                for (; n; --n, ++begin) {
+                    _alloc.construct(begin, val);
+                }
+                _end = begin;
             }
         }
 
+/*
         // -----------------------------------------Insert Element At Beginning-----------------------------------------
 
         void push_front (const value_type& val) {
