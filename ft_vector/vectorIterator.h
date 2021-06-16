@@ -23,17 +23,17 @@ namespace ft {
         typedef typename VectorIterator::difference_type    difference_type;
 
     private:
-        pointer                                     _ptr;
+        pointer                                             _ptr;
 
     public:
 
         // -----------------------------------------CONSTRUCTORS--------------------------------------------------------
 
         // default-constructor
-        explicit VectorIterator(pointer ptr = nullptr) : _ptr(ptr) {};
+        explicit VectorIterator(pointer ptr = 0) : _ptr(ptr) {};
 
         // copy-constructor
-        VectorIterator(VectorIterator<T, PointerT> const &x) : _ptr(x._ptr) {};
+        VectorIterator(VectorIterator<T, PointerT> const &x) : _ptr(x.base()) {};
 
         // -----------------------------------------DESTRUCTOR----------------------------------------------------------
 
@@ -119,11 +119,24 @@ namespace ft {
             return _ptr[index];
         }
 
+        pointer base() const {
+            return _ptr;
+        }
     };
 
     template <class Iter>
+    bool operator==(Iter a, Iter b) {
+        return a.base() == b.base();
+    }
+
+    template <class Iter>
+    bool operator!=(Iter a, Iter b) {
+        return a.base() == b.base();
+    }
+
+    template <class Iter>
     bool operator<(Iter const &a, Iter const &b) {
-        return *a._ptr < *b._ptr;
+        return a.base() < b.base();
     }
 
     template <class Iter>
@@ -133,14 +146,20 @@ namespace ft {
 
     template <class Iter>
     bool operator<=(Iter a, Iter b) {
-        return *a._ptr <= *b._ptr;
+        return a.base() <= b.base();
     }
 
     template <class Iter>
     bool operator>=(Iter a, Iter b) {
-        return *a._ptr <= *b._ptr;
+        return a.base() <= b.base();
     }
 
 }
+
+
+
+
+
+
 
 #endif //VECTORITERATOR_H

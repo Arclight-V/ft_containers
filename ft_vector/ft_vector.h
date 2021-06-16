@@ -14,7 +14,6 @@
 
 #define MUlTIPLIER_CAPACITY 2
 #define DIVISOR_CAPACITY    0.5
-//#define START_CAPACITY      100
 
 
 
@@ -30,11 +29,11 @@ namespace ft {
         typedef typename allocator_type::pointer                                    pointer;
         typedef typename allocator_type::const_pointer                              const_pointer;
 
-        typedef typename ft::VectorIterator<value_type, value_type *>               iterator;
-        typedef typename ft::VectorIterator<value_type, value_type const *>         const_iterator;
+        typedef typename ft::VectorIterator<value_type, pointer>                    iterator;
+        typedef typename ft::VectorIterator<value_type, const_pointer>              const_iterator;
         typedef typename ft::ReverseIterator<iterator>                              reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator>                        const_reverse_iterator;
-        typedef typename ft::VectorIterator<value_type, value_type *>::difference_type            difference_type;
+        typedef typename ft::VectorIterator<value_type, pointer>::difference_type   difference_type;
         typedef size_t                                                              size_type;
 
     private:
@@ -53,7 +52,7 @@ namespace ft {
         // Empty container constructor (default constructor)
         // Constructs an empty container, with no elements.
 
-        explicit vector (const allocator_type& alloc = allocator_type()) :  _alloc(alloc),
+        explicit vector(const allocator_type& alloc = allocator_type()) :  _alloc(alloc),
                                                                             _size(0),
                                                                             _capacity(0),
                                                                             _begin(nullptr),
@@ -62,7 +61,7 @@ namespace ft {
         //  Fill constructor
         //  Constructs a container with n elements. Each element is a copy of val.
 
-        explicit vector (size_type n, const value_type& val = value_type(),
+        explicit vector(size_type n, const value_type& val = value_type(),
                          const allocator_type& alloc = allocator_type()) : _alloc(alloc), _size(n), _capacity(_size) {
             _begin = _alloc.allocate(_capacity + 1);
             size_type i = 0;
@@ -86,11 +85,12 @@ namespace ft {
                 typename ft::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type isIter = InputIterator()) :
                 _alloc(alloc), _size(last._ptr - first._ptr), _capacity(_size) {
             (void)isIter;
-            pointer firstPtr = first._ptr, lastPtr = last._ptr, tmp = _begin;
+            pointer firstPtr = first._ptr, lastPtr = last._ptr;
             _begin = _alloc.allocate(_capacity + 1);
+            pointer tmp = _begin;
 
             for (; firstPtr != lastPtr; ++firstPtr, ++tmp) {
-                _alloc.construct(tmp, firstPtr);
+                _alloc.construct(tmp, *firstPtr);
             }
             _end = tmp;
         }
@@ -124,24 +124,26 @@ namespace ft {
                 _size = x._size;
                 _capacity = x._capacity;
                 _begin = _alloc.allocate(_capacity + 1);
-                size_type i = 0;
-                for (; i < x._size; ++i) {
-                    _alloc.construct(_begin + i, x[i]);
+                pointer beginCurrent = _begin, beginX = x._begin;
+                for (; beginX != x._end; ++beginX, ++beginCurrent) {
+                    _alloc.construct(beginCurrent, *beginX);
                 }
-                _end = _begin + i;
+                _end = beginCurrent;
             }
             return *this;
         }
 
         // -----------------------------------------ITERATORS-----------------------------------------------------------
 
+        const_iterator begin() const {
+            return const_iterator(_begin);
+        };
+
         iterator begin() {
             return iterator(_begin);
         };
 
-        const_iterator begin() const {
-            return const_iterator(_begin);
-        };
+
 
         iterator end() {
             return iterator(_end);
@@ -325,31 +327,8 @@ namespace ft {
             }
         }
 
-/*
-        // -----------------------------------------Insert Element At Beginning-----------------------------------------
-
-        void push_front (const value_type& val) {
-            node *newNode = nullptr;
-            allocateMemoryForNodeAndConstruct(val, &newNode);
-            _tail->next->previous = newNode;
-            newNode->next = _tail->next;
-            newNode->previous = _tail;
-            _tail->next = newNode;
-            ++_size;
-        }
-
-        // -----------------------------------------Delete first element------------------------------------------------
-
-        void pop_front() {
-            node *toDelete = _tail->next;
-
-            unlinkNode(&_tail->next);
-            destroyAndDeallocateNode(toDelete);
-            --_size;
-        }
-
         // -----------------------------------------Add Element At The End----------------------------------------------
-*/
+
         void push_back(value_type const &val) {
             if (_size + 1 > _capacity) {
                 value_type toPush = val;
@@ -512,19 +491,19 @@ namespace ft {
             return iterator(ptr);
         }
 
-        /*
+
         // -----------------------------------------Swap Content--------------------------------------------------------
 
-        void swap (list& x) {
-            ft::swap(_tail, x._tail);
-            ft::swap(_alloc,x._alloc);
-            ft::swap(_allocNode, x._allocNode);
-            ft::swap(_size,x._size);
+        void swap (vector& x) {
+            ft::swap(_alloc, x._alloc);
+            ft::swap(_size, x._size);
+            ft::swap(_capacity, x._capacity);
+            ft::swap(_begin, x._begin);
+            ft::swap(_end, x._end);
         }
 
         // -----------------------------------------Clear Content-------------------------------------------------------
 
- */
         void clear() {
             if (!_begin) {
                 return;
