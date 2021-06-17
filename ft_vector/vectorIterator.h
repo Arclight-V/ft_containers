@@ -156,10 +156,4 @@ namespace ft {
 
 }
 
-
-
-
-
-
-
 #endif //VECTORITERATOR_H

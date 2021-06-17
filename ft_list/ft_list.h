@@ -8,9 +8,9 @@
 #include "../common_templates/stdafx.h"
 #include "../common_templates/NodeTraits.h"
 #include "listIterator.h"
-#include "ReverseIterator.h"
-#include "Algorithm.h"
-#include "utils.h"
+#include "../common_templates/ReverseIterator.h"
+#include "../common_templates/Algorithm.h"
+#include "../common_templates/utils.h"
 
 namespace ft {
     template<typename T, typename Alloc = std::allocator<T> >
