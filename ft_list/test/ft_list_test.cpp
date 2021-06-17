@@ -1561,8 +1561,7 @@ int main() {
 	 relational_operators();
 	// ------------
 
-	complex();
+    //	complex();
 
-	while (1);
 	return 0;
 }

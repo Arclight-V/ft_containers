@@ -15,11 +15,11 @@
 namespace ft {
     template<typename T, typename Alloc = std::allocator<T> >
     class list {
-        typedef typename ft::NodeTraits<T>::_dl_list_TS node;
-        node *_tail;   //  using the tail has access to the head
+        typedef typename ft::NodeTraits<T>::_dl_list_TS                 node;
+        node                                                            *_tail;
     public:
-        typedef T value_type;
-        typedef Alloc allocator_type;
+        typedef T                                                       value_type;
+        typedef Alloc                                                   allocator_type;
         typedef typename allocator_type::reference                      reference;
         typedef typename allocator_type::const_reference                const_reference;
         typedef typename allocator_type::pointer                        pointer;
@@ -29,8 +29,7 @@ namespace ft {
         typedef typename ft::ReverseIterator<iterator>                  reverse_iterator;
         typedef typename ft::ReverseIterator<const_iterator>            const_reverse_iterator;
         typedef typename ft::ListIterator<value_type>::difference_type  difference_type;
-        typedef size_t size_type;
-
+        typedef size_t                                                  size_type;
 
         /*
         ** -----------------------------------------MEMBER FUNCTIONS----------------------------------------------------

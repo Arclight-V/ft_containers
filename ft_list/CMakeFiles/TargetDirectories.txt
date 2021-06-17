@@ -1,3 +1,0 @@
-/Users/anatashi/Desktop/ft_containers/ft_list/CMakeFiles/rebuild_cache.dir
-/Users/anatashi/Desktop/ft_containers/ft_list/CMakeFiles/edit_cache.dir
-/Users/anatashi/Desktop/ft_containers/ft_list/CMakeFiles/ft_list_test.dir
